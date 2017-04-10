@@ -1,0 +1,15 @@
+####################
+# Hugo Settings
+####################
+
+baseurl = "https://www.zaynetro.com/"
+languageCode = "en-US"
+theme = "zaynetro"
+
+title = "zaynetro"
+
+[params]
+
+email = ""
+github = "zaynetro"
+footer_text = "Roman Zaynetdinov (zaynetro)"

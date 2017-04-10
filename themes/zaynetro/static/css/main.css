@@ -1,0 +1,240 @@
+body {
+  color: #42464c;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+
+/**
+ * ===========================================================================
+ * Base styles
+ */
+
+h1, h2, h3 {
+  font-weight: 300;
+}
+
+a {
+  color: #444;
+}
+
+code {
+  font-size: 90%;
+  padding: 2px 4px;
+  margin: 0 2px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  color: #42464c;
+}
+
+pre {
+  background-color: #f5f7fa;
+  color: #42464c;
+  white-space: pre;
+  word-wrap: normal;
+  padding: 0.5rem;
+}
+
+pre code {
+  display: block;
+  border: 0;
+  overflow-x: auto;
+  font: normal 9pt Consolas, Monaco, monospace;
+}
+
+
+/**
+ * ===========================================================================
+ * Layout
+ */
+
+.container {
+  margin: 0 auto;
+  max-width: 50rem;
+  padding: 0 0.3rem;
+}
+
+.footer {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.header {
+  margin: 2rem auto;
+  display: flex;
+  width: 26rem;
+  max-width: 100%;
+}
+
+.navigation {
+  margin-left: 1rem;
+}
+
+.header-home {
+  position: relative;
+  border: 3px solid #ddd;
+  /*padding: 0.5rem;*/
+  border-radius: 1rem;
+}
+
+/* Chat bubble (cheers: https://codepen.io/Founts/pen/gmhcl) */
+.header-home:before,
+.header-home > a:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: auto;
+  top: auto;
+}
+
+.header-home:before {
+  left: 30px;
+  bottom: -40px;
+  border: 20px solid;
+  border-color: #ddd transparent transparent #ddd;
+}
+
+.header-home > a {
+  display: block;
+  margin: 0;
+  padding: 1rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.header-home > a:hover {
+  text-decoration: underline;
+}
+
+.header-home > a:after {
+  left: 34px;
+  bottom: -31px;
+  border: 16px solid;
+  border-color: #fff transparent transparent #fff;
+}
+
+.header-home > a > h1 {
+  margin: 0;
+}
+
+.header-external {
+  margin: 4rem 0 0 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pager-item > a,
+.pager-item > span {
+  display: block;
+  position: relative;
+  padding: 0.5rem 1.5rem;
+  background-color: #eee;
+  border-radius: 0.3rem;
+}
+
+.pager-item > a:hover {
+  background-color: #ddd;
+}
+
+.pager-left .pager-item a {
+  padding-left: 2.0rem;
+}
+
+.pager-right .pager-item a {
+  padding-right: 2.0rem;
+}
+
+.pager-item > span {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pager-item a:before {
+  position: absolute;
+  top: 0;
+  font-size: 1.5rem;
+}
+
+.pager-left .pager-item a:before {
+  left: 1.0rem;
+  content: "\2039";
+}
+
+.pager-right .pager-item a:before {
+  right: 1.0rem;
+  content: "\203A";
+}
+
+/**
+ * ===========================================================================
+ * Icons
+ */
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+.icon-github {
+  width: 2rem;
+  height: 2rem;
+  color: black;
+}
+
+
+/**
+ * ===========================================================================
+ * Post
+ */
+
+.post-date {
+  line-height: 1.15;
+  margin-bottom: 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+.post-title {
+  line-height: 1.25;
+  margin-top: 0;
+}
+
+.post-title > a {
+  color: #222;
+  text-decoration: none;
+}
+
+.post-title > a:hover {
+  text-decoration: underline;
+}
+
+.post-content {
+  color: #444;
+}
+
+.post-short {
+  margin-bottom: 3rem;
+}
+
+.post-more {
+  color: #444;
+  display: inline-block;
+  padding: 0 8px;
+}
+
+.post-more:hover {
+  background-color: #ddd;
+  border-radius: 5px;
+}

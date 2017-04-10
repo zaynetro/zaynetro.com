@@ -1,0 +1,25 @@
+<section>
+  <div class="container">
+    <nav class="pager">
+      <div class="pager-left">
+        <div class="pager-item">
+          {{ if .Paginator.HasPrev }}
+          <a href="{{ .Paginator.Prev.URL }}">Newer</a>
+          {{ else }}
+          <span>Newer</span>
+          {{ end }}
+        </div>
+      </div>
+
+      <div class="pager-right">
+        <div class="pager-item">
+          {{ if .Paginator.HasNext }}
+          <a href="{{ .Paginator.Next.URL }}">Older</a>
+          {{ else }}
+          <span>Older</span>
+          {{ end }}
+        </div>
+      </div>
+    </nav>
+  </div>
+</section>
