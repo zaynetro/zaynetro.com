@@ -138,6 +138,12 @@ nnoremap <space> za
 " }}}
 ```
 
+## Images
+
+This is a nice image
+
+![Image of Yaktocat](https://media.pragprog.com/images/cms/bhtmux-cartoon.jpg)
+
 ## Links
 
 * Home page: [Home page](https://zaynetro.com)

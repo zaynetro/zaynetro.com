@@ -4,18 +4,15 @@
   <div class="container">
     {{ range sort .Paginator.Pages }}
     <article class="post-short">
-      <h3 class="post-date">{{ .Date.Format "January 2, 2006" }}</h3>
+      <h3 class="post-meta">
+        <span class="post-date">{{ .Date.Format "January 2, 2006" }}</span>
+        <span class="post-type">{{ .Type }}</span>
+      </h3>
       <h2 class="post-title">
         <a href="{{ .Permalink }}">{{ .Title }}</a>
         {{ if .Draft }} ::Draft{{ end }}
       </h2>
 
-      <div class="post-content">
-        {{ .Summary | plainify | safeHTML }}
-        {{ if .Truncated }}
-        <a class="post-more" href="{{ .Permalink }}">Read more...</a>
-        {{ end }}
-      </div>
     </article>
     {{ end }}
   </div>

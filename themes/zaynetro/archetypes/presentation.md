@@ -1,5 +1,7 @@
 +++
 author = "Roman Zaynetdinov"
-title = ""
+title = "Some presentation"
 date = {{ .Date }}
+slides = ""
+location = ""
 +++

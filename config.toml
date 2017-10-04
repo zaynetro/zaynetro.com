@@ -8,8 +8,11 @@ theme = "zaynetro"
 
 title = "zaynetro"
 
+paginate = 20
+
 [params]
 
 email = ""
 github = "zaynetro"
+cv = "https://stackoverflow.com/story/zaynetro"
 footer_text = "Roman Zaynetdinov (zaynetro)"

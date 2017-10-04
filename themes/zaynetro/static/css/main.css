@@ -125,6 +125,11 @@ pre code {
   margin: 4rem 0 0 0;
   padding: 0;
   list-style-type: none;
+  display: flex;
+}
+
+.header-external > li {
+  margin-right: 1rem;
 }
 
 .pager {
@@ -181,16 +186,14 @@ pre code {
 
 .icon {
   display: inline-block;
-  width: 1em;
-  height: 1em;
   stroke-width: 0;
   stroke: currentColor;
   fill: currentColor;
+  width: 2rem;
+  height: 2rem;
 }
 
 .icon-github {
-  width: 2rem;
-  height: 2rem;
   color: black;
 }
 
@@ -200,10 +203,26 @@ pre code {
  * Post
  */
 
-.post-date {
+.post-meta {
   line-height: 1.15;
   margin-bottom: 0;
+}
+
+.post-date {
   color: #666;
+  font-size: 1rem;
+  padding-right: 0.3rem;
+}
+
+.post-type {
+  font-size: 11px;
+  border-radius: 5px;
+  background-color: #bbb;
+  color: #fff;
+  padding: 2px 5px;
+}
+
+.post-meta {
   font-size: 1rem;
 }
 
@@ -221,21 +240,10 @@ pre code {
   text-decoration: underline;
 }
 
-.post-content {
-  color: #444;
-}
-
 .post-short {
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
-.post-more {
-  color: #444;
-  display: inline-block;
-  padding: 0 8px;
-}
-
-.post-more:hover {
-  background-color: #ddd;
-  border-radius: 5px;
+.post-content img {
+  max-width: 100%;
 }
