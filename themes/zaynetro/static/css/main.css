@@ -70,6 +70,12 @@ strong {
 .footer {
   margin: 1.5rem 0;
   text-align: center;
+  font-size: 90%;
+}
+
+.footer-separator {
+  padding: 0 0.3rem;
+  color: #ccc;
 }
 
 .header {
