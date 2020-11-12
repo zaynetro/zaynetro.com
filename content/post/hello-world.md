@@ -1,6 +1,6 @@
 +++
 author = "Roman Zaynetdinov"
-date = "2017-04-10T20:02:24+03:00"
+date = 2017-04-10T20:02:24+03:00
 title = "Hello world!"
 +++
 

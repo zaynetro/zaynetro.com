@@ -1,5 +1,0 @@
-+++
-author = "Roman Zaynetdinov"
-title = ""
-date = {{ .Date }}
-+++

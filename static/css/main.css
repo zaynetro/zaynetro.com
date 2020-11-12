@@ -26,13 +26,9 @@ code {
   margin: 0 2px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  background-color: #f8f8f8;
-  color: #42464c;
 }
 
 pre {
-  background-color: #f5f7fa;
-  color: #42464c;
   white-space: pre;
   word-wrap: normal;
   padding: 0.5rem;
