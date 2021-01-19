@@ -7,4 +7,4 @@ help: ## This help.
 
 .PHONY: run
 run: ## Run locally
-	zola serve --port 1313
+	zola serve --drafts --port 1313

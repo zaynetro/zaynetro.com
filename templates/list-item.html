@@ -4,7 +4,7 @@
     <span class="post-type">{{ page.components | first }}</span>
   </h3>
   <h2 class="post-title">
+    {% if page.draft %}<i>Draft: </i>{% endif %}
     <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
-    {% if page.draft %} ::Draft{% endif %}
   </h2>
 </article>
