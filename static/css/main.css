@@ -18,6 +18,7 @@ h1, h2, h3 {
 
 a {
   color: #333;
+  overflow-wrap: break-word;
 }
 
 a:hover {
@@ -268,4 +269,14 @@ strong {
 
 .post-content img {
   max-width: 100%;
+}
+
+.post-content ul {
+  padding-left: 2rem;
+}
+
+@media (max-width: 400px)  {
+  .post-content ul {
+    padding-left: 1rem;
+  }
 }
