@@ -237,7 +237,7 @@ strong {
 
 .table-of-contents {
   position: fixed;
-  top: 24rem;
+  top: 10rem;
   left: calc((100% - var(--container-max-width)) / 2 - 25rem);
   width: 25rem;
   padding: 0;
