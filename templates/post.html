@@ -2,14 +2,40 @@
 
 {% block content %}
 
-<section class="post">
+<div class="post">
   <div class="container">
     <h2 class="post-date">{{ page.date | date(format="%Y-%m-%d") }}</h2>
     <h1 class="post-title">{{ page.title }}</h1>
-    <div class="post-content">
-      {{ page.content | safe }}
-    </div>
   </div>
-</section>
+
+  <section class="post-body">
+    <ul class="table-of-contents">
+      <li>
+        <a href="#">↑ Top</a>
+      </li>
+
+      {% for h1 in page.toc %}
+      <li>
+        <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
+        {% if h1.children %}
+        <ul>
+          {% for h2 in h1.children %}
+          <li>
+            <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <div class="container">
+      <div class="post-content">
+        {{ page.content | safe }}
+      </div>
+    </div>
+  </section>
+</div>
 
 {% endblock content %}
