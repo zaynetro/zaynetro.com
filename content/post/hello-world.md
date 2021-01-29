@@ -1,10 +1,10 @@
 +++
 author = "Roman Zaynetdinov"
 date = 2017-04-10T20:02:24+03:00
-title = "Hello world!"
+title = "Trying out CSS styles"
 +++
 
-This is my first blog post. I will try some features over here.
+I will try some features over here.
 
 * Bold text: **bold text**
 * Italic text: *italic text*
@@ -100,44 +100,6 @@ check_requirements() {
 
 ```
 
-More:
-
-```vim
-" .vimrc file
-" Created by Roman Zaynetdinov
-" //github.com/zaynetro
-"
-
-" Vim options {{{
-
-set modelines=1       " Enable file specific overrides
-"set nocompatible     " Use Vim settings, rather than Vi (not working in neovim)
-set mouse=a           " Enable mouse in all modes
-set background=dark
-set number            " Show line numbers
-set relativenumber    " Show relative line numbers
-set cursorline        " Highlight current line
-set lazyredraw        " Redraw only when need to
-set showmatch         " Highlight matching [{()}]
-set incsearch         " Search as characters are entered
-set ignorecase        " Case-insensitive search
-set hlsearch          " Highlight search results
-set showbreak=⇇       " Char to show on the wrapped lines
-
-" }}}
-
-
-" Key mappings {{{
-
-let mapleader=","     " Set leader key binding
-" Quick escape
-imap jk <ESC>
-" Space open/closes folds
-nnoremap <space> za
-
-" }}}
-```
-
 ## Images
 
 This is a nice image
@@ -148,6 +110,15 @@ This is a nice image
 
 * Home page: [Home page](https://zaynetro.com)
 
+> Below is some long text
+
 Look, just because I don't be givin' no man a foot massage don't make it right for Marsellus to throw Antwone into a glass motherfuckin' house, fuckin' up the way the nigger talks. Motherfucker do that shit to me, he better paralyze my ass, 'cause I'll kill the motherfucker, know what I'm sayin'?
 
 Now that there is the Tec-9, a crappy spray gun from South Miami. This gun is advertised as the most popular gun in American crime. Do you believe that shit? It actually says that in the little book that comes with it: the most popular gun in American crime. Like they're actually proud of that shit.
+
+## Tables
+
+| Title | Description | Notes
+| --- | --- | --- |
+| One | Something here | Great row |
+| Two |  | Not so great |

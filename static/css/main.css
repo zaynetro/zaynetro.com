@@ -78,6 +78,26 @@ strong {
   font-weight: bold;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid rgb(222, 226, 230);
+}
+
+table th {
+  text-align: inherit;
+  border-color: rgb(33, 37, 41);
+}
+
+table tbody tr:hover {
+  background-color: #f0f6ff;
+}
+
 /**
  * ===========================================================================
  * Layout
@@ -237,7 +257,7 @@ strong {
 
 .table-of-contents {
   position: fixed;
-  top: 10rem;
+  top: 30vh;
   left: calc((100% - var(--container-max-width)) / 2 - 25rem);
   width: 25rem;
   padding: 0;
