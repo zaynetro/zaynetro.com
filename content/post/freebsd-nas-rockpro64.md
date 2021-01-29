@@ -1,6 +1,6 @@
 +++
 author = "Roman Zaynetdinov"
-date = 2020-01-25T12:00:00+03:00
+date = 2021-01-25T12:00:00+03:00
 title = "Set up a NAS on RockPro64 with FreeBSD 13"
 draft = false
 +++

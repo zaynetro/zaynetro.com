@@ -1,6 +1,6 @@
 +++
 author = "Roman Zaynetdinov"
-date = 2020-01-19T12:00:00+03:00
+date = 2021-01-19T12:00:00+03:00
 title = "Follow RockPro64 boot process through serial connection"
 draft = false
 +++
