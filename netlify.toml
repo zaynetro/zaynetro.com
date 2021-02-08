@@ -4,7 +4,7 @@ command = "zola build"
 publish = "public"
 
 [context.production.environment]
-ZOLA_VERSION = "0.12.2"
+ZOLA_VERSION = "0.13.0"
 
 
 # Merge requests
@@ -12,7 +12,7 @@ ZOLA_VERSION = "0.12.2"
 command = "zola build --base-url $DEPLOY_PRIME_URL"
 
 [context.deploy-preview.environment]
-ZOLA_VERSION = "0.12.2"
+ZOLA_VERSION = "0.13.0"
 
 
 # Branches
@@ -20,4 +20,4 @@ ZOLA_VERSION = "0.12.2"
 command = "zola build --base-url $DEPLOY_PRIME_URL"
 
 [context.branch-deploy.environment]
-ZOLA_VERSION = "0.12.2"
+ZOLA_VERSION = "0.13.0"
