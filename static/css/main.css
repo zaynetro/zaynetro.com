@@ -107,6 +107,7 @@ table tbody tr:hover {
   margin: 0 auto;
   max-width: var(--container-max-width);
   padding: 0 0.3rem;
+  box-sizing: border-box;
 }
 
 .footer {
@@ -255,26 +256,53 @@ table tbody tr:hover {
  * Post
  */
 
-.table-of-contents {
-  position: fixed;
-  top: 30vh;
-  left: calc((100% - var(--container-max-width)) / 2 - 25rem);
-  width: 25rem;
-  padding: 0;
+.post-body {
+  display: flex;
 }
 
-@media (max-width: 110rem)  {
+.table-of-contents {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0%;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  box-sizing: border-box;
+  padding-top: 2rem;
+}
+
+.table-of-contents > ul {
+  padding-left: 1.5rem;
+  max-width: 25rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.post-body .blank {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0%;
+}
+
+@media (max-width: 88rem)  {
+  .post-body {
+    display: block;
+  }
+
   .table-of-contents {
     position: static;
-    width: auto;
+    padding-top: 0;
+  }
+
+  .table-of-contents > ul {
     max-width: var(--container-max-width);
-    margin: 0 auto;
+    padding-top: 0;
     padding-left: 3rem;
   }
 }
 
 @media (max-width: 400px)  {
-  .table-of-contents {
+  .table-of-contents > ul {
     padding-left: 1rem;
   }
 }
