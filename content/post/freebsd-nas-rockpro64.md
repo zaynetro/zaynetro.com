@@ -110,10 +110,21 @@ Snapshots will be available under `.zfs` directory for each dataset.
     14       0 * * 7 root /usr/local/sbin/zfs-auto-snapshot weekly    4
     28       0 1 * * root /usr/local/sbin/zfs-auto-snapshot monthly  12
     ```
+    
+    > Ideally, you would use [periodic](https://www.freebsd.org/cgi/man.cgi?query=periodic&sektion=8&manpath=freebsd-release-ports) instead.
 
 1. Enable regular snapshotting for all datasets: `zfs set com.sun:auto-snapshot=true nas`
 1. List all snapshots and used space: `zfs list -rt all`
 1. Rollback to snapshot: `zfs rollback nas/roman@2021-01-22`
+
+I went with running everything from monit.
+
+```
+check program zfs-auto-snapshot-frequent with path "/usr/local/sbin/zfs-auto-snapshot frequent 4"
+   if status != 0 then alert
+   every "15,30,45 * * * *"
+   group cron
+```
 
 
 ### Scrubbing
@@ -180,7 +191,49 @@ Once in a while you want ZFS to go through your disks and verify that data block
 
 ## Monitoring and email alerting
 
-TODO
+I decided to go with [monit](https://www.mmonit.com/monit/) for monitoring and alerting.
+
+1. `pkg install monit`
+1. Copy sample configuration `cp /usr/local/etc/monitrc.sample /usr/local/etc/monitrc`
+1. `service monit enable && service monit start`
+1. Check that config is correct `monit -t`
+1. Reload config `monit reload`
+1. View summary in the terminal `monit summary`
+1. View summary in the browser http://localhost:2812 (default credentials admin/monit)
+
+Sample script to check for CPU temperature:
+
+```sh
+#!/usr/bin/env sh
+
+set -e
+
+# Check CPU temperature (located: /etc/monit/scripts/cpu-temp.sh)
+
+TEMP=`sysctl -n hw.temperature.CPU`
+echo $TEMP
+VALUE=`echo $TEMP | cut -c1-2`
+exit $VALUE
+```
+
+Then you can set up an alert in monit that will check for the exit code. It will alert if temperature is higher than 60 degrees. 
+Notice that we also print to the stdout so that monit could show that value in the web UI.
+
+```
+# CPU temperature
+check program CPU-temp with path "/etc/monit/scripts/cpu-temp.sh"
+   if status > 60 then alert
+   if status < 10 then alert
+   group temperature
+```
+
+![CPU alerting example](/images/monit-cpu-example.png)
+
+> If you use monit to run cron tasks then set
+> `set daemon  35   # check services at 35 seconds intervals`
+> so that cron tasks could run once at a specific minute.
+
+
 ### Temperatures
 
 * Board temperature `sysctl hw.temperature` or `sysctl -a | grep temp`
@@ -200,12 +253,6 @@ Access your NAS from anywhere without exposing it to the public internet.
 1. Accept this device in [the web interface](https://my.zerotier.com/network)
 
 
-## Future improvements
-
-* [ ] Migrate from cron to [periodic](https://www.freebsd.org/cgi/man.cgi?query=periodic&sektion=8&manpath=freebsd-release-ports)
-* [ ] Write up about monitoring and emails
-
-
 ## References
 
 * [FreeBSD Handbook](https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/index.html)
@@ -216,3 +263,4 @@ Access your NAS from anywhere without exposing it to the public internet.
 * [FreeBSD Samba](https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/network-samba.html)
 * [ArchWiki SMB](https://wiki.archlinux.org/index.php/ZFS#SMB)
 * [Samba config](http://www.freebsdwiki.net/index.php/Samba%2C_Configuration)
+* [Monit manual](https://www.mmonit.com/monit/documentation/monit.html)
