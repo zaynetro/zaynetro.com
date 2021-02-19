@@ -4,4 +4,5 @@ sort_by = "date"
 template = "list.html"
 page_template = "presentation.html"
 paginate_by = 20
+transparent = true
 +++

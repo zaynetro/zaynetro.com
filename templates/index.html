@@ -2,17 +2,9 @@
 
 {% block content %}
 <section class="posts">
-  <div class="container">
-    {% set_global pages = [] %}
-    {% for subname in section.subsections %}
-    {% set s = get_section(path=subname) %}
-    {% set_global pages = pages | concat(with=s.pages) %}
-    {% endfor %}
-
-    {# Atm we don't paginate pages on the index page #}
-    {# Zola's paginator works per section. See paginate_by attribute #}
-    {% for page in pages | sort(attribute="date") | reverse %}
-    {% include "list-item.html" %}
+    <div class="container">
+    {% for page in paginator.pages %}
+      {% include "list-item.html" %}
     {% endfor %}
   </div>
 </section>
