@@ -13,7 +13,8 @@ https://www.zaynetro.com/
 1. Posts go to: `content/posts/`
 1. Presentations go to: `content/presentation/`
 
+Home page uses `paginate_by` from  `content/_index.md` to paginate both posts and presentations. This requires setting `transparent = true` for both subsections.
 
 ## Misc
 
-Theme inspiration: https://github.com/tanksuzuki/hemingway
+Original theme inspiration: https://github.com/tanksuzuki/hemingway
