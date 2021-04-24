@@ -33,6 +33,34 @@ I decided to give up my attempts with configuring NAS on rockpro64 and just go w
 * Set up SMART test. Choose Short type.
 
 
+## Import data from NTFS device
+
+I have an external HDD that I wanted to import data from. You can easily do this from Storage -> Import Disk but this will import everything from your disk into specified directory. 
+
+I wanted to copy only some directories so had to do this process manually.
+
+```sh
+# Load fuse Kernel module
+kldload fuse
+
+# Find your device 
+geom disk list
+# Find your partition
+geom show da0
+
+# Mount the device to /media in read-only mode
+ntfs-3g /dev/da0s1 /media -o ro
+
+# Copy all files from /media/photos/* into /mnt/roman/photos directory
+# Notice the tailing slash. It is important to have it otherwise rsync
+# will copy the directory and not just the files inside of it.
+rsync /media/photos/ /mnt/roman/photos
+
+# Unmount the device
+umount /dev/da0s1
+```
+
+
 ## Tailscale
 
 I want to be able to access my NAS from outside of home network. ZeroTier and Tailscale seem to suit my use case. I have decided to give Tailscale a go this time.
@@ -104,3 +132,4 @@ and then watch the logs in `/var/log/messages`.
 
 * [https://kevin.deldycke.com/2020/10/truenas-configuration/](https://kevin.deldycke.com/2020/10/truenas-configuration/)
 * [https://tailscale.com/kb/1097/install-opnsense/](https://tailscale.com/kb/1097/install-opnsense/)
+* [https://kflu.github.io/2018/02/03/2018-02-03-freebsd-ntfs/](https://kflu.github.io/2018/02/03/2018-02-03-freebsd-ntfs/)
