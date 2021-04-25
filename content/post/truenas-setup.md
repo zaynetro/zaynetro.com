@@ -46,7 +46,7 @@ kldload fuse
 # Find your device 
 geom disk list
 # Find your partition
-geom show da0
+gpart show da0
 
 # Mount the device to /media in read-only mode
 ntfs-3g /dev/da0s1 /media -o ro
@@ -128,8 +128,27 @@ tailscaled_syslog_output_enable="YES"
 and then watch the logs in `/var/log/messages`.
 
 
+## Issues
+
+### SMB share browsing is slow on macOS
+
+Prevent macOS from reading .DS_Store files: [see the guide](https://support.apple.com/en-us/HT208209)
+
+```sh
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
+```
+
+then log out and log back in.
+
+
+### Time machine doesn't see SMB share
+
+For Time machine to see your SMB share make sure to select *Multi-user time machine* in the Purpose section when creating a share.
+
+
 ## References
 
 * [https://kevin.deldycke.com/2020/10/truenas-configuration/](https://kevin.deldycke.com/2020/10/truenas-configuration/)
 * [https://tailscale.com/kb/1097/install-opnsense/](https://tailscale.com/kb/1097/install-opnsense/)
 * [https://kflu.github.io/2018/02/03/2018-02-03-freebsd-ntfs/](https://kflu.github.io/2018/02/03/2018-02-03-freebsd-ntfs/)
+* [https://old.reddit.com/r/MacOS/comments/lh0yjc/configure_a_truenas_core_share_as_a_time_machine/](https://old.reddit.com/r/MacOS/comments/lh0yjc/configure_a_truenas_core_share_as_a_time_machine/)
