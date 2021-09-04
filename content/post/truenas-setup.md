@@ -82,7 +82,7 @@ TrueNAS resets many directories on reboot so I had to create a script that would
     ```
 * Log in `tailscale up`. This is an interactive process so should be done manually once.
 
-* Store [tailscale rc.d](https://svnweb.freebsd.org/ports/head/security/tailscale/files/tailscaled.in?view=markup) in `/mnt/nas/custom/tailscaled.service`
+* Store [tailscale rc.d](https://cgit.freebsd.org/ports/tree/security/tailscale/files/tailscaled.in) in `/mnt/nas/custom/tailscaled.service`
     * I had to replace `%%PREFIX%%` with `/usr/local` though
 * Create a setup script `/mnt/nas/custom/setup-tailscale.sh`:
     ```sh
