@@ -108,6 +108,7 @@ table tbody tr:hover {
   margin: 0 auto;
   max-width: var(--container-max-width);
   box-sizing: border-box;
+  flex-grow: 1;
 }
 
 .footer {
