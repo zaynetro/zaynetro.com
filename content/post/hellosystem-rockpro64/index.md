@@ -183,7 +183,7 @@ startx
 start-hello
 ```
 
-{{ responsive_img(path="images/helloSystem-rockpro64.png" alt="helloSystem on rockpro64") }}
+{{ responsive_img(path="post/hellosystem-rockpro64/helloSystem-rockpro64.png" alt="helloSystem on rockpro64") }}
 
 
 ### Changes from the original guide

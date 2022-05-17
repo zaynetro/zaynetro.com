@@ -12,7 +12,7 @@ This is my personal guide on how to set up a NAS with FreeBSD 13 and ZFS on Pine
 1. Download a FreeBSD 13 image for rockpro64 board (under [aarch64](https://download.freebsd.org/ftp/snapshots/arm64/aarch64/ISO-IMAGES/13.0/) section)
 1. Write an image to a micro SD card ([BSD install](https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/bsdinstall-pre.html))
 1. A white LED should indicate that OS has successfully started.
-    * If white LED is off this indicates that OS could not boot. Your best option is to [debug boot process with serial connection](@/post/uart-rockpro64.md).
+    * If white LED is off this indicates that OS could not boot. Your best option is to [debug boot process with serial connection](@/post/uart-rockpro64/index.md).
     * HDMI output should also be available nowadays. If you screen's resolution is 4K or larger than FreeBSD won't boot.
 1. You can connect to your device with SSH since FreeBSD starts a SSH server by default. Users:
     * root - root

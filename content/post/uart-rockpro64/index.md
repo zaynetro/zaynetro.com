@@ -9,7 +9,7 @@ Serial console device could be used to observe boot process from early stages. T
 
 ## RockPro64
 
-{{ responsive_img(path="images/rockpro64.jpg" alt="RockPro64 board") }}
+{{ responsive_img(path="post/uart-rockpro64/rockpro64.jpg" alt="RockPro64 board") }}
 
 Next to each GPIO pin there is a number. Connect *GND* to pin 6, *TXD* to pin 8 and *RXD* to pin 10. Configure serial device to run in *3.3V* mode.
 
