@@ -1,6 +1,6 @@
 +++
 author = "Roman Zaynetdinov"
-date = 2022-06-17T09:00:00+03:00
+date = 2022-05-17T09:00:00+03:00
 title = "Missing plugins on Fedora 36 when running podman-compose"
 +++
 
