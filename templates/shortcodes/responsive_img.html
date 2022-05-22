@@ -1,11 +1,20 @@
-{% set image_800 = resize_image(path=path, width=800, op='fit_width') %}
-{% set image_500 = resize_image(path=path, width=500, op='fit_width') %}
+{% set meta = get_image_metadata(path=path) %}
 <a href="{{ get_url(path=path) }}" class="img-link">
     <picture>
-        <source media="(max-width: 500px)" srcset="{{ image_500.url }}" />
+        {% if meta.width > 500 %}
+          {% set image_500 = resize_image(path=path, width=500, op='fit_width') %}
+          <source media="(max-width: 500px)" srcset="{{ image_500.url }}" />
+        {% endif %}
+
+        {% if meta.width > 800 %}
+          {% set image_800 = resize_image(path=path, width=800, op='fit_width') %}
+          <img src="{{ image_800.url }}" loading="lazy" alt="{{ alt }}" />
+        {% else %}
+          <img src="{{ get_url(path=path) }}" loading="lazy" alt="{{ alt }}" />
+        {% endif %}
+
         {# Once zola supports webp we can also do this: #}
         {# At some point zola will suport AVIF content type as well #}
         {# <source type="image/webp" srcset="pyramid.webp"> --> #}
-        <img src="{{ image_800.url }}" loading="lazy" alt="{{ alt }}" />
     </picture>
 </a>

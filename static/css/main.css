@@ -69,7 +69,7 @@ pre code {
 }
 
 blockquote {
-  margin: 0.5rem 1rem 0.5rem 0;
+  margin: 0.5rem 0 0.5rem 0;
   padding: 0.1rem 1rem 0.1rem 1rem;
   border-left: 10px solid #6ea8fe;
   background-color: #f0f6ff;

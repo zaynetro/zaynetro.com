@@ -7,6 +7,8 @@ draft = false
 
 ## My Developer Story
 
+> UPD (2022-05-22): Other people pointed to me that they have received three reminders from Stack Overflow about them discontinuing Developer Story feature. I have checked my email and couldn't find any of them :/ It could be I simply deleted them since I couldn't remember what "Developer Story" means. It could be I received them in my spam folder or never received at all. Sadly, I will never know the truth now. It has been more than 30 days and I don't keep deleted emails for longer than that.
+
 I've used to have my resume on LinkedIn but since they started pushing more towards a social network for "professionals" and requiring an account I've started looking elsewhere. Around then Stack Overflow presented Developer Story and some time after I gave it a go.
 
 I really liked Developer Story and decided that it will be my main CV and LinkedIn page will just refer to it. *(I had to keep LinkedIn account because without it you can't access other people's profiles... This gets really annoying especially when you need to access resumes of candidates before interviewing them.)*
