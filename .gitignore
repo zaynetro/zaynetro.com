@@ -3,3 +3,5 @@ public
 
 # Cached resized images
 static/processed_images
+
+.DS_Store

@@ -124,13 +124,17 @@ table tbody tr:hover {
 
 .header {
   margin: 2rem auto;
-  display: flex;
-  width: 26rem;
   max-width: 100%;
+  display: flex;
+}
+
+.header-logo {
 }
 
 .navigation {
-  margin-left: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .header-logo > a {
@@ -138,13 +142,14 @@ table tbody tr:hover {
 }
 
 .header-logo img {
-  margin: 4px 3px 0 3px;
+  margin: 4px 3px -4px 3px;
+  width: 100px;
 }
 
 .header-home {
+  margin: 0 1rem;
   position: relative;
   border: 3px solid #ddd;
-  /*padding: 0.5rem;*/
   border-radius: 1rem;
 }
 
@@ -186,7 +191,7 @@ table tbody tr:hover {
   border-color: #fff transparent transparent #fff;
 }
 
-.header-home > a > h1 {
+.header-home h2 {
   margin: 0;
 }
 
@@ -202,6 +207,39 @@ table tbody tr:hover {
 
 .header-external a {
   font-size: 1.1rem;
+}
+
+@media (max-width: 480px) {
+  .header-logo img {
+    width: 80px;
+  }
+
+  .header-home::before,
+  .header-home::after {
+    border: 0;
+  }
+
+  .header-home {
+    border: 0;
+    font-size: 16px;
+  }
+
+  .header-home a {
+    padding: 0;
+  }
+
+  .header-home a::after {
+    display: none;
+  }
+
+  .header-external {
+    margin-top: 0.5rem;
+  }
+
+  .navigation {
+    margin-left: 2rem;
+    display: block;
+  }
 }
 
 .pager {
@@ -274,6 +312,7 @@ table tbody tr:hover {
 
 .table-of-contents > ul {
   padding-left: 1.5rem;
+  padding-right: 0.5rem;
   max-width: 25rem;
   margin: 0 auto;
   box-sizing: border-box;
@@ -285,7 +324,7 @@ table tbody tr:hover {
   flex-basis: 0%;
 }
 
-@media (max-width: 88rem)  {
+@media (max-width: 80rem)  {
   .post-body {
     display: block;
   }
