@@ -137,6 +137,11 @@ table tbody tr:hover {
   background-color: var(--table-hover-color);
 }
 
+pre > code > table > tbody > tr > td {
+  padding: 0;
+  border: 0;
+}
+
 /**
  * ===========================================================================
  * Layout
