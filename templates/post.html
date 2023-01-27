@@ -32,14 +32,20 @@
       </ul>
     </div>
 
-    <div class="container">
+    <main class="container">
       <div class="post-content">
         {{ page.content | safe }}
       </div>
-    </div>
+
+      <div class="like-box">
+        <button type="button" class="like-btn" id="like-btn">Like</button>
+      </div>
+    </main>
 
     <div class="blank"></div>
   </section>
 </div>
+
+<script type="module" src="/js/like-btn.js"></script>
 
 {% endblock content %}

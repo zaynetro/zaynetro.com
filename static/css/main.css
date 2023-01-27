@@ -15,6 +15,10 @@
   --post-tag-bg-color: #6c757d;
   --pager-bg-color: #eee;
   --table-hover-color: #f0f6ff;
+
+  --like-border-color: #9999ac;
+  --like-border-active-color: #826e30;
+  --like-border-inset-shadow-color: #ebebf6;
 }
 
 
@@ -32,6 +36,8 @@
     --post-tag-bg-color: #373c40;
     --pager-bg-color: #444;
     --table-hover-color: #333;
+
+    --like-border-inset-shadow-color: #9999ac;
   }
 
   .header-home > a::after {
@@ -460,4 +466,51 @@ pre > code > table > tbody > tr > td {
   .post-content ol {
     padding-left: 1rem;
   }
+}
+
+.like-box {
+  height: 40px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.like-btn {
+  padding-top: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 10px;
+  border: 0;
+  position: relative;
+  border-radius: 3px;
+  z-index: 201;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.like-btn:active,
+.like-btn:disabled {
+  padding-bottom: 6px;
+}
+
+.like-btn::before {
+  content: '';
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1px solid var(--like-border-color);
+  /* First shadow is under the button. Second is that lane inside */
+  box-shadow: 0 4px 3px 0 rgba(20,20,96,.1), inset 0 -5px 0 0 var(--like-border-inset-shadow-color);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.like-btn:active::before,
+.like-btn:disabled::before {
+  background-color: var(--a-hover-color);
+  border-color: var(--like-border-active-color);
+  box-shadow: none;
 }
