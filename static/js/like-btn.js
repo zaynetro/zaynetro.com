@@ -4,9 +4,9 @@ const btn = document.querySelector('#like-btn');
 function readLocation() {
   const p = location.pathname;
   if (p.endsWith('/')) {
-    return p + '/';
-  } else {
     return p;
+  } else {
+    return p + '/';
   }
 }
 
