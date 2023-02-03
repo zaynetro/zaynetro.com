@@ -6,13 +6,12 @@
   --bg-color: #fff;
   --text-color: #333;
   --title-color: #222;
-  --date-color: #444;
+  --date-color: #676767;
   --a-hover-color: #ffe69c;
   --code-bg-color: #f7f7f7;
   --code-border-color: #ddd;
   --quote-bg-color: #f0f6ff;
   --target-bg-color: #fff5f6;
-  --post-tag-bg-color: #6c757d;
   --pager-bg-color: #eee;
   --table-hover-color: #f0f6ff;
 
@@ -36,7 +35,6 @@
     --code-border-color: #999;
     --quote-bg-color: #323335;
     --target-bg-color: #373434;
-    --post-tag-bg-color: #373c40;
     --pager-bg-color: #444;
     --table-hover-color: #333;
 
@@ -410,17 +408,8 @@ pre > code > table > tbody > tr > td {
 .post-date {
   display: inline-block;
   color: var(--date-color);
-  font-size: 1rem;
+  font-size: 15px;
   padding-right: 0.3rem;
-}
-
-.post-type {
-  display: inline-block;
-  font-size: 12px;
-  border-radius: 5px;
-  background-color: var(--post-tag-bg-color);
-  color: #fff;
-  padding: 0.15rem 0.5rem;
 }
 
 .post-meta {
@@ -438,7 +427,7 @@ pre > code > table > tbody > tr > td {
 }
 
 .post-short {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .post-content img {
