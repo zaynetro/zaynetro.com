@@ -46,6 +46,21 @@
   </section>
 </div>
 
+{% if page.extra.with_mermaid %}
+<script defer type="module">
+ import mermaid from '/js/mermaid@9.3.0.mjs';
+
+ let theme = 'default';
+ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+   theme = 'dark';
+ }
+
+ mermaid.initialize({
+   startOnLoad: true,
+   theme: theme,
+ });
+</script>
+{% endif %}
 <script defer type="module" src="/js/like-btn.js"></script>
 
 {% endblock content %}

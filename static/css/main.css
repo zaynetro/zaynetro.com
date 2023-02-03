@@ -20,6 +20,8 @@
   --like-border-active-color: #826e30;
   --like-border-hover-color: #f3f3f3;
   --like-border-inset-shadow-color: #dde;
+
+  --mermaid-label-color: #555;
 }
 
 
@@ -40,6 +42,8 @@
 
     --like-border-hover-color: #222;
     --like-border-inset-shadow-color: #666;
+
+    --mermaid-label-color: #bbb;
   }
 
   .header-home > a::after {
@@ -441,6 +445,11 @@ pre > code > table > tbody > tr > td {
   max-width: 100%;
 }
 
+.post-content > p > img {
+  margin: 0 auto;
+  display: block;
+}
+
 .post-content a.img-link {
   background-color: inherit;
   padding: 0;
@@ -503,4 +512,35 @@ pre > code > table > tbody > tr > td {
   background-color: var(--a-hover-color);
   border-color: var(--like-border-active-color);
   box-shadow: 0 0px 0px 0 rgba(20,20,96,.1), inset 0 0 0 0 var(--like-border-inset-shadow-color);
+}
+
+.footnote-definition:first-of-type {
+  border-top: 1px solid #eee;
+}
+
+.footnote-definition {
+  display: flex;
+}
+
+.footnote-definition:target {
+  background-color: var(--target-bg-color);
+}
+
+.footnote-definition p {
+  margin: 0.2rem;
+}
+
+.mermaid-block > pre {
+  margin-bottom: 0;
+}
+
+.mermaid-block svg {
+  margin: 0 auto;
+  display: block;
+}
+
+.mermaid-label {
+  text-align: center;
+  color: var(--mermaid-label-color);
+  font-size: 14px;
 }
