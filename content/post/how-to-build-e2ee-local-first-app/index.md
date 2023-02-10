@@ -2,6 +2,7 @@
 author = "Roman Zaynetdinov"
 date = 2023-02-03T12:00:00+03:00
 title = "How to almost build an E2EE local-first app"
+description = "A few years back I started asking myself questions: Where do I want my files to be stored? Will I be able to access my files in 10 years time? Seeing all these challenges I have decided to try to build a mobile-first application that will be end-to-end encrypted, support offline editing and have an easy sharing capabilities."
 draft = false
 
 [extra]

@@ -5,9 +5,13 @@
   {% if page and page.title %}
   <title>{{ page.title }} | {{ config.title }}</title>
   <meta property='og:title' content="{{ page.title }} | {{ config.title }}">
+    {% if page.description %}
+    <meta name="description" content="{{ page.description }}">
+    {% endif %}
   {% else %}
   <title>{{ config.title }}</title>
   <meta property='og:title' content="{{ config.title }}">
+  <meta name="description" content="{{ config.description }}">
   {% endif %}
   <link rel="icon" href="/favicon.png" />
   <link rel="stylesheet" href="/css/main.css" />
@@ -18,7 +22,7 @@
         <div class="header">
           <div class="header-logo">
             <a href="/">
-              <img src="/images/logo.png" alt="Racoon" loading="lazy" />
+              <img src="/images/logo.png" alt="Racoon" loading="lazy" width="100" />
             </a>
           </div>
 

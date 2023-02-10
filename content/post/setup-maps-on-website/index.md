@@ -2,6 +2,7 @@
 author = "Roman Zaynetdinov"
 date = 2023-02-09T12:00:00+03:00
 title = "Set up maps on your website"
+description = "If you are like me you may needed to add a map on a website. This seems not so trivial to do!"
 draft = false
 +++
 
