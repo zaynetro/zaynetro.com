@@ -533,3 +533,16 @@ pre > code > table > tbody > tr > td {
   color: var(--mermaid-label-color);
   font-size: 14px;
 }
+
+.img-block-list {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.img-block-label {
+  padding-top: 8px;
+  text-align: center;
+  color: var(--mermaid-label-color);
+  font-size: 14px;
+}
