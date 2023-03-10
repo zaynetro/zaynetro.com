@@ -449,8 +449,8 @@ pre > code > table > tbody > tr > td {
   padding-left: 2rem;
 }
 
-.post-content h2,
-.post-content h3 {
+.post-content > h2,
+.post-content > h3 {
   padding: 0.2rem 0 0.2rem 0.7rem;
   border-left: 4px solid #adb5bd;
 }
@@ -545,4 +545,67 @@ pre > code > table > tbody > tr > td {
   text-align: center;
   color: var(--mermaid-label-color);
   font-size: 14px;
+}
+
+.poll {
+  display: inline-block;
+  background-color: var(--quote-bg-color);
+  padding: 0 16px 16px 16px;
+}
+
+.poll h4 {
+  margin: 0;
+  padding: 16px 0;
+}
+
+.poll ul {
+  padding: 0;
+  margin: 0 16px;
+  list-style-type: circle;
+  list-style-type: "○";
+}
+
+.poll li {
+  padding: 4px 0 4px 8px;
+}
+
+.poll li.voted {
+  list-style-type: "✓";
+}
+
+.draw-by-zaynetro {
+  display: flex;
+}
+
+.draw-editor {
+  width: 65%;
+}
+
+.draw-output {
+  width: 35%;
+}
+
+.draw-error {
+  color: #c00;
+  padding: 0 16px;
+}
+
+.draw-editor > textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px;
+  font-family: "Roboto Mono", monospace;
+  font-size: 12px;
+  height: 250px;
+}
+
+@media (max-width: 480px) {
+  .draw-by-zaynetro {
+    display: block;
+  }
+
+  .draw-editor,
+  .draw-output {
+    width: 100%;
+  }
 }

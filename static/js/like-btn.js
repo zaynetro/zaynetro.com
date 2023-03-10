@@ -54,7 +54,7 @@ function showThanks() {
 function getItem(key) {
   try {
     return localStorage.getItem(key);
-  } catch (e) {
+  } catch (_e) {
     // Local storage might be disabled in private windows.
     return sessionStorage.getItem(key);
   }
@@ -63,8 +63,46 @@ function getItem(key) {
 function setItem(key, value) {
   try {
     return localStorage.setItem(key, value);
-  } catch (e) {
+  } catch (_e) {
     // Local storage might be disabled in private windows.
     return sessionStorage.getItem(key, value);
   }
+}
+
+function getPollBtnKey(btn) {
+  return encodeURIComponent('voted-' + btn.dataset.pollid + '-' + btn.innerText);
+}
+
+function hasVoted(btn) {
+  try {
+    const key = getPollBtnKey(btn);
+    const value = getItem(key);
+    return value === 'true';
+  } catch (e) {
+    console.error('Nope...', e);
+    return false;
+  }
+}
+
+const pollButtons = document.querySelectorAll('.poll button');
+pollButtons.forEach((btn) => {
+  if (hasVoted(btn)) {
+    showVotedText(btn);
+  } else {
+    btn.addEventListener('click', () => {
+      try {
+        const key = getPollBtnKey(btn);
+        setItem(key, 'true');
+        showVotedText(btn);
+        window.plausible(btn.dataset.pollid, { props: { page: path, answer: btn.innerText } });
+      } catch (e) {
+        console.error('Nope...', e);
+      }
+    });
+  }
+});
+
+function showVotedText(btn) {
+  btn.parentElement.classList.add('voted');
+  btn.parentElement.innerText = btn.innerText;
 }

@@ -1,0 +1,140 @@
+<article class="draw-by-zaynetro">
+  <div class="draw-editor">
+    <textarea id="draw-editor" name="draw-editor">
+import {
+  Color,
+  Drawing,
+} from "https://draw-zaynetro.fly.dev/static/painter.ts";
+
+const d = new Drawing();
+d.border(Color.Blue);
+d.setPixel(3, 3, Color.Red);
+d.setPixel(3, 4, Color.Red);
+d.setPixel(3, 5, Color.Red);
+d.setPixel(3, 7, Color.Red);
+
+export default d.complete();
+    </textarea>
+
+    <button type="button" id="draw-sample-btn">Try another sample</button>
+  </div>
+  <div class="draw-output" id="draw-output">
+  </div>
+</article>
+
+<script>
+ const editor = document.querySelector('#draw-editor');
+ const output = document.querySelector('#draw-output');
+ const btn = document.querySelector('#draw-sample-btn');
+
+ setTimeout(() => draw(editor.value), 300);
+
+ async function draw(code) {
+   const res = await fetch('https://draw-zaynetro.fly.dev/api/draw', {
+     method: 'POST',
+     body: code,
+     mode: 'cors',
+     headers: {
+       'content-type': 'text/plain',
+     }
+   });
+
+   const svg = await res.text();
+   if (res.ok) {
+     setDrawSvg(svg);
+   } else {
+     setDrawErr(svg);
+   }
+ }
+
+ function clearDrawSvg() {
+   output.textContent = '';
+ }
+
+ function setDrawSvg(svg) {
+   clearDrawSvg();
+   const parser = new DOMParser();
+   const doc = parser.parseFromString(svg, "image/svg+xml");
+   output.appendChild(doc.documentElement);
+ }
+
+ function setDrawErr(err) {
+   const el = document.createElement('div')
+   el.classList.add('draw-error');
+   el.textContent = err;
+   output.appendChild(el);
+ }
+
+ let drawQueued = false;
+
+ editor.addEventListener('input', () => {
+   if(drawQueued) {
+     return;
+   }
+
+   drawQueued = true;
+   setTimeout(() => {
+     drawQueued = false;
+     draw(editor.value);
+   }, 250);
+ });
+
+ btn.addEventListener('click', () => {
+     editor.value = `
+import {
+  Color,
+  Drawing,
+} from "https://draw-zaynetro.fly.dev/static/painter.ts";
+
+const d = new Drawing();
+d.border(Color.Green);
+
+// First letter
+d.vl(2, 2, 6, Color.Black);
+d.setPixel(3, 2, Color.Black);
+d.setPixel(4, 3, Color.Black);
+d.vl(4, 4, 2, Color.Black);
+d.setPixel(4, 6, Color.Black);
+d.setPixel(3, 7, Color.Black);
+
+// Second letter
+d.vl(6, 2, 6, Color.Black);
+d.setPixel(7, 2, Color.Black);
+d.setPixel(8, 2, Color.Black);
+d.setPixel(7, 4, Color.Black);
+d.setPixel(7, 7, Color.Black);
+d.setPixel(8, 7, Color.Black);
+
+// Third letter
+d.vl(10, 2, 6, Color.Black);
+d.setPixel(11, 4, Color.Black);
+d.setPixel(12, 5, Color.Black);
+d.vl(13, 2, 6, Color.Black);
+
+// Fourth letter
+d.vl(15, 3, 4, Color.Black);
+d.setPixel(16, 2, Color.Black);
+d.setPixel(16, 7, Color.Black);
+d.vl(17, 3, 4, Color.Black);
+
+// Icon
+d.setPixel(10, 12, Color.Red);
+
+// Icon: left half
+d.setPixel(9, 11, Color.Red);
+d.setPixel(8, 12, Color.Red);
+d.setPixel(8, 13, Color.Red);
+d.setPixel(9, 14, Color.Red);
+d.setPixel(10, 15, Color.Red);
+
+// Icon: right half
+d.setPixel(11, 11, Color.Red);
+d.setPixel(12, 12, Color.Red);
+d.setPixel(12, 12, Color.Red);
+d.setPixel(12, 13, Color.Red);
+d.setPixel(11, 14, Color.Red);
+
+export default d.complete();`.trim();
+     draw(editor.value);
+ });
+</script>
