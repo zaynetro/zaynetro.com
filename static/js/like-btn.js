@@ -94,7 +94,7 @@ pollButtons.forEach((btn) => {
         const key = getPollBtnKey(btn);
         setItem(key, 'true');
         showVotedText(btn);
-        window.plausible(btn.dataset.pollid, { props: { page: path, answer: btn.innerText } });
+        window.plausible(btn.dataset.pollid, { props: { answer: btn.innerText } });
       } catch (e) {
         console.error('Nope...', e);
       }
