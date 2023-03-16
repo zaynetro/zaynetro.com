@@ -48,7 +48,7 @@
 
 {% if page.extra.with_mermaid %}
 <script defer type="module">
- import mermaid from '/js/mermaid@9.3.0.mjs';
+ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 
  let theme = 'default';
  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {

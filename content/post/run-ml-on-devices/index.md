@@ -4,6 +4,9 @@ date = 2023-02-27T12:00:00+03:00
 title = "Run ML models locally on devices or in the browser"
 description = "You can run machine learning models on user devices. Models can analyze the data without sending it to the server."
 draft = false
+
+[extra]
+preview_image = "/post/run-ml-on-devices/onnx_logo.png"
 +++
 
 ## Intro

@@ -3,6 +3,9 @@ author = "Roman Zaynetdinov"
 date = 2023-02-04T12:00:00+03:00
 title = "Support light and dark color themes in CSS"
 draft = false
+
+[extra]
+preview_image = "post/light-dark-modes-css/css_logo.png"
 +++
 
 Do you want you website to look different depending on user's color preference. This website supports both light and dark modes. Try changing the setting and see this site updating live.

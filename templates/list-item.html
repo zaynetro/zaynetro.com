@@ -1,4 +1,15 @@
 <article class="post-short">
+  {% if page.extra.preview_image %}
+  <div class="post-image">
+    {% set path = page.extra.preview_image %}
+    {% set image_1x = resize_image(path=path, width=60, op='fit_width', format='webp') %}
+    {% set image_2x = resize_image(path=path, width=120, op='fit_width', format='webp') %}
+    <img src="{{ image_2x.url }}" srcset="{{ image_1x.url }}, {{ image_2x.url }} 2x" loading="lazy" />
+  </div>
+  {% else %}
+  <div class="post-blank-image"></div>
+  {% endif %}
+  <div class="post-text">
   <h3 class="post-meta">
     <span class="post-date">{{ page.date | date(format="%Y-%m-%d") }}</span>
   </h3>
@@ -6,4 +17,5 @@
     {% if page.draft %}<i>Draft: </i>{% endif %}
     <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
   </h2>
+  </div>
 </article>

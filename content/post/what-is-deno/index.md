@@ -4,9 +4,16 @@ date = 2023-03-06T12:00:00+03:00
 title = "What is Deno?"
 description = "Deno is an alternative runtime for JavaScript. It comes with TypeScript support and a sandbox out of the box."
 draft = false
+
+[extra]
+preview_image = "/post/what-is-deno/deno_hr.png"
 +++
 
 [Deno](https://deno.land) is an alternative JavaScript runtime that uses V8 and Rust. Think of Node.js but with some different design decisions. Deno comes with built-in support for TypeScript, ES modules, test runner, code formatter, LSP server and sandboxed execution.
+
+{% labeled_img(label="Deno logo") %}
+<img src="./deno_hr.png" alt="Deno logo" width="256" loading="lazy" />
+{% end %}
 
 
 ## Basic example

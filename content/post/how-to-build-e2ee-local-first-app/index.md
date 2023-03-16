@@ -7,6 +7,7 @@ draft = false
 
 [extra]
 with_mermaid = true
+preview_image = "post/how-to-build-e2ee-local-first-app/dog_icon.png"
 +++
 
 ## Backstory
