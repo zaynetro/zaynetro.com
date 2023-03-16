@@ -25,7 +25,6 @@ highlight_themes_css = [
 ]
 
 [extra]
-email = ""
 github = "zaynetro"
 cv = "https://www.linkedin.com/in/roman-zay/"
 footer_text = "Roman Zaynetdinov (zaynetro)"
