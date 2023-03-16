@@ -1,7 +1,7 @@
 +++
 author = "Roman Zaynetdinov"
 date = 2023-03-06T12:00:00+03:00
-title = "What is Deno?"
+title = "What is Deno and how to use its sandbox?"
 description = "Deno is an alternative runtime for JavaScript. It comes with TypeScript support and a sandbox out of the box."
 draft = false
 
@@ -14,6 +14,8 @@ preview_image = "/post/what-is-deno/deno_hr.png"
 {% labeled_img(label="Deno logo") %}
 <img src="./deno_hr.png" alt="Deno logo" width="256" loading="lazy" />
 {% end %}
+
+> Check out a cool sandbox demo in [Deno Deploy](#deno-deploy) section.
 
 
 ## Basic example
