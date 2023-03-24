@@ -13,6 +13,13 @@
   <meta property='og:title' content="{{ config.title }}">
   <meta name="description" content="{{ config.description }}">
   {% endif %}
+
+  {% if page and page.extra and page.extra.preview_image %}
+    {% set path = page.extra.preview_image %}
+    {% set image = resize_image(path=path, width=300, op='fit_width', format='webp') %}
+    <meta property='og:image' src="{{ image.url | safe }}" />
+  {% endif %}
+
   <link rel="icon" href="/favicon.png" />
   <link rel="stylesheet" href="/css/main.css" />
   <script defer data-domain="zaynetro.com" src="/js/stats.js"></script>
@@ -39,7 +46,7 @@
               </li>
 
               <li class="header-link-profile">
-                <a href="{{ config.extra.cv }}">CV</a>
+                <a href="{{ config.extra.cv | safe }}">CV</a>
               </li>
 
               <li>
