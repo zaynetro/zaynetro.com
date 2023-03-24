@@ -18,6 +18,8 @@
     {% set path = page.extra.preview_image %}
     {% set image = resize_image(path=path, width=300, op='fit_width', format='jpeg') %}
     <meta property='og:image' src="{{ image.url | safe }}" />
+    <meta property='og:image:width' src="{{ image.width }}" />
+    <meta property='og:image:height' src="{{ image.height }}" />
   {% endif %}
 
   <link rel="icon" href="/favicon.png" />
