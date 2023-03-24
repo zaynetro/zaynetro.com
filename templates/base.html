@@ -16,7 +16,7 @@
 
   {% if page and page.extra and page.extra.preview_image %}
     {% set path = page.extra.preview_image %}
-    {% set image = resize_image(path=path, width=300, op='fit_width', format='webp') %}
+    {% set image = resize_image(path=path, width=300, op='fit_width', format='jpeg') %}
     <meta property='og:image' src="{{ image.url | safe }}" />
   {% endif %}
 
