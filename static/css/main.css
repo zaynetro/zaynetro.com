@@ -506,6 +506,11 @@ pre > code > table > tbody > tr > td {
   }
 }
 
+.footnote-definition {
+  font-size: 14px;
+  padding: 8px 0;
+}
+
 .like-box {
   height: 40px;
   display: flex;
