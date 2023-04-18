@@ -80,6 +80,7 @@ Column-oriented storage references:
 * <https://en.wikipedia.org/wiki/Column-oriented_DBMS>
 * <https://docs.aws.amazon.com/redshift/latest/dg/c_columnar_storage_disk_mem_mgmnt.html>
 * <https://parquet.apache.org/docs/file-format/>
+* <https://arrow.apache.org/blog/2022/10/05/arrow-parquet-encoding-part-1/>
 
 So far we have been treating payload as a JSON string. In fact OLAP databases support structs and lists so we can define a typed schema for our payload. Let's use DuckDB for schema definition in SQL:
 
