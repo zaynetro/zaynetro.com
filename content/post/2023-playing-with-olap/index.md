@@ -102,6 +102,8 @@ CREATE TABLE events (
 
 {{ poll(id="olap-sources" title="Where to you follow tech updates?", items=["Hacker News", "Lobste.rs", "Reddit", "Twitter", "Other"]) }}
 
+## Queries comparison
+
 Querying DuckDB is exactly the same as querying SQLite. Let's try to find the most visited pages:
 
 ```sql
@@ -121,6 +123,52 @@ This query is the same for SQLite and DuckDB where payload field as JSON. For ty
 +SELECT payload.path AS path, COUNT(*) AS count
 ```
 
+Now let's take a look at "Average feedback score" query. This query requires extracting a struct field, a first list element and also casting a string to a number.
+
+SQLite is by far the simplest. It also does the casting for us:
+
+```sql
+SELECT AVG(payload->>'$.fields[0].value') AS average
+  FROM events
+ WHERE
+     event_type = 'form_submit'
+     AND payload->>'$.form_type' = 'feedback';
+```
+
+Typed DuckDB:
+
+```sql
+SELECT AVG(TRY_CAST(payload.fields[1].value AS INTEGER)) AS average
+  FROM events
+ WHERE
+     event_type = 'form_submit'
+     AND payload.form_type = 'feedback';
+```
+
+Polars:
+
+```rust
+let pres = df
+    .filter(
+        col("event_type").eq(lit("form_submit"))
+        .and(col("payload")
+                .struct_()
+                .field_by_name("form_type")
+                .eq(lit("feedback")),
+        ),
+    )
+    .select([
+        // '$.fields[0].value
+        col("payload")
+            .struct_().field_by_name("fields")
+            .arr().first()
+            .struct_().field_by_name("value")
+            .cast(DataType::Int32)
+            .alias("score"),
+    ])
+    .select([avg("score")])
+    .collect()?;
+```
 
 
 ## Results
