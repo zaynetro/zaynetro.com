@@ -6,7 +6,7 @@ description = "You can run machine learning models on user devices. Models can a
 draft = false
 
 [extra]
-preview_image = "/post/run-ml-on-devices/onnx_logo.png"
+preview_image = { href = "/post/run-ml-on-devices/onnx_logo.png", alt = "ONNX logo" }
 +++
 
 ## Intro

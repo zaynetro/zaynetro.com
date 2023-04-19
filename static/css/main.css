@@ -1,6 +1,3 @@
-@import url("/syntax-theme-dark.css") (prefers-color-scheme: dark);
-@import url("/syntax-theme-light.css") (prefers-color-scheme: light);
-
 :root {
   --container-max-width: 50rem;
   --bg-color: #fff;
@@ -181,9 +178,6 @@ pre > code > table > tbody > tr > td {
   display: flex;
 }
 
-.header-logo {
-}
-
 .navigation {
   display: flex;
   flex-wrap: wrap;
@@ -262,9 +256,10 @@ pre > code > table > tbody > tr > td {
   font-size: 1.1rem;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .header-logo img {
     width: 80px;
+    height: 124px;
   }
 
   .header-home::before,

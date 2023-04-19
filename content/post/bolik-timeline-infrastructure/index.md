@@ -7,7 +7,7 @@ draft = false
 
 [extra]
 with_mermaid = true
-preview_image = "post/bolik-timeline-infrastructure/dog_icon.png"
+preview_image = { href = "post/bolik-timeline-infrastructure/dog_icon.png", alt = "Bolik Timeline logo" }
 +++
 
 {{ responsive_img(path="post/bolik-timeline-infrastructure/feature_graphic.jpg" alt="Bolik Timeline feature graphic") }}

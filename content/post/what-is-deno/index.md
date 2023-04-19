@@ -6,7 +6,7 @@ description = "Deno is an alternative runtime for JavaScript. It comes with Type
 draft = false
 
 [extra]
-preview_image = "/post/what-is-deno/deno_hr.png"
+preview_image = { href = "/post/what-is-deno/deno_hr.png", alt = "Deno logo" }
 +++
 
 [Deno](https://deno.land) is an alternative JavaScript runtime that uses V8 and Rust. Think of Node.js but with some different design decisions. Deno comes with built-in support for TypeScript, ES modules, test runner, code formatter, LSP server and sandboxed execution.

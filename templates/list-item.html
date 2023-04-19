@@ -1,10 +1,20 @@
 <article class="post-short">
   {% if page.extra.preview_image %}
   <div class="post-image">
-    {% set path = page.extra.preview_image %}
-    {% set image_1x = resize_image(path=path, width=60, op='fit_width', format='webp') %}
-    {% set image_2x = resize_image(path=path, width=120, op='fit_width', format='webp') %}
-    <img src="{{ image_2x.url }}" srcset="{{ image_1x.url }}, {{ image_2x.url }} 2x" loading="lazy" />
+    {% set path = page.extra.preview_image.href %}
+    {% set alt = page.extra.preview_image.alt %}
+
+    <picture>
+      {# For mobile: #}
+      {% set mobile_1x = resize_image(path=path, width=40, op='fit_width', format='webp') %}
+      {% set mobile_2x = resize_image(path=path, width=80, op='fit_width', format='webp') %}
+      <source media="(max-width: 500px)" src="{{ mobile_2x.url }}" srcset="{{ mobile_1x.url }}, {{ mobile_2x.url }} 2x" />
+
+      {# For desktop: #}
+      {% set image_1x = resize_image(path=path, width=60, op='fit_width', format='webp') %}
+      {% set image_2x = resize_image(path=path, width=120, op='fit_width', format='webp') %}
+      <img src="{{ image_2x.url }}" srcset="{{ image_1x.url }}, {{ image_2x.url }} 2x" loading="lazy" alt="{{ alt }}" />
+    </picture>
   </div>
   {% else %}
   <div class="post-blank-image"></div>

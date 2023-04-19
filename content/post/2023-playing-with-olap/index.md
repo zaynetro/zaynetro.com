@@ -6,7 +6,7 @@ description = "Databases for OLAP (online analytical processing) use a column-or
 draft = false
 
 [extra]
-preview_image = "post/2023-playing-with-olap/preview.png"
+preview_image = { href = "post/2023-playing-with-olap/preview.png", alt = "SQLite, Polars and DuckDB logos" }
 +++
 
 ## Intro

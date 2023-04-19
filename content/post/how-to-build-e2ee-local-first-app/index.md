@@ -7,7 +7,7 @@ draft = false
 
 [extra]
 with_mermaid = true
-preview_image = "post/how-to-build-e2ee-local-first-app/dog_icon.png"
+preview_image = { href = "post/how-to-build-e2ee-local-first-app/dog_icon.png", alt = "Bolik Timeline logo" }
 +++
 
 ## Backstory
