@@ -465,6 +465,7 @@ pre > code > table > tbody > tr > td {
 
 .post-content img {
   max-width: 100%;
+  height: auto;
 }
 
 .post-content > p > img {

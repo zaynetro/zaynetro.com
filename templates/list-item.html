@@ -8,7 +8,7 @@
       {# For mobile: #}
       {% set mobile_1x = resize_image(path=path, width=40, op='fit_width', format='webp') %}
       {% set mobile_2x = resize_image(path=path, width=80, op='fit_width', format='webp') %}
-      <source media="(max-width: 500px)" src="{{ mobile_2x.url }}" srcset="{{ mobile_1x.url }}, {{ mobile_2x.url }} 2x" />
+      <source media="(max-width: 500px)" srcset="{{ mobile_1x.url }}, {{ mobile_2x.url }} 2x" />
 
       {# For desktop: #}
       {% set image_1x = resize_image(path=path, width=60, op='fit_width', format='webp') %}
