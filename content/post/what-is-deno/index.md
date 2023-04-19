@@ -12,7 +12,7 @@ preview_image = { href = "/post/what-is-deno/deno_hr.png", alt = "Deno logo" }
 [Deno](https://deno.land) is an alternative JavaScript runtime that uses V8 and Rust. Think of Node.js but with some different design decisions. Deno comes with built-in support for TypeScript, ES modules, test runner, code formatter, LSP server and sandboxed execution.
 
 {% labeled_img(label="Deno logo") %}
-<img src="./deno_hr.png" alt="Deno logo" width="256" loading="lazy" />
+<img src="./deno_hr.png" alt="Deno logo" width="256" height="256 loading="lazy" />
 {% end %}
 
 > Check out a cool sandbox demo in [Deno Deploy](#deno-deploy) section.
