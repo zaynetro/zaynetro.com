@@ -400,5 +400,5 @@ For UI tests I would recommend to stick with Vitest, Cypress or Playwright.
 
 Deno is not the only one Node.js alternative. There is also [Bun](https://bun.sh/) which is WebKit-based. 
 
-> Note that Bun's performance benchmarks may not represent the real world situation. [Read more](https://github.com/denoland/deno/discussions/15121).
+> Note that Bun's performance benchmarks may not represent the real world situation. [Read more about benchmarks](https://github.com/denoland/deno/discussions/15121).
 
