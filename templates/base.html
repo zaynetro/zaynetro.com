@@ -28,6 +28,9 @@
   <link rel="stylesheet" href="/syntax-theme-dark.css" media="(prefers-color-scheme: dark)" />
   <link rel="stylesheet" href="/syntax-theme-light.css" media="(prefers-color-scheme: light)" />
   {% endif %}
+  {% block rss %}
+  <link rel="alternate" type="application/rss+xml" title="Roman Zaynetdinov's Blog" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
+  {% endblock %}
   <script defer data-domain="zaynetro.com" src="/js/stats.js"></script>
   <body>
     <header>
