@@ -353,10 +353,10 @@ There is one downside to this approach though. Since we lock the runtime for the
 
 ## Project references
 
-I have created a cross-platform Flutter application that uses Flutter Rust bridge, [Bolik Timeline](https://bolik.tech/). If you want to see some "real life" examples check out the links:
+I have created a cross-platform Flutter application that uses Flutter Rust bridge, [Bolik Timeline](https://timeline.bolik.tech/). If you want to see some "real life" examples check out the links:
 
-* [Set up native module](https://github.com/boliktech/bolik/blob/833f4e2dd0c09e439d7684d15fa1e0d62b1aebc6/app/lib/common/models/phase_info.dart#L40:L71): Listen to logs and start a runtime.
-    * [Rust side of setup](https://github.com/boliktech/bolik/blob/833f4e2dd0c09e439d7684d15fa1e0d62b1aebc6/app/native/src/api.rs#L69:L135)
-* Sample method call: [Dart](https://github.com/boliktech/bolik/blob/833f4e2dd0c09e439d7684d15fa1e0d62b1aebc6/app/lib/common/models/app_state.dart#L24) and [Rust](https://github.com/boliktech/bolik/blob/833f4e2dd0c09e439d7684d15fa1e0d62b1aebc6/app/native/src/api.rs#L232:L235)
+* [Set up native module](https://github.com/boliktech/timeline/blob/833f4e2dd0c09e439d7684d15fa1e0d62b1aebc6/app/lib/common/models/phase_info.dart#L40:L71): Listen to logs and start a runtime.
+    * [Rust side of setup](https://github.com/boliktech/timeline/blob/833f4e2dd0c09e439d7684d15fa1e0d62b1aebc6/app/native/src/api.rs#L69:L135)
+* Sample method call: [Dart](https://github.com/boliktech/timeline/blob/833f4e2dd0c09e439d7684d15fa1e0d62b1aebc6/app/lib/common/models/app_state.dart#L24) and [Rust](https://github.com/boliktech/timeline/blob/833f4e2dd0c09e439d7684d15fa1e0d62b1aebc6/app/native/src/api.rs#L232:L235)
 
 And finally, if you have any questions feel free to get in touch with me.
