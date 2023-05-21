@@ -40,11 +40,11 @@ function like() {
   }
 }
 
-if (hasLiked()) {
-  showThanks();
-} else {
-  btn.addEventListener('click', like);
-}
+// if (hasLiked()) {
+//   showThanks();
+// } else {
+//   btn.addEventListener('click', like);
+// }
 
 function showThanks() {
   btn.innerText = 'Thanks!';
