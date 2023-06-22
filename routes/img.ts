@@ -7,13 +7,18 @@ import {
   MagickFormat,
   MagickGeometry,
 } from "imagemagick_deno/mod.ts";
-import * as path from "$std/path/mod.ts";
 import { serveFile } from "$std/http/file_server.ts";
+import * as blob from "kv_toolbox/blob.ts";
 
 await initialize();
 
-const resizedImagesDir = path.join(Deno.cwd(), "resized_images");
-await Deno.mkdir(resizedImagesDir, { recursive: true });
+const kv = await Deno.openKv();
+const prefix = "v1-images";
+
+// Delete old cache entries
+for await (const entry of kv.list({ prefix: ["v0-images"] })) {
+  await kv.delete(entry.key);
+}
 
 type ResizeParams = {
   imgPath: string;
@@ -128,22 +133,24 @@ export const handler: Handlers = {
     // Resize the image
     const w = parseInt(wStr!, 10);
     const imgHash = await genHash(img, w);
-    const existingPath = path.join(resizedImagesDir, imgHash);
 
-    try {
-      await Deno.lstat(existingPath);
-    } catch (err) {
-      if (!(err instanceof Deno.errors.NotFound)) {
-        throw err;
-      }
-
+    let existing = await blob.get(kv, [prefix, imgHash], {
+      // TODO: somehow it is undefined
+      // consistency: Deno.KvConsistencyLevel.eventual,
+    });
+    if (!existing) {
       // Image not cached
       console.log("Resizing the image", "width", w, img);
-      const resized = await resizer.resize(img, w);
-      await Deno.writeFile(existingPath, resized);
+      existing = await resizer.resize(img, w);
+      blob.set(kv, [prefix, imgHash], existing);
     }
 
-    const res = await serveFile(req, existingPath);
+    const res = new Response(existing, {
+      status: 200,
+      headers: {
+        "Content-Type": "image/png",
+      },
+    });
 
     if (url.searchParams.get("__frsh_c")) {
       res.headers.set("Cache-Control", "public, max-age=31536000, immutable");
