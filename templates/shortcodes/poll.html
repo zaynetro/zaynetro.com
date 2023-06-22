@@ -1,9 +1,0 @@
-{# Using article instead of div so that footnote could be the first of type #}
-<article class="poll">
-  <h4>{{ title }}</h4>
-  <ul>
-  {% for item in items %}
-    <li><button type="button" data-pollid="{{id}}">{{ item }}</button></li>
-  {% endfor %}
-  </ul>
-</article>
