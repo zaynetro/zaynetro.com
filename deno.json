@@ -20,7 +20,8 @@
     "prismjs/": "https://esm.sh/prismjs@1.29.0/",
     "imagemagick_deno/": "https://deno.land/x/imagemagick_deno@0.0.24/",
     "mermaid": "https://esm.sh/mermaid@10.2.3",
-    "kv_toolbox/": "https://deno.land/x/kv_toolbox@0.0.2/"
+    "kv_toolbox/": "https://deno.land/x/kv_toolbox@0.0.2/",
+    "@tabler/icons-preact": "https://esm.sh/@tabler/icons-preact@2.23.0"
   },
   "compilerOptions": {
     "jsx": "react-jsx",

@@ -8,7 +8,10 @@ import * as $2 from "./routes/js/stats-event.ts";
 import * as $3 from "./routes/js/stats.js.ts";
 import * as $4 from "./routes/post/[slug].tsx";
 import * as $5 from "./routes/sitemap.xml.ts";
+import * as $6 from "./routes/sudoku.tsx";
+import * as $7 from "./routes/sudoku/[exercise].tsx";
 import * as $$0 from "./islands/BlogPostImports.tsx";
+import * as $$1 from "./islands/sudoku/SudokuXWing.tsx";
 
 const manifest = {
   routes: {
@@ -18,9 +21,12 @@ const manifest = {
     "./routes/js/stats.js.ts": $3,
     "./routes/post/[slug].tsx": $4,
     "./routes/sitemap.xml.ts": $5,
+    "./routes/sudoku.tsx": $6,
+    "./routes/sudoku/[exercise].tsx": $7,
   },
   islands: {
     "./islands/BlogPostImports.tsx": $$0,
+    "./islands/sudoku/SudokuXWing.tsx": $$1,
   },
   baseUrl: import.meta.url,
 };

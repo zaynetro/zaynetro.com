@@ -2,9 +2,9 @@ import { asset, Head } from "$fresh/runtime.ts";
 import { blogImages } from "@/utils/blog.ts";
 import * as path from "$std/path/mod.ts";
 
-const baseTitle = "Roman Zaynetdinov (zaynetro)";
+export const baseTitle = "Roman Zaynetdinov (zaynetro)";
 
-const globalStyles = `
+export const globalStyles = `
 :root {
   --text-color: #333;
   --a-hover-color: #ffe69c;
@@ -103,6 +103,10 @@ export function Header({
 
               <li>
                 <a href="mailto:roman@zaynetro.com">Get in touch</a>
+              </li>
+
+              <li>
+                <a href="/sudoku">Sudoku</a>
               </li>
             </ul>
           </nav>

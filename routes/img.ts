@@ -137,6 +137,7 @@ export const handler: Handlers = {
     let existing = await blob.get(kv, [prefix, imgHash], {
       // TODO: somehow it is undefined
       // consistency: Deno.KvConsistencyLevel.eventual,
+      consistency: "eventual",
     });
     if (!existing) {
       // Image not cached
