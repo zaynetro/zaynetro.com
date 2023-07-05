@@ -1,6 +1,6 @@
 +++
 author = "Roman Zaynetdinov"
-date = "2023-05-25T12:00:00+03:00"
+date = "2023-06-05T12:00:00+03:00"
 title = "ES Modules and import maps"
 description = "What are ES modules? What is an import map? How to use them? I try to answer these and other questions in this blog post."
 draft = false
@@ -59,6 +59,7 @@ There was an attempt by React team to "improve" the situation with [create-react
 
 <bk-poll-form></bk-poll-form>
 <script async src="https://eyuxylujanwriimduamk.supabase.co/storage/v1/object/public/cdn/ui/122cfbhd3j8bog2/bk-poll-form.js"></script>
+<div class="powered-by">Poll powered by <a href="https://bolik.net" target="_blank">Bolik</a>.</div>
 
 Webpack has solved a lot of issues like bundling, using plugins, importing CSS, etc. With time though, the slowness of it and the frustration of misconfiguring a loader has become too much. Luckily, new projects continued to appear each year that made life simpler.
 

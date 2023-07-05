@@ -222,6 +222,7 @@ What can you do with it? The app is a simple sandbox that executes code submitte
 
 <bk-poll-form></bk-poll-form>
 <script async src="https://eyuxylujanwriimduamk.supabase.co/storage/v1/object/public/cdn/ui/1k7m5lp200s90e/bk-poll-form.js"></script>
+<div class="powered-by">Poll powered by <a href="https://bolik.net" target="_blank">Bolik</a>.</div>
 
 
 ## Test runner

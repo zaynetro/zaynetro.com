@@ -627,6 +627,18 @@ const customCSS = `
 .markdown-body h2:target, .markdown-body h3:target {
   text-decoration: underline #dc3545;
 }
+
+.powered-by {
+  margin-bottom: 16px;
+  font-size: 80%;
+  color: #555;
+}
+
+@media (prefers-color-scheme:dark) {
+  .powered-by {
+    color: #bbb;
+  }
+}
 `;
 
 export default function PostPage(props: PageProps) {
