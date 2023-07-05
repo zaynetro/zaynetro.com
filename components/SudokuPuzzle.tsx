@@ -221,7 +221,8 @@ export function SudokuPuzzle({
           Notes
         </button>
 
-        {/* <button
+        {
+          /* <button
             type="button"
             class="flex flex-col justify-center relative text-gray-600 dark:text-gray-300 text-sm"
             onClick={() => {}}
@@ -231,7 +232,8 @@ export function SudokuPuzzle({
             </span>
 
             Hint
-            </button> */}
+            </button> */
+        }
       </div>
 
       <div class="flex mt-2 justify-center">

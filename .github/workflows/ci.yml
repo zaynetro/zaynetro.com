@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  www:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Check format
+        working-directory: www
+        run: deno fmt --check
+
+      - name: Check linting
+        working-directory: www
+        run: deno lint
+
+      # - name: Typecheck
+      #   working-directory: www
+      #   run: deno check main.ts

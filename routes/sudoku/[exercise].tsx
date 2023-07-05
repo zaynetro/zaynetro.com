@@ -62,11 +62,15 @@ export default function SudokuExercisePage({ data }: {
           src="/js/stats.js"
         />
         <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
-        <style dangerouslySetInnerHTML={{ __html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
 /* Disable zooming in mobile Safari  https://stackoverflow.com/a/62165035 */
 body {
   touch-action: pan-x pan-y;
-}` }} />
+}`,
+          }}
+        />
       </Head>
 
       <header class="max-w-3xl mx-auto pt-6 px-4">
