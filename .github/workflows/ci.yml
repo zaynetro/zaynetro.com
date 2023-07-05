@@ -21,13 +21,10 @@ jobs:
           deno-version: v1.x
 
       - name: Check format
-        working-directory: www
         run: deno fmt --check
 
       - name: Check linting
-        working-directory: www
         run: deno lint
 
       # - name: Typecheck
-      #   working-directory: www
       #   run: deno check main.ts
