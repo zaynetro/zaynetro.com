@@ -10,6 +10,7 @@ import {
 const materials = [
   "https://www.sudoku.academy/learn/x-wing/",
   "https://www.youtube.com/watch?v=az2M0V9QCXk",
+  "http://www.sudokubeginner.com/x-wing/",
 ];
 
 type Exercise = {
@@ -92,22 +93,85 @@ const exercises: Exercise[] = [{
         " This removes all 8 number candidates from rows 1 and 8.";
     },
   ],
+}, {
+  grid: [
+    [1, 6, 5, 9, 0, 0, 8, 0, 0],
+    [3, 7, 4, 0, 8, 5, 0, 9, 6],
+    [8, 2, 9, 0, 0, 6, 0, 0, 4],
+    [0, 0, 1, 0, 5, 2, 0, 3, 0],
+    [0, 0, 3, 0, 1, 0, 0, 0, 5],
+    [0, 5, 6, 3, 0, 0, 7, 0, 0],
+    [6, 9, 8, 0, 0, 1, 0, 0, 7],
+    [4, 1, 0, 5, 0, 0, 0, 6, 0],
+    [5, 3, 0, 0, 6, 0, 9, 0, 0],
+  ],
+  answer: [
+    "R3C5",
+    "R3C7",
+    "R7C5",
+    "R7C7",
+  ],
+  hints: [
+    (ctx) => {
+      ctx.highlightRow(3);
+      ctx.highlightRow(5);
+      return "Take a look at rows 3 and 5.";
+    },
+    () => "Number 3 could be only in two cells in rows 3 and 5.",
+    (ctx) => {
+      ctx.clearHighlight();
+      ctx.highlight(3, 5);
+      ctx.note(3, 5, 3);
+      ctx.highlight(3, 7);
+      ctx.note(3, 7, 3);
+      ctx.highlight(7, 5);
+      ctx.note(7, 5, 3);
+      ctx.highlight(7, 7);
+      ctx.note(7, 7, 3);
+      return "R3C5, R3C7, R7C5, R5C7 forms an X-wing. Number 3 must be in either of these four cells." +
+        " This removes all 3 number candidates from columns 5 and 7.";
+    },
+  ],
+}, {
+  grid: [
+    [4, 5, 8, 0, 0, 0, 7, 9, 3],
+    [6, 9, 3, 5, 0, 0, 2, 1, 4],
+    [7, 0, 0, 4, 9, 3, 6, 8, 5],
+    [0, 0, 5, 9, 0, 0, 0, 0, 6],
+    [0, 4, 0, 0, 3, 5, 0, 7, 0],
+    [3, 0, 0, 0, 0, 2, 4, 5, 0],
+    [0, 6, 0, 1, 0, 0, 0, 0, 7],
+    [0, 0, 4, 0, 0, 9, 0, 6, 0],
+    [1, 0, 0, 0, 5, 0, 8, 4, 0],
+  ],
+  answer: [
+    "R5C1",
+    "R5C7",
+    "R7C1",
+    "R7C7",
+  ],
+  hints: [
+    (ctx) => {
+      ctx.highlightCol(1);
+      ctx.highlightCol(7);
+      return "Take a look at columns 1 and 7.";
+    },
+    () => "Number 9 could be only in two cells in columns 1 and 7.",
+    (ctx) => {
+      ctx.clearHighlight();
+      ctx.highlight(5, 1);
+      ctx.note(5, 1, 9);
+      ctx.highlight(5, 7);
+      ctx.note(5, 7, 9);
+      ctx.highlight(7, 1);
+      ctx.note(7, 1, 9);
+      ctx.highlight(7, 7);
+      ctx.note(7, 7, 9);
+      return "R5C1, R5C7, R7C1, R5C7 forms an X-wing. Number 9 must be in either of these four cells." +
+        " This removes all 9 number candidates from rows 5 and 7.";
+    },
+  ],
 }];
-
-// TODO: include notes for Row 2, Row 4, Column 5, Column 7 (X-wing is in R2C5, R2C7, R4C5, R4C7) found by checking the rows
-// TODO: this is a bad exercise... There are two X-wings at the same time with number 8
-/* const xwing = [
- *   [6, 0, 8, 0, 9, 0, 1, 0, 7],
- *   [0, 7, 9, 3, 0, 0, 0, 2, 6],
- *   [0, 0, 0, 0, 6, 7, 0, 0, 0],
- *   [0, 0, 0, 6, 0, 3, 0, 7, 0],
- *   [7, 0, 6, 0, 0, 0, 2, 0, 0],
- *   [0, 8, 0, 7, 0, 0, 0, 6, 0],
- *   [8, 0, 5, 0, 3, 0, 7, 4, 2],
- *   [0, 4, 7, 0, 0, 8, 6, 1, 0],
- *   [1, 0, 2, 0, 7, 0, 9, 0, 8],
- * ]; */
-// TODO: more exercises here http://www.sudokubeginner.com/x-wing/
 
 export default function SudokuXWing() {
   const exerciseIndex = useSignal(0);
