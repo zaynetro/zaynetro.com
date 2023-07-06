@@ -1,4 +1,4 @@
-import { SudokuPuzzle } from "@/components/SudokuPuzzle.tsx";
+import { HintFunc, SudokuPuzzle } from "@/components/SudokuPuzzle.tsx";
 import { useSignal } from "@preact/signals";
 import {
   IconArrowRight,
@@ -16,7 +16,7 @@ type Exercise = {
   grid: number[][];
   notes?: Record<string, number[]>;
   answer: string[];
-  hints: string[];
+  hints: HintFunc[];
 };
 
 const exercises: Exercise[] = [{
@@ -33,10 +33,25 @@ const exercises: Exercise[] = [{
   ],
   answer: ["R3C5", "R3C7", "R7C5", "R7C7"],
   hints: [
-    "Take a look at columns 5 and 7.",
-    "Number 3 could be only in two cells in columns 5 and 7.",
-    "R3C5, R3C7, R7C5, R7C7 forms an X-wing. Number 3 must be in either of these four cells." +
-    " This removes all 3 number candidates from rows 3 and 7.",
+    (ctx) => {
+      ctx.highlightCol(5);
+      ctx.highlightCol(7);
+      return "Take a look at columns 5 and 7.";
+    },
+    () => "Number 3 could be only in two cells in columns 5 and 7.",
+    (ctx) => {
+      ctx.clearHighlight();
+      ctx.highlight(3, 5);
+      ctx.note(3, 5, 3);
+      ctx.highlight(3, 7);
+      ctx.note(3, 7, 3);
+      ctx.highlight(7, 5);
+      ctx.note(7, 5, 3);
+      ctx.highlight(7, 7);
+      ctx.note(7, 7, 3);
+      return "R3C5, R3C7, R7C5, R7C7 forms an X-wing. Number 3 must be in either of these four cells." +
+        " This removes all 3 number candidates from rows 3 and 7.";
+    },
   ],
 }, {
   grid: [
@@ -57,10 +72,25 @@ const exercises: Exercise[] = [{
     "R8C7",
   ],
   hints: [
-    "Take a look at columns 2 and 7.",
-    "Number 8 could be only in two cells in columns 2 and 7.",
-    "R1C2, R1C7, R8C2, R8C7 forms an X-wing. Number 8 must be in either of these four cells." +
-    " This removes all 8 number candidates from rows 1 and 8.",
+    (ctx) => {
+      ctx.highlightCol(2);
+      ctx.highlightCol(7);
+      return "Take a look at columns 2 and 7.";
+    },
+    () => "Number 8 could be only in two cells in columns 2 and 7.",
+    (ctx) => {
+      ctx.clearHighlight();
+      ctx.highlight(1, 2);
+      ctx.note(1, 2, 8);
+      ctx.highlight(1, 7);
+      ctx.note(1, 7, 8);
+      ctx.highlight(8, 2);
+      ctx.note(8, 2, 8);
+      ctx.highlight(8, 7);
+      ctx.note(8, 7, 8);
+      return "R1C2, R1C7, R8C2, R8C7 forms an X-wing. Number 8 must be in either of these four cells." +
+        " This removes all 8 number candidates from rows 1 and 8.";
+    },
   ],
 }];
 
@@ -220,6 +250,7 @@ function SingleExercise({
       <SudokuPuzzle
         initial={exercise.grid}
         onSelectCell={selectCell}
+        hints={exercise.hints}
       />
     </>
   );

@@ -1,20 +1,33 @@
-import { useSignal } from "@preact/signals";
+import { batch, useSignal } from "@preact/signals";
 import { useEffect } from "preact/hooks";
 import { IconBulb, IconEraser, IconPencil } from "@tabler/icons-preact";
 
 type SudokuGrid = number[][];
 
+export type HintCtx = {
+  highlightRow: (row: number) => void;
+  highlightCol: (col: number) => void;
+  highlight: (row: number, col: number) => void;
+  clearHighlight: () => void;
+  note: (row: number, col: number, num: number) => void;
+};
+export type HintFunc = (ctx: HintCtx) => string;
+
 export function SudokuPuzzle({
   initial,
   onSelectCell,
+  hints,
 }: {
   initial: SudokuGrid;
   onSelectCell?: (row: number, col: number) => void;
+  hints?: HintFunc[];
 }) {
   const grid = useSignal(initial);
   const notes = useSignal<Record<string, number[]>>({});
   const selected = useSignal<number[] | null>(null);
   const notesMode = useSignal(false);
+  const highlights = useSignal<Record<string, boolean>>({});
+  const visibleHints = useSignal<string[]>([]);
 
   const selectedNumber = selected.value
     ? grid.value[selected.value[0]][selected.value[1]]
@@ -47,7 +60,12 @@ export function SudokuPuzzle({
     setNotes(null, row, col);
   }
 
-  function setNotes(num: number | null, row: number, col: number) {
+  function setNotes(
+    num: number | null,
+    row: number,
+    col: number,
+    { appendOnly } = { appendOnly: false },
+  ) {
     const key = `${row},${col}`;
     if (!num) {
       notes.value = {
@@ -70,7 +88,9 @@ export function SudokuPuzzle({
 
     // Either append or remove from the notes
     if (existing.includes(num)) {
-      existing = existing.filter((v) => v != num);
+      if (!appendOnly) {
+        existing = existing.filter((v) => v != num);
+      }
     } else {
       existing.push(num);
       existing.sort();
@@ -103,8 +123,10 @@ export function SudokuPuzzle({
     }
 
     if (notesMode.value) {
-      setNotes(num, row, col);
-      setValue(0, row, col);
+      batch(() => {
+        setNotes(num, row, col);
+        setValue(0, row, col);
+      });
       return;
     }
 
@@ -116,6 +138,50 @@ export function SudokuPuzzle({
     onSelectCell?.(row, col);
   }
 
+  function highlightCell(row: number, col: number) {
+    const key = `${row},${col}`;
+    highlights.value = {
+      ...highlights.value,
+      [key]: true,
+    };
+  }
+
+  function nextHint() {
+    const allHints = hints ?? [];
+    if (visibleHints.value.length >= allHints.length) {
+      // No more hints
+      return;
+    }
+
+    batch(() => {
+      const index = visibleHints.value.length;
+      const hint = allHints[index]({
+        highlightRow: (row) => {
+          for (let i = 0; i < 9; i += 1) {
+            highlightCell(row - 1, i);
+          }
+        },
+        highlightCol: (col) => {
+          for (let i = 0; i < 9; i += 1) {
+            highlightCell(i, col - 1);
+          }
+        },
+        highlight: (row, col) => {
+          highlightCell(row - 1, col - 1);
+        },
+        clearHighlight: () => {
+          highlights.value = {};
+        },
+        note: (row, col, num) => {
+          setNotes(num, row - 1, col - 1, { appendOnly: true });
+        },
+      });
+      const next = [...visibleHints.value];
+      next.push(hint);
+      visibleHints.value = next;
+    });
+  }
+
   useEffect(() => {
     document.addEventListener("keyup", keyboardListener);
 
@@ -125,12 +191,14 @@ export function SudokuPuzzle({
   }, []);
 
   return (
-    <div class="max-w-xl mx-auto select-none">
+    <div class="max-w-lg mx-auto select-none">
       <div class="grid grid-cols-9 grid-rows-9 aspect-square">
         {grid.value.map((rowValues, row) => (
           <>
             {rowValues.map((cellValue, col) => {
               const s = selected.value;
+              const key = `${row},${col}`;
+              const highlighted = highlights.value[key];
 
               // Index of a 3x3 block
               const blockIndex = Math.floor(row / 3) * 3 + Math.floor(col / 3);
@@ -157,6 +225,8 @@ export function SudokuPuzzle({
                       "border-l-gray-900 dark:border-l-gray-200": col === 0,
                       "border-r-gray-900 dark:border-r-gray-200": col > 0 &&
                         (col + 1) % 3 == 0,
+                      // Highlighted cell
+                      "bg-fuchsia-200 dark:bg-fuchsia-800": highlighted,
                       // Selected row, column or 3x3 block
                       "bg-amber-100 dark:bg-amber-900": rowColSelected ||
                         blockSelected,
@@ -175,7 +245,7 @@ export function SudokuPuzzle({
                   <SudokuCell
                     selectedNumber={selectedNumber}
                     value={cellValue}
-                    notes={notes.value[`${row},${col}`]}
+                    notes={notes.value[key]}
                     onClick={() => selectCell(row, col)}
                   />
                 </div>
@@ -221,19 +291,19 @@ export function SudokuPuzzle({
           Notes
         </button>
 
-        {
-          /* <button
+        {!!hints && !!hints.length && (
+          <button
             type="button"
             class="flex flex-col justify-center relative text-gray-600 dark:text-gray-300 text-sm"
-            onClick={() => {}}
-            >
+            onClick={nextHint}
+          >
             <span class="self-center">
-            <IconBulb size={28} />
+              <IconBulb size={28} />
             </span>
 
             Hint
-            </button> */
-        }
+          </button>
+        )}
       </div>
 
       <div class="flex mt-2 justify-center">
@@ -250,6 +320,24 @@ export function SudokuPuzzle({
           </button>
         ))}
       </div>
+
+      {!!visibleHints.value.length && (
+        <div class="flex flex-col gap-1 rounded-md p-2 bg-yellow-100 text-gray-800 dark:bg-yellow-900 dark:text-gray-300">
+          {visibleHints.value.map((h) => <p>{h}</p>)}
+
+          {(visibleHints.value.length < (hints ?? []).length) && (
+            <div class="flex justify-end">
+              <button
+                type="button"
+                class="p-2 rounded-md text-sm bg-blue-700 text-white dark:text-gray-100"
+                onClick={nextHint}
+              >
+                More
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -274,7 +362,9 @@ function SudokuCell({
         !!notes && (
           <span class="text-xs sm:text-base text-gray-400 break-all">
             {notes.map((n) => (
-              selectedNumber == n ? <b class="text-gray-900">{n}</b> : <>{n}</>
+              selectedNumber == n
+                ? <b class="text-gray-600 dark:text-gray-300">{n}</b>
+                : <>{n}</>
             ))}
           </span>
         )
