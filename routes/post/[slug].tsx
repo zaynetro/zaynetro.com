@@ -635,6 +635,11 @@ const customCSS = `
 }
 
 @media (prefers-color-scheme:dark) {
+  .mermaid-label,
+  .img-block-label {
+    color: #aaa;
+  }
+
   .powered-by {
     color: #bbb;
   }
