@@ -8,17 +8,17 @@ import {
   MagickGeometry,
 } from "imagemagick_deno/mod.ts";
 import { serveFile } from "$std/http/file_server.ts";
-// import * as blob from "kv_toolbox/blob.ts";
+import * as blob from "kv_toolbox/blob.ts";
 
 await initialize();
 
-// const kv = await Deno.openKv();
-// const prefix = "v1-images";
+const kv = await Deno.openKv();
+const prefix = "v1-images";
 
-// // Delete old cache entries
-// for await (const entry of kv.list({ prefix: ["v0-images"] })) {
-//   await kv.delete(entry.key);
-// }
+// Delete old cache entries
+for await (const entry of kv.list({ prefix: ["v0-images"] })) {
+  await kv.delete(entry.key);
+}
 
 type ResizeParams = {
   imgPath: string;
@@ -133,18 +133,17 @@ export const handler: Handlers = {
 
     // Resize the image
     const w = parseInt(wStr!, 10);
-    // deno-lint-ignore no-unused-vars
     const imgHash = await genHash(img, w);
 
-    let existing = null;
-    // let existing = await blob.get(kv, [prefix, imgHash], {
-    //   consistency: "eventual",
-    // });
+    // let existing = null;
+    let existing = await blob.get(kv, [prefix, imgHash], {
+      consistency: "eventual",
+    });
     if (!existing) {
       // Image not cached
       console.log("Resizing the image", "width", w, img);
       existing = await resizer.resize(img, w);
-      // blob.set(kv, [prefix, imgHash], existing);
+      blob.set(kv, [prefix, imgHash], existing);
     }
 
     const res = new Response(existing, {
