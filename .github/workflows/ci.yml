@@ -26,5 +26,8 @@ jobs:
       - name: Check linting
         run: deno lint
 
-      - name: Typecheck
+      - name: Typecheck main.ts
         run: deno check main.ts
+
+      - name: Typecheck build.ts
+        run: deno check build.ts

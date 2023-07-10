@@ -1,11 +1,14 @@
 import { Footer, Header } from "@/components/Header.tsx";
-import { blogPosts } from "@/utils/blog.ts";
+import { isProd } from "@/utils/env.ts";
 import { formatDate } from "@/routes/post/[slug].tsx";
 import { Head } from "$fresh/runtime.ts";
+import { blogPosts } from "@/posts.gen.ts";
 
 export default function HomePage() {
   const posts = [...blogPosts.values()]
-    .sort((a, b) => b.date.getTime() - a.date.getTime());
+    // Exclude draft posts in production
+    .filter((p) => isProd ? !p.draft : true)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
     <>
@@ -42,7 +45,7 @@ export default function HomePage() {
 
               <div class="flex flex-col gap-1">
                 <span class="text-gray-600 dark:text-gray-400 text-sm">
-                  {formatDate(p.date)}
+                  {formatDate(new Date(p.date))}
                 </span>
                 <h2 class="text-2xl">
                   <a href={`/post/${p.slug}`} class="no-underline">

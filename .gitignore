@@ -6,4 +6,6 @@
 .env.local
 
 .DS_Store
-resized_images
+
+# Generated file
+posts.gen.ts

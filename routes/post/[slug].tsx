@@ -1,5 +1,5 @@
 import { Footer, Header } from "@/components/Header.tsx";
-import { blogPosts, renderPost } from "@/utils/blog.ts";
+import { blogPosts } from "@/posts.gen.ts";
 import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import BlogPostImports from "@/islands/BlogPostImports.tsx";
@@ -665,8 +665,6 @@ export default function PostPage(props: PageProps) {
     );
   }
 
-  renderPost(post);
-
   return (
     <>
       <Head>
@@ -682,7 +680,7 @@ export default function PostPage(props: PageProps) {
       <div class="mt-4 px-4">
         <div class="mt-8 max-w-4xl mx-auto">
           <div class="text-gray-600 dark:text-gray-400 text-sm pb-2">
-            {formatDate(post.date)}
+            {formatDate(new Date(post.date))}
           </div>
           <h1 class="text-3xl dark:text-gray-200">{post.title}</h1>
         </div>

@@ -1,6 +1,6 @@
 import { asset, Head } from "$fresh/runtime.ts";
-import { blogImages } from "@/utils/blog.ts";
 import * as path from "$std/path/mod.ts";
+import { blogImages } from "@/posts.gen.ts";
 
 export const baseTitle = "Roman Zaynetdinov (zaynetro)";
 

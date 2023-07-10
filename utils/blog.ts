@@ -35,7 +35,11 @@ class Renderer extends Marked.Renderer {
   /* Mermaid is used */
   mermaid = false;
 
-  constructor(private filePath: string, private fileSlug: string) {
+  constructor(
+    private filePath: string,
+    private fileSlug: string,
+    private images: Map<string, string>,
+  ) {
     super();
   }
 
@@ -119,7 +123,7 @@ class Renderer extends Marked.Renderer {
           Deno.lstatSync(imagePath);
 
           const id = this.fileSlug + "/" + path.basename(imagePath);
-          blogImages.set(id, imagePath);
+          this.images.set(id, imagePath);
 
           return line.replace(src, asset(`/img?id=${id}&orig`));
         })
@@ -156,7 +160,7 @@ class Renderer extends Marked.Renderer {
     Deno.lstatSync(imagePath);
 
     const id = this.fileSlug + "/" + path.basename(imagePath);
-    blogImages.set(id, imagePath);
+    this.images.set(id, imagePath);
 
     if (title?.includes("no-resize")) {
       title = title?.replaceAll("no-resize", "");
@@ -190,22 +194,16 @@ class Renderer extends Marked.Renderer {
   }
 }
 
-/** All known blog posts. Slug to post mapping. */
-export const blogPosts = new Map<string, BlogPost>();
-/** All known blog images. ID to path mapping. */
-export const blogImages = new Map<string, string>();
-
-type BlogPost = {
-  filePath: string;
+export type BlogPost = {
   slug: string;
   title: string;
+  draft: boolean;
   description?: string;
-  text: string;
-  html?: string;
-  date: Date;
+  html: string;
+  date: string;
   previewImage?: PreviewImage;
   /* Table of contents */
-  toc?: TocHeading[];
+  toc: TocHeading[];
   /* Mermaid is used */
   mermaid: boolean;
 };
@@ -225,27 +223,34 @@ type TocEntry = {
   slug: string;
 };
 
-export async function loadPosts() {
+export async function loadPosts(): Promise<{
+  posts: Map<string, BlogPost>;
+  images: Map<string, string>;
+}> {
+  /** All known blog posts. Slug to post mapping. */
+  const posts = new Map<string, BlogPost>();
+  /** All known blog images. ID to path mapping. */
+  const images = new Map<string, string>();
+
   for await (
     const file of walk(postsDir, {
       maxDepth: 2,
       exts: [".md"],
     })
   ) {
-    await loadPost(file);
+    await loadPost(file, { posts, images });
   }
+
+  return { posts, images };
 }
 
-const isProd = !!Deno.env.get("DENO_DEPLOYMENT_ID");
-
-async function loadPost(file: WalkEntry) {
-  // console.log(
-  //   `Heap used ${Math.round(Deno.memoryUsage().heapUsed / 1024 / 1024)}MB`,
-  //   `RSS ${Math.round(Deno.memoryUsage().rss / 1024 / 1024)}MB`,
-  // );
-
-  const t0 = performance.now();
-
+async function loadPost(file: WalkEntry, {
+  posts,
+  images,
+}: {
+  posts: Map<string, BlogPost>;
+  images: Map<string, string>;
+}) {
   // If file is index.md then use directory as slug otherwise use markdown file name.
   let slug: string;
   if (file.path.endsWith("index.md")) {
@@ -258,25 +263,23 @@ async function loadPost(file: WalkEntry) {
   const text = await Deno.readTextFile(file.path);
   const { body, attrs } = extractFrontMatter(text);
 
-  if (attrs.draft && isProd) {
-    console.log(
-      "Skipped draft",
-      path.relative(baseDir, file.path),
-    );
-    return;
-  }
+  const mdRenderer = new Renderer(file.path, slug, images);
+  const html = Marked.marked(body, {
+    gfm: true,
+    renderer: mdRenderer,
+    mangle: undefined,
+    headerIds: undefined,
+  });
 
   const post: BlogPost = {
-    filePath: file.path,
     slug,
     title: attrs.title! as string,
+    draft: !!attrs.draft,
     description: attrs.description as string | undefined,
-    text: body,
-    // html,
-    date: new Date(Date.parse(attrs.date! as string)),
-    // toc: mdRenderer.toc,
-    mermaid: false,
-    // mermaid: mdRenderer.mermaid,
+    html,
+    date: new Date(Date.parse(attrs.date! as string)).toISOString(),
+    toc: mdRenderer.toc,
+    mermaid: mdRenderer.mermaid,
   };
 
   const extraAttrs = attrs.extra as Record<string, unknown> | undefined;
@@ -298,33 +301,13 @@ async function loadPost(file: WalkEntry) {
       id: imgId,
       alt: previewImage.alt,
     };
-    blogImages.set(imgId, imagePath);
+    images.set(imgId, imagePath);
   }
 
-  blogPosts.set(slug, post);
-  const t1 = performance.now();
+  posts.set(slug, post);
   console.log(
     "Processed",
     path.relative(baseDir, file.path),
-    `in ${t1 - t0}ms`,
+    post.draft ? "(draft)" : "",
   );
-}
-
-/** Render Markdown into HTML if hasn't been done */
-export function renderPost(post: BlogPost) {
-  if (post.html) {
-    return;
-  }
-
-  const mdRenderer = new Renderer(post.filePath, post.slug);
-  const html = Marked.marked(post.text, {
-    gfm: true,
-    renderer: mdRenderer,
-    mangle: undefined,
-    headerIds: undefined,
-  });
-
-  post.html = html;
-  post.toc = mdRenderer.toc;
-  post.mermaid = mdRenderer.mermaid;
 }

@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { blogImages } from "@/utils/blog.ts";
+import { blogImages } from "@/posts.gen.ts";
 import {
   ImageMagick,
   IMagickImage,

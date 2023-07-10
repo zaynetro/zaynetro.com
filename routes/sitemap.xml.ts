@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { blogPosts } from "@/utils/blog.ts";
+import { blogPosts } from "@/posts.gen.ts";
 
 export const handler: Handlers = {
   GET(req, _ctx) {

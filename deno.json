@@ -2,7 +2,9 @@
   "lock": false,
   "tasks": {
     "start": "deno run -A --unstable --watch=static/,routes/,posts/ dev.ts",
-    "update": "deno run -A -r https://fresh.deno.dev/update ."
+    "update": "deno run -A -r https://fresh.deno.dev/update .",
+    "build": "deno run --allow-read --allow-write --allow-env build.ts",
+    "production": "deno run -A --unstable main.ts"
   },
   "imports": {
     "@/": "./",
