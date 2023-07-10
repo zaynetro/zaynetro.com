@@ -1,5 +1,5 @@
 import * as path from "$std/path/mod.ts";
-import { walk } from "$std/fs/walk.ts";
+import { walk, WalkEntry } from "$std/fs/walk.ts";
 import { extract as extractFrontMatter } from "$std/front_matter/toml.ts";
 import * as Marked from "marked";
 import { default as Prism } from "prismjs";
@@ -196,14 +196,16 @@ export const blogPosts = new Map<string, BlogPost>();
 export const blogImages = new Map<string, string>();
 
 type BlogPost = {
+  filePath: string;
   slug: string;
   title: string;
   description?: string;
-  html: string;
+  text: string;
+  html?: string;
   date: Date;
   previewImage?: PreviewImage;
   /* Table of contents */
-  toc: TocHeading[];
+  toc?: TocHeading[];
   /* Mermaid is used */
   mermaid: boolean;
 };
@@ -230,59 +232,99 @@ export async function loadPosts() {
       exts: [".md"],
     })
   ) {
-    console.log("Processing", path.relative(baseDir, file.path));
-    // If file is index.md then use directory as slug otherwise use markdown file name.
-    let slug: string;
-    if (file.path.endsWith("index.md")) {
-      // Use directory name in which index.md is located
-      slug = path.basename(path.dirname(file.path));
-    } else {
-      // Use file name without the extension
-      slug = path.basename(file.path).split(".")[0];
-    }
-    const text = await Deno.readTextFile(file.path);
-    const { body, attrs } = extractFrontMatter(text);
-
-    const mdRenderer = new Renderer(file.path, slug);
-    const html = Marked.marked(body, {
-      gfm: true,
-      renderer: mdRenderer,
-      mangle: undefined,
-      headerIds: undefined,
-    });
-
-    const post: BlogPost = {
-      slug,
-      title: attrs.title! as string,
-      description: attrs.description as string | undefined,
-      html,
-      date: new Date(Date.parse(attrs.date! as string)),
-      toc: mdRenderer.toc,
-      mermaid: mdRenderer.mermaid,
-    };
-
-    const extraAttrs = attrs.extra as Record<string, unknown> | undefined;
-    if (extraAttrs?.preview_image) {
-      const previewImage = extraAttrs!.preview_image as {
-        href: string;
-        alt: string;
-      };
-      // Verify that image exists
-      const dirname = path.dirname(file.path);
-      const imagePath = path.join(dirname, previewImage.href);
-      const fileInfo = await Deno.lstat(imagePath);
-      if (!fileInfo.isFile) {
-        throw new Error("Preview image is not a file " + imagePath);
-      }
-
-      const imgId = slug + "/" + path.basename(imagePath);
-      post.previewImage = {
-        id: imgId,
-        alt: previewImage.alt,
-      };
-      blogImages.set(imgId, imagePath);
-    }
-
-    blogPosts.set(slug, post);
+    await loadPost(file);
   }
+}
+
+const isProd = !!Deno.env.get("DENO_DEPLOYMENT_ID");
+
+async function loadPost(file: WalkEntry) {
+  // console.log(
+  //   `Heap used ${Math.round(Deno.memoryUsage().heapUsed / 1024 / 1024)}MB`,
+  //   `RSS ${Math.round(Deno.memoryUsage().rss / 1024 / 1024)}MB`,
+  // );
+
+  const t0 = performance.now();
+
+  // If file is index.md then use directory as slug otherwise use markdown file name.
+  let slug: string;
+  if (file.path.endsWith("index.md")) {
+    // Use directory name in which index.md is located
+    slug = path.basename(path.dirname(file.path));
+  } else {
+    // Use file name without the extension
+    slug = path.basename(file.path).split(".")[0];
+  }
+  const text = await Deno.readTextFile(file.path);
+  const { body, attrs } = extractFrontMatter(text);
+
+  if (attrs.draft && isProd) {
+    console.log(
+      "Skipped draft",
+      path.relative(baseDir, file.path),
+    );
+    return;
+  }
+
+  const post: BlogPost = {
+    filePath: file.path,
+    slug,
+    title: attrs.title! as string,
+    description: attrs.description as string | undefined,
+    text: body,
+    // html,
+    date: new Date(Date.parse(attrs.date! as string)),
+    // toc: mdRenderer.toc,
+    mermaid: false,
+    // mermaid: mdRenderer.mermaid,
+  };
+
+  const extraAttrs = attrs.extra as Record<string, unknown> | undefined;
+  if (extraAttrs?.preview_image) {
+    const previewImage = extraAttrs!.preview_image as {
+      href: string;
+      alt: string;
+    };
+    // Verify that image exists
+    const dirname = path.dirname(file.path);
+    const imagePath = path.join(dirname, previewImage.href);
+    const fileInfo = await Deno.lstat(imagePath);
+    if (!fileInfo.isFile) {
+      throw new Error("Preview image is not a file " + imagePath);
+    }
+
+    const imgId = slug + "/" + path.basename(imagePath);
+    post.previewImage = {
+      id: imgId,
+      alt: previewImage.alt,
+    };
+    blogImages.set(imgId, imagePath);
+  }
+
+  blogPosts.set(slug, post);
+  const t1 = performance.now();
+  console.log(
+    "Processed",
+    path.relative(baseDir, file.path),
+    `in ${t1 - t0}ms`,
+  );
+}
+
+/** Render Markdown into HTML if hasn't been done */
+export function renderPost(post: BlogPost) {
+  if (post.html) {
+    return;
+  }
+
+  const mdRenderer = new Renderer(post.filePath, post.slug);
+  const html = Marked.marked(post.text, {
+    gfm: true,
+    renderer: mdRenderer,
+    mangle: undefined,
+    headerIds: undefined,
+  });
+
+  post.html = html;
+  post.toc = mdRenderer.toc;
+  post.mermaid = mdRenderer.mermaid;
 }

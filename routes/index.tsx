@@ -45,7 +45,7 @@ export default function HomePage() {
                   {formatDate(p.date)}
                 </span>
                 <h2 class="text-2xl">
-                  <a href={`/post/${p.slug}/`} class="no-underline">
+                  <a href={`/post/${p.slug}`} class="no-underline">
                     {p.title}
                   </a>
                 </h2>

@@ -1,5 +1,5 @@
 import { Footer, Header } from "@/components/Header.tsx";
-import { blogPosts } from "@/utils/blog.ts";
+import { blogPosts, renderPost } from "@/utils/blog.ts";
 import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import BlogPostImports from "@/islands/BlogPostImports.tsx";
@@ -665,6 +665,8 @@ export default function PostPage(props: PageProps) {
     );
   }
 
+  renderPost(post);
+
   return (
     <>
       <Head>
@@ -691,7 +693,7 @@ export default function PostPage(props: PageProps) {
               <li>
                 <a href="#">↑ Top</a>
               </li>
-              {post.toc.map((heading) => (
+              {post.toc!.map((heading) => (
                 <li>
                   <a href={`#${heading.entry.slug}`}>{heading.entry.text}</a>
 
@@ -714,7 +716,7 @@ export default function PostPage(props: PageProps) {
           <main class="max-w-4xl mx-0 md:mx-auto mt-4 xl:mt-0 xl:grow">
             <div
               class="my-2 markdown-body"
-              dangerouslySetInnerHTML={{ __html: post.html }}
+              dangerouslySetInnerHTML={{ __html: post.html! }}
             />
 
             <div class="mt-4">

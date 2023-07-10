@@ -58,7 +58,8 @@ const resizer = (function () {
 
         return img.write(
           MagickFormat.Png,
-          (data) => data,
+          // I am copying the buffer so that it could be used outside of this method safely
+          (data) => new Uint8Array(data),
         );
       },
     );
