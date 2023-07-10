@@ -17,12 +17,17 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v3
 
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
       - name: Build step
-        run: deno task build # 📝 Update the build command(s)
+        run: deno task build
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
           project: "tall-chicken-56"
-          entrypoint: "main.ts" # 📝 Update the entrypoint
-          root: "." # 📝 Update the root
+          entrypoint: "main.ts"
+          root: "."
