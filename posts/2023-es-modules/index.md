@@ -10,6 +10,8 @@ preview_image = { href = "es-logo.png", alt = "EcmaScript logo" }
 +++
 
 > This is a Part 1 of *"Bundling TypeScript in the browser series"*. 
+>
+> Part 2: [Bundling TypeScript in the browser](/post/2023-bundling-ts-in-browser)
 
 
 ## A brief history of bundlers
@@ -199,6 +201,8 @@ Static import is a statement while dynamic import is a function that returns a P
 const { name } = await import('./name.js');
 console.log(`Hi from JS ${name}!`);
 ```
+
+### Import from a string
 
 It turns out that we can even import the module from a string. *(Feel free to paste the snippet below in your browser console)*
 

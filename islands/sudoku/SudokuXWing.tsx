@@ -11,6 +11,7 @@ const materials = [
   "https://www.sudoku.academy/learn/x-wing/",
   "https://www.youtube.com/watch?v=az2M0V9QCXk",
   "http://www.sudokubeginner.com/x-wing/",
+  "https://www.youtube.com/watch?v=z--Mo2GMqhI",
 ];
 
 type Exercise = {

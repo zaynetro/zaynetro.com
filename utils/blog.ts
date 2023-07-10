@@ -48,7 +48,7 @@ class Renderer extends Marked.Renderer {
     const slug = slugger.slug(raw);
     const c = level == 1 ? "text-xl" : "text-lg";
     const tocEntry: TocEntry = {
-      text,
+      text: text.replaceAll("&amp;", "&"),
       slug,
     };
     if (level == 2) {
