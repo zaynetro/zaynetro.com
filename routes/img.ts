@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { blogImages } from "@/posts.gen.ts";
+import { blogImages } from "@/build/posts.gen.ts";
 import {
   ImageMagick,
   IMagickImage,
@@ -9,6 +9,7 @@ import {
 } from "imagemagick_deno/mod.ts";
 import { serveFile } from "$std/http/file_server.ts";
 import * as blob from "kv_toolbox/blob.ts";
+import { ASSET_CACHE_BUST_KEY } from "$fresh/runtime.ts";
 
 await initialize();
 
@@ -125,7 +126,7 @@ export const handler: Handlers = {
     if (orig) {
       // Serve original image
       const res = await serveFile(req, img);
-      if (url.searchParams.get("__frsh_c")) {
+      if (url.searchParams.get(ASSET_CACHE_BUST_KEY)) {
         res.headers.set("Cache-Control", "public, max-age=31536000, immutable");
       }
       return res;
@@ -153,7 +154,7 @@ export const handler: Handlers = {
       },
     });
 
-    if (url.searchParams.get("__frsh_c")) {
+    if (url.searchParams.get(ASSET_CACHE_BUST_KEY)) {
       res.headers.set("Cache-Control", "public, max-age=31536000, immutable");
     }
 

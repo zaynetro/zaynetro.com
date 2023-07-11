@@ -2,6 +2,4 @@
 
 import dev from "$fresh/dev.ts";
 
-import "@/build.ts";
-
-await dev(import.meta.url, "./main.ts");
+await dev(import.meta.url, "./local-main.ts");

@@ -2,7 +2,7 @@ import { Footer, Header } from "@/components/Header.tsx";
 import { isProd } from "@/utils/env.ts";
 import { formatDate } from "@/routes/post/[slug].tsx";
 import { Head } from "$fresh/runtime.ts";
-import { blogPosts } from "@/posts.gen.ts";
+import { blogPosts } from "@/build/posts.gen.ts";
 
 export default function HomePage() {
   const posts = [...blogPosts.values()]

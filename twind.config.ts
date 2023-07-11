@@ -5,7 +5,6 @@ import presetTailwind from "@twind/preset-tailwind";
 export default {
   selfURL: import.meta.url,
   ...defineConfig({
-    // deno-lint-ignore no-explicit-any
-    presets: [presetTailwind() as Preset<any>],
+    presets: [presetTailwind() as Preset],
   }),
 } as Options;

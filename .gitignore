@@ -7,5 +7,5 @@
 
 .DS_Store
 
-# Generated file
-posts.gen.ts
+# Generated files
+build

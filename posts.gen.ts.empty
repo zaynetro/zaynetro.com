@@ -1,0 +1,4 @@
+// This is a placeholder file needed until a real one is generated.
+
+export const blogPosts: Map<string, BlogPost> = new Map();
+export const blogImages: Map<string, string> = new Map();

@@ -1,5 +1,5 @@
 import { Footer, Header } from "@/components/Header.tsx";
-import { blogPosts } from "@/posts.gen.ts";
+import { blogPosts } from "@/build/posts.gen.ts";
 import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import BlogPostImports from "@/islands/BlogPostImports.tsx";

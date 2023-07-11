@@ -20,6 +20,11 @@ jobs:
         with:
           deno-version: v1.x
 
+      - name: Mock posts.gen.ts
+        run: |
+          mkdir -p build
+          cp posts.gen.ts.empty build/posts.gen.ts
+
       - name: Check format
         run: deno fmt --check
 

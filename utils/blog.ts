@@ -3,6 +3,7 @@ import { walk, WalkEntry } from "$std/fs/walk.ts";
 import { extract as extractFrontMatter } from "$std/front_matter/toml.ts";
 import * as Marked from "marked";
 import { default as Prism } from "prismjs";
+import { ASSET_CACHE_BUST_KEY } from "$fresh/runtime.ts";
 
 // Support more languages (by default only HTML, JS and CSS are supported)
 import "prismjs/components/prism-typescript?no-check";
@@ -17,7 +18,6 @@ import "prismjs/components/prism-rust?no-check";
 import "prismjs/components/prism-toml?no-check";
 import "prismjs/components/prism-sql?no-check";
 import "prismjs/components/prism-xml-doc?no-check";
-import { asset } from "$fresh/runtime.ts";
 
 const baseDir = Deno.cwd();
 const postsDir = path.join(baseDir, "posts");
@@ -120,12 +120,11 @@ class Renderer extends Marked.Renderer {
           const src = matches[1];
           const dirname = path.dirname(this.filePath);
           const imagePath = path.join(dirname, src);
-          Deno.lstatSync(imagePath);
 
           const id = this.fileSlug + "/" + path.basename(imagePath);
           this.images.set(id, path.relative(baseDir, imagePath));
 
-          return line.replace(src, asset(`/img?id=${id}&orig`));
+          return line.replace(src, imgHref({ id, file: imagePath }));
         })
         .join("\n");
       const label = Marked.marked.parseInline(matches[1], {
@@ -157,40 +156,38 @@ class Renderer extends Marked.Renderer {
 
     const dirname = path.dirname(this.filePath);
     const imagePath = path.join(dirname, src);
-    Deno.lstatSync(imagePath);
+    const info = Deno.lstatSync(imagePath);
 
     const id = this.fileSlug + "/" + path.basename(imagePath);
     this.images.set(id, path.relative(baseDir, imagePath));
+
+    const imgSrc = (width?: number) => imgHrefWithInfo({ info, width, id });
 
     if (title?.includes("no-resize")) {
       title = title?.replaceAll("no-resize", "");
 
       return `
 <img
-  src="/img?id=${id}&orig"
+  src="${imgSrc()}"
   alt="${alt ?? ""}"
   title="${title ?? ""}"
 />`;
     }
 
     return `
-<a href="/img?id=${id}&orig" class="img-link">
+<a href="${imgSrc()}" class="img-link">
   <picture>
     <source
       media="(max-width: 500px)"
-      srcset="${this.imgSrc(id, 500)}, ${this.imgSrc(id, 1000)} 2x" />
+      srcset="${imgSrc(500)}, ${imgSrc(1000)} 2x" />
 
     <img
-      src="${this.imgSrc(id, 900)}"
-      srcset="${this.imgSrc(id, 900)}, ${this.imgSrc(id, 1800)} 2x"
+      src="${imgSrc(900)}"
+      srcset="${imgSrc(900)}, ${imgSrc(1800)} 2x"
       alt="${alt ?? ""}"
       title="${title ?? ""}" />
   </picture>
 </a>`;
-  }
-
-  private imgSrc(id: string, w: number): string {
-    return asset(`/img?id=${id}&w=${w}`);
   }
 }
 
@@ -307,4 +304,40 @@ async function loadPost(file: WalkEntry, {
     path.relative(baseDir, file.path),
     post.draft ? "(draft)" : "",
   );
+}
+
+function imgHref({
+  file,
+  id,
+  width,
+}: {
+  file: string;
+  id: string;
+  width?: number;
+}) {
+  const info = Deno.lstatSync(file);
+  return imgHrefWithInfo({ info, id, width });
+}
+
+function imgHrefWithInfo({
+  info,
+  id,
+  width,
+}: {
+  info: Deno.FileInfo;
+  id: string;
+  width?: number;
+}) {
+  const cacheId = info.mtime?.getTime() ?? 0;
+  let href = `/img?id=${id}`;
+
+  if (width) {
+    href += `&w=${width}`;
+  } else {
+    href += `&orig`;
+  }
+
+  href += `&${ASSET_CACHE_BUST_KEY}=${cacheId}`;
+
+  return href;
 }

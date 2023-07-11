@@ -3,12 +3,12 @@
   "tasks": {
     "start": "deno run -A --unstable --watch=static/,routes/,posts/ dev.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
-    "build": "deno run --allow-read --allow-write --allow-env build.ts",
+    "build": "deno run -A --unstable build.ts",
     "production": "deno run -A --unstable main.ts"
   },
   "imports": {
     "@/": "./",
-    "$fresh/": "https://deno.land/x/fresh@1.2.0/",
+    "$fresh/": "https://raw.githubusercontent.com/zaynetro/fresh/prebuild-js/",
     "preact": "https://esm.sh/preact@10.15.1",
     "preact/": "https://esm.sh/preact@10.15.1/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.1.0",
@@ -30,9 +30,9 @@
     "jsxImportSource": "preact"
   },
   "fmt": {
-    "exclude": ["static/", "posts/", ".vscode/"]
+    "exclude": ["static/", "posts/", ".vscode/", "build/"]
   },
   "lint": {
-    "exclude": ["static/", "posts/", ".vscode/"]
+    "exclude": ["static/", "posts/", ".vscode/", "build/"]
   }
 }
