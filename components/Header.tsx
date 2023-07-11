@@ -44,7 +44,7 @@ a:hover {
 // Register our logo image
 blogImages.set(
   "logo.png",
-  path.join(Deno.cwd(), "static", "images", "logo.png"),
+  path.join("static", "images", "logo.png"),
 );
 
 export function Header({

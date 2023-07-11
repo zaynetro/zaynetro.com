@@ -123,7 +123,7 @@ class Renderer extends Marked.Renderer {
           Deno.lstatSync(imagePath);
 
           const id = this.fileSlug + "/" + path.basename(imagePath);
-          this.images.set(id, imagePath);
+          this.images.set(id, path.relative(baseDir, imagePath));
 
           return line.replace(src, asset(`/img?id=${id}&orig`));
         })
@@ -160,7 +160,7 @@ class Renderer extends Marked.Renderer {
     Deno.lstatSync(imagePath);
 
     const id = this.fileSlug + "/" + path.basename(imagePath);
-    this.images.set(id, imagePath);
+    this.images.set(id, path.relative(baseDir, imagePath));
 
     if (title?.includes("no-resize")) {
       title = title?.replaceAll("no-resize", "");
@@ -291,17 +291,14 @@ async function loadPost(file: WalkEntry, {
     // Verify that image exists
     const dirname = path.dirname(file.path);
     const imagePath = path.join(dirname, previewImage.href);
-    const fileInfo = await Deno.lstat(imagePath);
-    if (!fileInfo.isFile) {
-      throw new Error("Preview image is not a file " + imagePath);
-    }
+    await Deno.lstat(imagePath);
 
     const imgId = slug + "/" + path.basename(imagePath);
     post.previewImage = {
       id: imgId,
       alt: previewImage.alt,
     };
-    images.set(imgId, imagePath);
+    images.set(imgId, path.relative(baseDir, imagePath));
   }
 
   posts.set(slug, post);
