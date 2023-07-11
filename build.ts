@@ -1,7 +1,6 @@
 import { loadPosts } from "@/utils/blog.ts";
 import * as path from "$std/path/mod.ts";
 import manifest from "@/fresh.gen.ts";
-import * as base64 from "$std/encoding/base64.ts";
 import twindPlugin from "$fresh/plugins/twindv1.ts";
 import twindConfig from "@/twind.config.ts";
 import { ServerContext } from "$fresh/server.ts";
@@ -61,8 +60,8 @@ async function genSnapshot() {
   const snapshot = await ctx.buildSnapshot();
 
   const filesDir = path.join(buildDir, "files");
-  await fs.emptyDir(filesDir);
   await Deno.mkdir(filesDir, { recursive: true });
+  await fs.emptyDir(filesDir);
 
   console.log("Will write", snapshot.paths.length, "build files");
   const paths = snapshot.paths;
@@ -77,15 +76,9 @@ async function genSnapshot() {
     deps[p] = v;
   }
 
-  const content = JSON.stringify(
-    { deps, paths },
-    null,
-    2,
-  );
-
-  const snapshotPath = path.join(buildDir, "build.snapshot.json");
+  const content = JSON.stringify({ deps, paths }, null, 2);
   console.log("Writing build.snapshot.json");
-  await Deno.writeTextFile(snapshotPath, content);
+  await Deno.writeTextFile(path.join(buildDir, "build.snapshot.json"), content);
 
   const t1 = performance.now();
   console.log(`Built a snapshot in ${t1 - t0}ms`);

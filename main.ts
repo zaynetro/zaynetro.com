@@ -5,8 +5,6 @@
 /// <reference lib="deno.ns" />
 /// <reference lib="deno.unstable" />
 
-import "$std/dotenv/load.ts";
-
 import { start } from "$fresh/server.ts";
 import manifest from "@/fresh.gen.ts";
 
@@ -14,7 +12,6 @@ import twindPlugin from "$fresh/plugins/twindv1.ts";
 import twindConfig from "@/twind.config.ts";
 
 import { BuildSnapshot } from "$fresh/src/build/mod.ts";
-// import * as base64 from "$std/encoding/base64.ts";
 import * as path from "$std/path/mod.ts";
 
 const t0 = performance.now();
