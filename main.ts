@@ -14,30 +14,41 @@ import twindPlugin from "$fresh/plugins/twindv1.ts";
 import twindConfig from "@/twind.config.ts";
 
 import { BuildSnapshot } from "$fresh/src/build/mod.ts";
-import * as base64 from "$std/encoding/base64.ts";
+// import * as base64 from "$std/encoding/base64.ts";
+import * as path from "$std/path/mod.ts";
 
+const t0 = performance.now();
 let snapshotText = await Deno.readTextFile("build/build.snapshot.json");
 const snapshotJson = JSON.parse(snapshotText);
 snapshotText = "";
 
+const filesDir = path.join(Deno.cwd(), "build", "files");
+
 export const snapshot: BuildSnapshot = {
   get paths() {
-    return Object.keys(snapshotJson.files);
+    return snapshotJson.paths;
   },
 
-  read(path: string): Uint8Array | null {
-    const v = snapshotJson.files[path];
-    if (!v) {
+  read(p: string): ReadableStream<Uint8Array> | null {
+    try {
+      const file = Deno.openSync(path.join(filesDir, p));
+      return file.readable;
+    } catch (e) {
+      if (!(e instanceof Deno.errors.NotFound)) {
+        throw e;
+      }
+
       return null;
     }
-
-    return base64.decode(v);
   },
 
   dependencies(path: string): string[] {
-    return snapshotJson.dependencies[path] ?? [];
+    return snapshotJson.deps[path] ?? [];
   },
 };
+
+const t1 = performance.now();
+console.log(`Took ${t1 - t0}ms to start`);
 
 await start(manifest, {
   plugins: [twindPlugin(twindConfig)],

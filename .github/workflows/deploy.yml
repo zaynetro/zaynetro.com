@@ -33,6 +33,6 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "tall-chicken-56"
+          project: "zaynetro-com"
           entrypoint: "main.ts"
           root: "."

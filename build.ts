@@ -5,6 +5,7 @@ import * as base64 from "$std/encoding/base64.ts";
 import twindPlugin from "$fresh/plugins/twindv1.ts";
 import twindConfig from "@/twind.config.ts";
 import { ServerContext } from "$fresh/server.ts";
+import * as fs from "$std/fs/mod.ts";
 
 const buildDir = path.join(Deno.cwd(), "build");
 await Deno.mkdir(buildDir, { recursive: true });
@@ -50,7 +51,6 @@ ${imagesImport}
   await Deno.writeTextFile(postsCache, content);
 }
 
-// TODO: store files on disk
 /** Generate ESBuild snapshot */
 async function genSnapshot() {
   const t0 = performance.now();
@@ -60,11 +60,15 @@ async function genSnapshot() {
   });
   const snapshot = await ctx.buildSnapshot();
 
-  const files: Record<string, string> = {};
-  for (const p of snapshot.paths) {
-    const data = snapshot.read(p) as Uint8Array;
-    const v = base64.encode(data);
-    files[p] = v;
+  const filesDir = path.join(buildDir, "files");
+  await fs.emptyDir(filesDir);
+  await Deno.mkdir(filesDir, { recursive: true });
+
+  console.log("Will write", snapshot.paths.length, "build files");
+  const paths = snapshot.paths;
+  for (const p of paths) {
+    const data = snapshot.read(p)!;
+    await Deno.writeFile(path.join(filesDir, p), data);
   }
 
   const deps: Record<string, string[]> = {};
@@ -74,10 +78,7 @@ async function genSnapshot() {
   }
 
   const content = JSON.stringify(
-    {
-      files,
-      dependencies: deps,
-    },
+    { deps, paths },
     null,
     2,
   );
