@@ -1,3 +1,5 @@
+/// <reference lib="deno.unstable" />
+
 import { loadPosts } from "@/utils/blog.ts";
 import * as path from "$std/path/mod.ts";
 import manifest from "@/fresh.gen.ts";
