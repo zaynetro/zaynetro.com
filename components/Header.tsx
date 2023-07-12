@@ -1,6 +1,14 @@
 import { asset, Head } from "$fresh/runtime.ts";
 import * as path from "$std/path/mod.ts";
 import { blogImages } from "@/build/posts.gen.ts";
+import {
+  IconBrandGithub,
+  IconBrandLinkedin,
+  IconDog,
+  IconGridDots,
+  IconMail,
+} from "@tabler/icons-preact";
+import { ComponentChildren } from "preact";
 
 export const baseTitle = "Roman Zaynetdinov (zaynetro)";
 
@@ -31,6 +39,8 @@ a {
   overflow-wrap: break-word;
   padding: 1px 2px;
   border-radius: 5px;
+  /* Safari doesn't support dotted text-decoration so first we define a value that it supports. */
+  text-decoration: underline;
   text-decoration: underline dotted #777;
   text-decoration-thickness: from-font;
 }
@@ -92,48 +102,97 @@ export function Header({
           <nav class="flex flex-col gap-4">
             <a href="/" class="text-lg no-underline">zaynetro.com</a>
 
-            <ul class="flex flex-col gap-1 list-disc ml-4">
-              <li>
-                <a href="https://github.com/zaynetro">GitHub</a>
-              </li>
+            <ul class="flex flex-col gap-1">
+              <NavLink href="https://github.com/zaynetro">
+                <IconBrandGithub size={16} />
+                GitHub
+              </NavLink>
 
-              <li>
-                <a href="https://www.linkedin.com/in/roman-zay/">CV</a>
-              </li>
+              <NavLink href="https://www.linkedin.com/in/roman-zay/">
+                <IconBrandLinkedin size={16} />
+                CV
+              </NavLink>
 
-              <li>
-                <a href="mailto:roman@zaynetro.com">Get in touch</a>
-              </li>
-
-              <li>
-                <a href="/sudoku">Sudoku</a>
-              </li>
+              <NavLink href="mailto:roman@zaynetro.com">
+                <IconMail size={16} />
+                Get in touch
+              </NavLink>
             </ul>
           </nav>
+
+          <ul class="flex flex-col gap-1 pt-12">
+            <span class="text-gray-600">Projects:</span>
+
+            <NavLink href="/sudoku">
+              <IconGridDots size={16} />
+              Sudoku
+            </NavLink>
+
+            <NavLink
+              href="https://bolik.net"
+              target="_blank"
+            >
+              <IconDog size={16} />
+              Bolik
+            </NavLink>
+          </ul>
         </div>
       </header>
     </>
   );
 }
 
+function NavLink({
+  href,
+  target,
+  children,
+}: {
+  href: string;
+  target?: string;
+  children: ComponentChildren;
+}) {
+  return (
+    <li>
+      <a
+        href={href}
+        target={target}
+        class="inline-flex gap-1 items-center py-1.5 sm:py-0"
+      >
+        {children}
+      </a>
+    </li>
+  );
+}
+
 export function Footer() {
   return (
     <footer class="text-center mt-8 mb-4 px-4">
-      <p class="inline-flex flex-col sm:flex-row text-gray-700 dark:text-gray-200 text-sm gap-2">
+      <div class="inline-flex flex-col sm:flex-row text-gray-700 dark:text-gray-200 text-sm gap-4">
         <span>
           Roman Zaynetdinov (zaynetro) {new Date().getFullYear()}
         </span>
         <span class="hidden sm:block text-gray-300">|</span>
-        <span>
-          <a href="https://github.com/zaynetro/zaynetro.com">
-            Source
-          </a>
-        </span>
-        <span class="hidden sm:block text-gray-300">|</span>
-        <span>
-          <a href="mailto:roman@zaynetro.com">Get in touch</a>
-        </span>
-      </p>
+
+        <div class="flex gap-4 justify-center">
+          <span>
+            <a
+              href="https://github.com/zaynetro/zaynetro.com"
+              class="py-1.5 sm:py-0"
+            >
+              Source
+            </a>
+          </span>
+          <span class="text-gray-300">|</span>
+          <span>
+            <a
+              href="mailto:roman@zaynetro.com"
+              class="py-1.5 sm:py-0"
+            >
+              Get in touch
+            </a>
+          </span>
+        </div>
+      </div>
     </footer>
   );
 }

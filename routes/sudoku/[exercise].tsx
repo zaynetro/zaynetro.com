@@ -74,9 +74,9 @@ body {
       </Head>
 
       <header class="max-w-3xl mx-auto pt-6 px-4 flex gap-6 items-center">
-        <a href="/" class="text-lg no-underline">zaynetro.com</a>
+        <a href="/" class="text-lg no-underline py-1.5">zaynetro.com</a>
         <div>
-          <a href="/sudoku" class="text-md no-underline">Sudoku exercises</a>
+          <a href="/sudoku" class="text-md py-1">Sudoku exercises</a>
         </div>
       </header>
 

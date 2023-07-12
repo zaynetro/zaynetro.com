@@ -22,7 +22,7 @@ export default function SudokuPage() {
       </Head>
 
       <header class="max-w-3xl mx-auto pt-6 px-4">
-        <a href="/" class="text-lg no-underline">zaynetro.com</a>
+        <a href="/" class="text-lg no-underline py-1.5">zaynetro.com</a>
       </header>
 
       <main class="max-w-xl mx-auto mt-8 mb-16 flex flex-col gap-4 px-4">
@@ -30,7 +30,12 @@ export default function SudokuPage() {
         <ul class="flex flex-col gap-4 mt-4 ml-6 list-disc">
           {exercises.map((e) => (
             <li>
-              <a href={`/sudoku/${e.slug}`}>{e.name}</a>
+              <a
+                href={`/sudoku/${e.slug}`}
+                class="py-1"
+              >
+                {e.name}
+              </a>
             </li>
           ))}
         </ul>
