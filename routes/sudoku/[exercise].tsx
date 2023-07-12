@@ -73,8 +73,11 @@ body {
         />
       </Head>
 
-      <header class="max-w-3xl mx-auto pt-6 px-4">
+      <header class="max-w-3xl mx-auto pt-6 px-4 flex gap-6 items-center">
         <a href="/" class="text-lg no-underline">zaynetro.com</a>
+        <div>
+          <a href="/sudoku" class="text-md no-underline">Sudoku exercises</a>
+        </div>
       </header>
 
       <main class="max-w-3xl mx-auto px-4 mt-8">
