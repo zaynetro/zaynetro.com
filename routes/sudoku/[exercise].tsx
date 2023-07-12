@@ -52,7 +52,7 @@ export default function SudokuExercisePage({ data }: {
         <meta property="og:title" content={title} />
         <meta
           name="description"
-          content={`${exercise.name}. Practice solving Sudoku online.`}
+          content={`${exercise.name}. Practice solving Sudoku online. Do you want to get better at Sudoku? Try completing this exercise.`}
         />
         <link rel="icon" href={asset("/favicon.png")} />
         <script
