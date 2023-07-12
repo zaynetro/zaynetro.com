@@ -180,6 +180,10 @@ export default function SudokuXWing() {
 
   function onNext() {
     exerciseIndex.value += 1;
+
+    if ("plausible" in window) {
+      (window.plausible as (event: string) => void)("sudoku-solved");
+    }
   }
 
   return (

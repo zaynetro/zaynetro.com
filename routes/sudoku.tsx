@@ -34,9 +34,39 @@ export default function SudokuPage() {
             </li>
           ))}
         </ul>
+
+        {/* Next sudoku exercise poll */}
+        <div class="mt-48 h-52">
+          <bk-poll-form></bk-poll-form>
+          <script
+            async
+            src="https://eyuxylujanwriimduamk.supabase.co/storage/v1/object/public/cdn/ui/12o8plen1pih2v3/bk-poll-form.js"
+          >
+          </script>
+
+          <div class="mt-4 text-xs text-gray-500">
+            Poll powered by{" "}
+            <a href="https://bolik.net" target="_blank">Bolik</a>.
+          </div>
+        </div>
       </main>
 
       <Footer />
     </>
   );
+}
+
+// This import is needed to allow extending module declaration.
+import "preact";
+
+declare module "preact" {
+  namespace JSX {
+    interface IntrinsicElements {
+      "bk-poll-form": BkPollFormAttrs;
+    }
+  }
+}
+
+interface BkPollFormAttrs extends preact.JSX.HTMLAttributes<HTMLElement> {
+  href?: string;
 }
