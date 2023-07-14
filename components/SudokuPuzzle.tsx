@@ -6,18 +6,28 @@ import {
   IconPencil,
   IconRobot,
 } from "@tabler/icons-preact";
+import { JSX } from "preact";
 
 type SudokuGrid = number[][];
+
+type CandidateHighlightStyle = "normal" | "removed";
 
 /** All methods use a 1-based indexing (human-readable). */
 export type HintCtx = {
   highlightRow: (row: number) => void;
   highlightCol: (col: number) => void;
   highlight: (row: number, col: number) => void;
+  highlightCandidate: (
+    row: number,
+    col: number,
+    num: number,
+    style?: CandidateHighlightStyle,
+  ) => void;
   clearHighlight: () => void;
   note: (row: number, col: number, num: number) => void;
+  fillCandidates: () => void;
 };
-export type HintFunc = (ctx: HintCtx) => string;
+export type HintFunc = (ctx: HintCtx) => string | JSX.Element;
 
 const nineLengthArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const boxes = [
@@ -39,14 +49,17 @@ export function SudokuPuzzle({
 }: {
   initial: SudokuGrid;
   onSelectCell?: (row: number, col: number) => void;
-  hints?: HintFunc[];
+  hints: HintFunc[];
 }) {
   const grid = useSignal(initial);
   const notes = useSignal<Record<string, number[]>>({});
   const selected = useSignal<number[] | null>(null);
   const notesMode = useSignal(false);
   const highlights = useSignal<Record<string, boolean>>({});
-  const visibleHints = useSignal<string[]>([]);
+  const candidateHighlights = useSignal<
+    Record<string, CandidateHighlightStyle>
+  >({});
+  const visibleHints = useSignal<(string | JSX.Element)[]>([]);
 
   const selectedNumber = selected.value
     ? grid.value[selected.value[0]][selected.value[1]]
@@ -165,36 +178,61 @@ export function SudokuPuzzle({
     };
   }
 
+  function highlightCandidate(
+    row: number,
+    col: number,
+    num: number,
+    style: CandidateHighlightStyle = "removed",
+  ) {
+    const key = `${row},${col},${num}`;
+    candidateHighlights.value = {
+      ...candidateHighlights.value,
+      [key]: style,
+    };
+  }
+
   function nextHint() {
-    const allHints = hints ?? [];
-    if (visibleHints.value.length >= allHints.length) {
+    if (visibleHints.value.length >= hints.length) {
       // No more hints
       return;
     }
 
-    batch(() => {
-      const index = visibleHints.value.length;
-      const hint = allHints[index]({
-        highlightRow: (row) => {
-          for (let i = 0; i < 9; i += 1) {
-            highlightCell(row - 1, i);
-          }
-        },
-        highlightCol: (col) => {
-          for (let i = 0; i < 9; i += 1) {
-            highlightCell(i, col - 1);
-          }
-        },
-        highlight: (row, col) => {
-          highlightCell(row - 1, col - 1);
-        },
-        clearHighlight: () => {
+    const index = visibleHints.value.length;
+    const hint = hints[index]({
+      highlightRow: (row) => {
+        for (let i = 0; i < 9; i += 1) {
+          highlightCell(row - 1, i);
+        }
+      },
+      highlightCol: (col) => {
+        for (let i = 0; i < 9; i += 1) {
+          highlightCell(i, col - 1);
+        }
+      },
+      highlight: (row, col) => {
+        highlightCell(row - 1, col - 1);
+      },
+      highlightCandidate: (
+        row: number,
+        col: number,
+        num: number,
+        style?: CandidateHighlightStyle,
+      ) => {
+        highlightCandidate(row - 1, col - 1, num, style);
+      },
+      clearHighlight: () => {
+        batch(() => {
           highlights.value = {};
-        },
-        note: (row, col, num) => {
-          setNotes(num, row - 1, col - 1, { appendOnly: true });
-        },
-      });
+          candidateHighlights.value = {};
+        });
+      },
+      note: (row, col, num) => {
+        setNotes(num, row - 1, col - 1, { appendOnly: true });
+      },
+      fillCandidates,
+    });
+
+    batch(() => {
       const next = [...visibleHints.value];
       next.push(hint);
       visibleHints.value = next;
@@ -313,6 +351,10 @@ export function SudokuPuzzle({
                     value={cellValue}
                     notes={notes.value[key]}
                     onClick={() => selectCell(row, col)}
+                    getStyle={(num) => {
+                      const key = `${row},${col},${num}`;
+                      return candidateHighlights.value[key];
+                    }}
                   />
                 </div>
               );
@@ -357,7 +399,7 @@ export function SudokuPuzzle({
           Notes
         </button>
 
-        {!!hints && !!hints.length && (
+        {!!hints.length && (
           <button
             type="button"
             class="flex flex-col justify-center relative text-gray-600 dark:text-gray-300 text-sm"
@@ -404,14 +446,16 @@ export function SudokuPuzzle({
         <div class="flex flex-col gap-1 rounded-md p-2 bg-yellow-100 text-gray-800 dark:bg-yellow-900 dark:text-gray-300">
           {visibleHints.value.map((h) => <p>{h}</p>)}
 
-          {(visibleHints.value.length < (hints ?? []).length) && (
+          {(visibleHints.value.length < hints.length) && (
             <div class="flex justify-end">
               <button
                 type="button"
                 class="p-2 rounded-md text-sm bg-blue-700 text-white dark:text-gray-100"
                 onClick={nextHint}
               >
-                More
+                {(visibleHints.value.length + 1) == hints.length
+                  ? "Solution"
+                  : "More"}
               </button>
             </div>
           )}
@@ -426,11 +470,13 @@ function SudokuCell({
   notes,
   onClick,
   selectedNumber,
+  getStyle,
 }: {
   value: number;
   notes?: number[];
   onClick: () => void;
   selectedNumber?: number;
+  getStyle: (num: number) => CandidateHighlightStyle | null;
 }) {
   return (
     <div
@@ -440,15 +486,32 @@ function SudokuCell({
       {value > 0 ? value : (
         !!notes && (
           <span class="text-xs sm:text-base text-gray-400 break-all">
-            {notes.map((n) => (
-              selectedNumber == n
-                ? (
-                  <b class="rounded-xl px-1 bg-yellow-200 dark:bg-yellow-800 text-gray-600 dark:text-gray-300">
+            {notes.map((n) => {
+              const selected = selectedNumber == n;
+              const highlighted = getStyle(n);
+              const selectedClass =
+                "rounded-xl px-1 text-gray-600 dark:text-gray-300";
+
+              if (highlighted == "removed") {
+                return (
+                  <span class={`${selectedClass} bg-red-300 dark:bg-red-700`}>
+                    {n}
+                  </span>
+                );
+              }
+
+              if (highlighted == "normal" || selected) {
+                return (
+                  <b
+                    class={`${selectedClass} bg-yellow-200 dark:bg-yellow-800`}
+                  >
                     {n}
                   </b>
-                )
-                : <>{n}</>
-            ))}
+                );
+              }
+
+              return <>{n}</>;
+            })}
           </span>
         )
       )}

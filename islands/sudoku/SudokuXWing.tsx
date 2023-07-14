@@ -43,6 +43,7 @@ const exercises: Exercise[] = [{
     () => "Number 3 could be only in two cells in columns 5 and 7.",
     (ctx) => {
       ctx.clearHighlight();
+
       ctx.highlight(3, 5);
       ctx.note(3, 5, 3);
       ctx.highlight(3, 7);
@@ -51,8 +52,20 @@ const exercises: Exercise[] = [{
       ctx.note(7, 5, 3);
       ctx.highlight(7, 7);
       ctx.note(7, 7, 3);
-      return "R3C5, R3C7, R7C5, R7C7 forms an X-wing. Number 3 must be in either of these four cells." +
-        " This removes all 3 number candidates from rows 3 and 7.";
+
+      ctx.fillCandidates();
+      ctx.highlightCandidate(3, 3, 3);
+      ctx.highlightCandidate(3, 8, 3);
+
+      return (
+        <>
+          R3C5, R3C7, R7C5, R7C7 forms an X-wing. Number 3 must be in either of
+          these four cells. This removes all 3 number candidates from rows 3 and
+          7.
+          <br />
+          Finally, we can place number 7 in R3C3.
+        </>
+      );
     },
   ],
 }, {
@@ -82,6 +95,7 @@ const exercises: Exercise[] = [{
     () => "Number 8 could be only in two cells in columns 2 and 7.",
     (ctx) => {
       ctx.clearHighlight();
+
       ctx.highlight(1, 2);
       ctx.note(1, 2, 8);
       ctx.highlight(1, 7);
@@ -90,8 +104,22 @@ const exercises: Exercise[] = [{
       ctx.note(8, 2, 8);
       ctx.highlight(8, 7);
       ctx.note(8, 7, 8);
-      return "R1C2, R1C7, R8C2, R8C7 forms an X-wing. Number 8 must be in either of these four cells." +
-        " This removes all 8 number candidates from rows 1 and 8.";
+
+      ctx.fillCandidates();
+      ctx.highlightCandidate(1, 3, 8);
+      ctx.highlightCandidate(1, 8, 8);
+      ctx.highlightCandidate(8, 5, 8);
+      ctx.highlightCandidate(7, 5, 8, "normal");
+
+      return (
+        <>
+          R1C2, R1C7, R8C2, R8C7 forms an X-wing. Number 8 must be in either of
+          these four cells. This removes all 8 number candidates from rows 1 and
+          8.
+          <br />
+          Finally, we can place number 8 in R7C5.
+        </>
+      );
     },
   ],
 }, {
@@ -121,6 +149,7 @@ const exercises: Exercise[] = [{
     () => "Number 3 could be only in two cells in rows 3 and 7.",
     (ctx) => {
       ctx.clearHighlight();
+
       ctx.highlight(3, 5);
       ctx.note(3, 5, 3);
       ctx.highlight(3, 7);
@@ -129,8 +158,21 @@ const exercises: Exercise[] = [{
       ctx.note(7, 5, 3);
       ctx.highlight(7, 7);
       ctx.note(7, 7, 3);
-      return "R3C5, R3C7, R7C5, R5C7 forms an X-wing. Number 3 must be in either of these four cells." +
-        " This removes all 3 number candidates from columns 5 and 7.";
+
+      ctx.fillCandidates();
+      ctx.highlightCandidate(1, 5, 3);
+      ctx.highlightCandidate(8, 5, 3);
+      ctx.highlightCandidate(8, 7, 3);
+
+      return (
+        <>
+          R3C5, R3C7, R7C5, R5C7 forms an X-wing. Number 3 must be in either of
+          these four cells. This removes all 3 number candidates from columns 5
+          and 7.
+          <br />
+          Finally, we can place number 2 in R8C7.
+        </>
+      );
     },
   ],
 }, {
@@ -160,6 +202,7 @@ const exercises: Exercise[] = [{
     () => "Number 9 could be only in two cells in columns 1 and 7.",
     (ctx) => {
       ctx.clearHighlight();
+
       ctx.highlight(5, 1);
       ctx.note(5, 1, 9);
       ctx.highlight(5, 7);
@@ -168,8 +211,21 @@ const exercises: Exercise[] = [{
       ctx.note(7, 1, 9);
       ctx.highlight(7, 7);
       ctx.note(7, 7, 9);
-      return "R5C1, R5C7, R7C1, R5C7 forms an X-wing. Number 9 must be in either of these four cells." +
-        " This removes all 9 number candidates from rows 5 and 7.";
+
+      ctx.fillCandidates();
+      ctx.highlightCandidate(5, 3, 9);
+      ctx.highlightCandidate(5, 9, 9);
+      ctx.highlightCandidate(7, 3, 9);
+
+      return (
+        <>
+          R5C1, R5C7, R7C1, R5C7 forms an X-wing. Number 9 must be in either of
+          these four cells. This removes all 9 number candidates from rows 5 and
+          7.
+          <br />
+          Finally, we can place number 2 in R7C3.
+        </>
+      );
     },
   ],
 }];
