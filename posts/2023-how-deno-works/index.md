@@ -3,7 +3,7 @@ author = "Roman Zaynetdinov"
 date = "2023-06-15T12:00:00+03:00"
 title = "How Deno works"
 description = "What is Deno? How Deno works? Let's see how Deno is implemented and how it evaluates your TypeScript files."
-draft = true
+draft = false
 
 [extra]
 preview_image = { href = "deno_hr_small.png", alt = "Deno logo" }
