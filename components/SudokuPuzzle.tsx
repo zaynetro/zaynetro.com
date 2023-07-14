@@ -1,9 +1,15 @@
 import { batch, useSignal } from "@preact/signals";
 import { useEffect } from "preact/hooks";
-import { IconBulb, IconEraser, IconPencil } from "@tabler/icons-preact";
+import {
+  IconBulb,
+  IconEraser,
+  IconPencil,
+  IconRobot,
+} from "@tabler/icons-preact";
 
 type SudokuGrid = number[][];
 
+/** All methods use a 1-based indexing (human-readable). */
 export type HintCtx = {
   highlightRow: (row: number) => void;
   highlightCol: (col: number) => void;
@@ -12,6 +18,19 @@ export type HintCtx = {
   note: (row: number, col: number, num: number) => void;
 };
 export type HintFunc = (ctx: HintCtx) => string;
+
+const nineLengthArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const boxes = [
+  { rows: [0, 2], cols: [0, 2] },
+  { rows: [0, 2], cols: [3, 5] },
+  { rows: [0, 2], cols: [6, 8] },
+  { rows: [3, 5], cols: [0, 2] },
+  { rows: [3, 5], cols: [3, 5] },
+  { rows: [3, 5], cols: [6, 8] },
+  { rows: [6, 8], cols: [0, 2] },
+  { rows: [6, 8], cols: [3, 5] },
+  { rows: [6, 8], cols: [6, 8] },
+];
 
 export function SudokuPuzzle({
   initial,
@@ -182,6 +201,53 @@ export function SudokuPuzzle({
     });
   }
 
+  function fillCandidates() {
+    /** Numbers in each box */
+    const allBoxNumbers: Map<number, number[]> = new Map();
+    boxes.forEach((box, boxIndex) => {
+      const numbers: number[] = [];
+      for (let row = box.rows[0]; row <= box.rows[1]; row += 1) {
+        for (let col = box.cols[0]; col <= box.cols[1]; col += 1) {
+          const value = grid.value[row][col];
+          if (value) {
+            numbers.push(value);
+          }
+        }
+      }
+
+      allBoxNumbers.set(boxIndex, numbers);
+    });
+
+    // Go through each cell and calculate the possibilities
+    for (let row = 0; row < 9; row += 1) {
+      for (let col = 0; col < 9; col += 1) {
+        const value = grid.value[row][col];
+        if (value) {
+          // Value already filled. Nothing to do here...
+          continue;
+        }
+
+        const boxIndex = Math.floor(row / 3) * 3 + Math.floor(col / 3);
+
+        // Check row, column and box
+        const rowNumbers = nineLengthArr.map((_, i) => grid.value[row][i])
+          .filter((v) => !!v);
+        const colNumbers = nineLengthArr.map((_, i) => grid.value[i][col])
+          .filter((v) => !!v);
+        const boxNumbers = allBoxNumbers.get(boxIndex) ?? [];
+
+        const candidates = nineLengthArr.filter((v) =>
+          !rowNumbers.includes(v) && !colNumbers.includes(v) &&
+          !boxNumbers.includes(v)
+        );
+
+        for (const num of candidates) {
+          setNotes(num, row, col, { appendOnly: true });
+        }
+      }
+    }
+  }
+
   useEffect(() => {
     document.addEventListener("keyup", keyboardListener);
 
@@ -200,16 +266,16 @@ export function SudokuPuzzle({
               const key = `${row},${col}`;
               const highlighted = highlights.value[key];
 
-              // Index of a 3x3 block
-              const blockIndex = Math.floor(row / 3) * 3 + Math.floor(col / 3);
-              const selectedBlockIndex = s
+              // Index of a 3x3 box
+              const boxIndex = Math.floor(row / 3) * 3 + Math.floor(col / 3);
+              const selectedBoxIndex = s
                 ? (Math.floor(s[0] / 3) * 3 + Math.floor(s[1] / 3))
                 : null;
 
               // Row or column selected
               const rowColSelected = s ? (s[0] == row || s[1] == col) : false;
-              // 3x3 block selected
-              const blockSelected = blockIndex == selectedBlockIndex;
+              // 3x3 box selected
+              const boxSelected = boxIndex == selectedBoxIndex;
               // User set this cell value
               const userSpecified = !initial[row][col] && !!cellValue;
 
@@ -227,9 +293,9 @@ export function SudokuPuzzle({
                         (col + 1) % 3 == 0,
                       // Highlighted cell
                       "bg-fuchsia-200 dark:bg-fuchsia-800": highlighted,
-                      // Selected row, column or 3x3 block
+                      // Selected row, column or 3x3 box
                       "bg-amber-100 dark:bg-amber-900": rowColSelected ||
-                        blockSelected,
+                        boxSelected,
                       // User specified cell
                       "text-blue-700 dark:text-blue-300": userSpecified,
                       // Same number
@@ -255,7 +321,7 @@ export function SudokuPuzzle({
         ))}
       </div>
 
-      <div class="flex mt-6 gap-12">
+      <div class="flex items-start mt-6 gap-12">
         <button
           type="button"
           class="flex flex-col justify-center relative text-gray-600 dark:text-gray-300 text-sm"
@@ -304,6 +370,19 @@ export function SudokuPuzzle({
             Hint
           </button>
         )}
+
+        <button
+          type="button"
+          class="flex flex-col justify-center relative text-gray-600 dark:text-gray-300 text-sm"
+          title="Fill all candidates"
+          onClick={fillCandidates}
+        >
+          <span class="self-center">
+            <IconRobot size={28} />
+          </span>
+
+          <span>Fill notes</span>
+        </button>
       </div>
 
       <div class="flex mt-2 justify-center">
@@ -363,7 +442,11 @@ function SudokuCell({
           <span class="text-xs sm:text-base text-gray-400 break-all">
             {notes.map((n) => (
               selectedNumber == n
-                ? <b class="text-gray-600 dark:text-gray-300">{n}</b>
+                ? (
+                  <b class="rounded-xl px-1 bg-yellow-200 dark:bg-yellow-800 text-gray-600 dark:text-gray-300">
+                    {n}
+                  </b>
+                )
                 : <>{n}</>
             ))}
           </span>

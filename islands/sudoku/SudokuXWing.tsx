@@ -115,10 +115,10 @@ const exercises: Exercise[] = [{
   hints: [
     (ctx) => {
       ctx.highlightRow(3);
-      ctx.highlightRow(5);
-      return "Take a look at rows 3 and 5.";
+      ctx.highlightRow(7);
+      return "Take a look at rows 3 and 7.";
     },
-    () => "Number 3 could be only in two cells in rows 3 and 5.",
+    () => "Number 3 could be only in two cells in rows 3 and 7.",
     (ctx) => {
       ctx.clearHighlight();
       ctx.highlight(3, 5);
@@ -201,9 +201,16 @@ export default function SudokuXWing() {
       {exercise
         ? (
           <>
-            <p class="text-gray-600 dark:text-gray-200">
-              Click on four cells that form an X-wing
-            </p>
+            <div class="flex flex-col gap-1">
+              <p class="text-gray-600 dark:text-gray-200">
+                Click on four cells that form an X-wing.
+              </p>
+
+              <p class="text-sm text-gray-500 dark:text-gray-300">
+                If you are not sure how look for an X-wing then check the
+                materials below or click on a "Hint" button.
+              </p>
+            </div>
 
             <div class="mt-4 mb-16">
               <SingleExercise
