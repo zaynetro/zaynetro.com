@@ -73,7 +73,7 @@ async function genSnapshot() {
   }
 
   const deps: Record<string, string[]> = {};
-  for (const p of snapshot.paths) {
+  for (const p of paths) {
     const v = snapshot.dependencies(p);
     deps[p] = v;
   }

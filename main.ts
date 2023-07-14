@@ -14,16 +14,39 @@ import twindConfig from "@/twind.config.ts";
 import { BuildSnapshot } from "$fresh/src/build/mod.ts";
 import * as path from "$std/path/mod.ts";
 
-const t0 = performance.now();
-let snapshotText = await Deno.readTextFile("build/build.snapshot.json");
-const snapshotJson = JSON.parse(snapshotText);
-snapshotText = "";
+/**
+ * Lazy-loaded snapshot. Read JSON file only when needed.
+ * (Atm called only on Sudoku page)
+ */
+const lazySnapshot = (function () {
+  let json: {
+    paths: string[];
+    deps: Record<string, string[]>;
+  } | null = null;
 
-const filesDir = path.join(Deno.cwd(), "build", "files");
+  return {
+    get value() {
+      if (!json) {
+        // load
+        const t0 = performance.now();
+        const snapshotText = Deno.readTextFileSync(
+          path.join("build", "build.snapshot.json"),
+        );
+        const t1 = performance.now();
+        json = JSON.parse(snapshotText);
+        console.log(`Loaded snapshot in ${t1 - t0}ms`);
+      }
+
+      return json!;
+    },
+  };
+})();
+
+const filesDir = path.join("build", "files");
 
 export const snapshot: BuildSnapshot = {
   get paths() {
-    return snapshotJson.paths;
+    return lazySnapshot.value.paths;
   },
 
   read(p: string): ReadableStream<Uint8Array> | null {
@@ -40,12 +63,9 @@ export const snapshot: BuildSnapshot = {
   },
 
   dependencies(path: string): string[] {
-    return snapshotJson.deps[path] ?? [];
+    return lazySnapshot.value.deps[path] ?? [];
   },
 };
-
-const t1 = performance.now();
-console.log(`Took ${t1 - t0}ms to start`);
 
 await start(manifest, {
   plugins: [twindPlugin(twindConfig)],
