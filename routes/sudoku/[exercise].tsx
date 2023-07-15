@@ -1,20 +1,29 @@
 import { baseTitle, Footer, globalStyles } from "@/components/Header.tsx";
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers } from "$fresh/server.ts";
+import { JSX } from "preact";
 import SudokuXWing from "@/islands/sudoku/SudokuXWing.tsx";
+import SudokuYWing from "@/islands/sudoku/SudokuYWing.tsx";
 
 export type SudokuExercise = {
   slug: string;
   name: string;
-  resources?: string[];
+  island: () => JSX.Element;
 };
 
 const xWing: SudokuExercise = {
   slug: "x-wing",
   name: "Find an X-wing",
+  island: SudokuXWing,
 };
 
-export const exercises: SudokuExercise[] = [xWing];
+const yWing: SudokuExercise = {
+  slug: "y-wing",
+  name: "Find a Y-wing",
+  island: SudokuYWing,
+};
+
+export const exercises: SudokuExercise[] = [xWing, yWing];
 
 export const handler: Handlers<PageProps> = {
   GET(_req, ctx) {
@@ -82,6 +91,7 @@ body {
 
       <main class="max-w-3xl mx-auto px-4 mt-8">
         {exercise == xWing && <SudokuXWing />}
+        {exercise == yWing && <SudokuYWing />}
       </main>
 
       <Footer />

@@ -13,6 +13,7 @@ import * as $7 from "./routes/sudoku.tsx";
 import * as $8 from "./routes/sudoku/[exercise].tsx";
 import * as $$0 from "./islands/BlogPostImports.tsx";
 import * as $$1 from "./islands/sudoku/SudokuXWing.tsx";
+import * as $$2 from "./islands/sudoku/SudokuYWing.tsx";
 
 const manifest = {
   routes: {
@@ -29,6 +30,7 @@ const manifest = {
   islands: {
     "./islands/BlogPostImports.tsx": $$0,
     "./islands/sudoku/SudokuXWing.tsx": $$1,
+    "./islands/sudoku/SudokuYWing.tsx": $$2,
   },
   baseUrl: import.meta.url,
 };

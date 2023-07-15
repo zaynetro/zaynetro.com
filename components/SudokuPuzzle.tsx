@@ -46,10 +46,12 @@ export function SudokuPuzzle({
   initial,
   onSelectCell,
   hints,
+  hideCandidates,
 }: {
   initial: SudokuGrid;
   onSelectCell?: (row: number, col: number) => void;
   hints: HintFunc[];
+  hideCandidates?: string[];
 }) {
   const grid = useSignal(initial);
   const notes = useSignal<Record<string, number[]>>({});
@@ -276,7 +278,8 @@ export function SudokuPuzzle({
 
         const candidates = nineLengthArr.filter((v) =>
           !rowNumbers.includes(v) && !colNumbers.includes(v) &&
-          !boxNumbers.includes(v)
+          !boxNumbers.includes(v) &&
+          !(hideCandidates?.includes(`R${row + 1}C${col + 1}:${v}`) ?? false)
         );
 
         for (const num of candidates) {
