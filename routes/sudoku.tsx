@@ -10,6 +10,10 @@ export default function SudokuPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{title}</title>
         <meta property="og:title" content={title} />
+        <link
+          rel="canonical"
+          href={`https://www.zaynetro.com/sudoku`}
+        />
         <meta
           name="description"
           content="Practice solving Sudoku online. Do you want to get better at Sudoku? Try completing these exercises."

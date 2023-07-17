@@ -652,7 +652,7 @@ export default function PostPage(props: PageProps) {
   if (!post) {
     return (
       <>
-        <Header title="Not found" />
+        <Header title="Not found" url={props.url} />
 
         <main class="mt-8">
           <section class="max-w-xl mx-auto">
@@ -675,7 +675,7 @@ export default function PostPage(props: PageProps) {
         <style dangerouslySetInnerHTML={{ __html: CSS }} />
         <style dangerouslySetInnerHTML={{ __html: customCSS }} />
       </Head>
-      <Header title={post.title} />
+      <Header title={post.title} url={props.url} />
 
       <div class="mt-4 px-4">
         <div class="mt-8 max-w-4xl mx-auto">

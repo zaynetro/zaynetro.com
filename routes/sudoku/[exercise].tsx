@@ -59,6 +59,10 @@ export default function SudokuExercisePage({ data }: {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{title}</title>
         <meta property="og:title" content={title} />
+        <link
+          rel="canonical"
+          href={`https://www.zaynetro.com/sudoku/${exercise.slug}`}
+        />
         <meta
           name="description"
           content={`${exercise.name}. Practice solving Sudoku online. Do you want to get better at Sudoku? Try completing this exercise.`}

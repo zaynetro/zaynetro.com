@@ -59,8 +59,10 @@ blogImages.set(
 
 export function Header({
   title,
+  url,
 }: {
   title?: string;
+  url: URL;
 }) {
   const pageTitle = title ? `${title} | ${baseTitle}` : baseTitle;
 
@@ -70,6 +72,10 @@ export function Header({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{pageTitle}</title>
         <meta property="og:title" content={pageTitle} />
+        <link
+          rel="canonical"
+          href={`https://www.zaynetro.com${url.pathname}`}
+        />
         <link rel="icon" href={asset("/favicon.png")} />
         <script
           defer

@@ -3,8 +3,9 @@ import { isProd } from "@/utils/env.ts";
 import { formatDate } from "@/routes/post/[slug].tsx";
 import { Head } from "$fresh/runtime.ts";
 import { blogPosts } from "@/build/posts.gen.ts";
+import { PageProps } from "$fresh/server.ts";
 
-export default function HomePage() {
+export default function HomePage(props: PageProps) {
   const posts = [...blogPosts.values()]
     // Exclude draft posts in production
     .filter((p) => isProd ? !p.draft : true)
@@ -19,7 +20,7 @@ export default function HomePage() {
         />
       </Head>
 
-      <Header />
+      <Header url={props.url} />
 
       <main class="mt-8">
         <section class="max-w-3xl mx-auto flex flex-col gap-8 px-2">
