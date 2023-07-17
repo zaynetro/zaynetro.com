@@ -162,7 +162,7 @@ pub fn op_url_parse(state: &mut OpState, href: &str, buf: &mut [u32]) -> u32 {
 * [`deno_webidl`](https://lib.rs/crates/deno_webidl): implements [Web IDL](https://webidl.spec.whatwg.org/)
 * [`deno_console`](https://lib.rs/crates/deno_console): implements the [Console API](https://console.spec.whatwg.org/)
 * [`deno_url`](https://lib.rs/crates/deno_url): implements the [URL](https://url.spec.whatwg.org/) and [URLPattern](https://wicg.github.io/urlpattern/) APIs
-* [`deno_web`](https://lib.rs/crates/deno_web): implements Event, TextEncoder, TextDecoder and [File API](https://w3c.github.io/FileAPI).
+* [`deno_web`](https://lib.rs/crates/deno_web): implements Event, TextEncoder, TextDecoder, [File API](https://w3c.github.io/FileAPI), streams, MessagePort and structuredClone.
 * [`deno_fetch`](https://lib.rs/crates/deno_fetch): implements the [Fetch API](https://fetch.spec.whatwg.org/)
 * [`deno_cache`](https://lib.rs/crates/deno_cache): implements the [Cache API](https://w3c.github.io/ServiceWorker/#cache-interface)
 * [`deno_websocket`](https://lib.rs/crates/deno_websocket): implements [websocket functions](https://html.spec.whatwg.org/multipage/web-sockets.html)
