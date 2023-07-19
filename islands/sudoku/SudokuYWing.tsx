@@ -92,6 +92,47 @@ const exercises: Exercise[] = [{
     },
   ],
   hideCandidates: ["R4C1:8", "R4C2:8", "R6C2:8"],
+}, {
+  grid: [
+    [0, 4, 0, 3, 7, 9, 0, 0, 0],
+    [7, 2, 3, 6, 8, 1, 0, 5, 0],
+    [8, 9, 1, 2, 4, 5, 7, 3, 6],
+    [4, 7, 0, 5, 2, 8, 0, 0, 3],
+    [2, 0, 8, 1, 9, 3, 0, 7, 0],
+    [1, 3, 0, 4, 6, 7, 0, 0, 8],
+    [9, 0, 7, 8, 1, 4, 3, 0, 0],
+    [3, 8, 2, 7, 5, 6, 0, 4, 0],
+    [0, 1, 4, 9, 3, 2, 0, 0, 7],
+  ],
+  answer: ["R1C7", "R7C9", "R9C7"],
+  hints: [
+    (ctx) => {
+      ctx.highlightRow(7);
+      ctx.highlightCol(7);
+      return "Take a look at row 7 and column 7.";
+    },
+    (ctx) => {
+      ctx.clearHighlight();
+
+      ctx.highlight(1, 7);
+      ctx.highlight(7, 9);
+      ctx.highlight(9, 7);
+
+      ctx.fillCandidates();
+      ctx.highlightCandidate(1, 9, 2);
+
+      return (
+        <>
+          R1C7, R9C7, R7C9 forms a Y-wing. R9C7 is a pivot. R1C7 and R7C9 are
+          pins. Either pin will have number 2. This allows us to remove number 2
+          from an intersecting cell R1C9.
+          <br />
+          Finally, we can place number 1 in R1C9.
+        </>
+      );
+    },
+  ],
+  hideCandidates: ["R1C7:1", "R4C7:9", "R4C8:6", "R5C7:5", "R6C7:9", "R9C7:6"],
 }];
 
 export default function SudokuYWing() {
