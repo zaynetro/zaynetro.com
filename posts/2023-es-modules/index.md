@@ -60,7 +60,7 @@ Webpack allowed you customize a lot of things and eventually it became a major s
 There was an attempt by React team to "improve" the situation with [create-react-app](https://github.com/facebook/create-react-app) project. A lot of people seemed to like the project. I was not one of them. *create-react-app* hid Webpack behind a clean interface. Their [webpack configuration file](https://github.com/facebook/create-react-app/blob/9802941ff049a28da2682801bc182a29761b71f4/packages/react-scripts/config/webpack.config.js) is almost 800 lines long! That was too complex for me and I always prefered to write a webpack configuration file by hand to only configure things I needed.
 
 <bk-poll-form></bk-poll-form>
-<script async src="https://eyuxylujanwriimduamk.supabase.co/storage/v1/object/public/cdn/ui/122cfbhd3j8bog2/bk-poll-form.js"></script>
+<script async src="https://eyuxylujanwriimduamk.supabase.co/storage/v1/object/public/cdn/ui/18jmvik21k6mvk/bk-poll-form.js"></script>
 <div class="powered-by">Poll powered by <a href="https://bolik.net" target="_blank">Bolik</a>.</div>
 
 Webpack has solved a lot of issues like bundling, using plugins, importing CSS, etc. With time though, the slowness of it and the frustration of misconfiguring a loader has become too much. Luckily, new projects continued to appear each year that made life simpler.

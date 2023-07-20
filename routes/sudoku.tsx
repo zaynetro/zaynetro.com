@@ -52,7 +52,7 @@ export default function SudokuPage() {
           <bk-poll-form></bk-poll-form>
           <script
             async
-            src="https://eyuxylujanwriimduamk.supabase.co/storage/v1/object/public/cdn/ui/12o8plen1pih2v3/bk-poll-form.js"
+            src="https://eyuxylujanwriimduamk.supabase.co/storage/v1/object/public/cdn/ui/1ogkem439vdb7h/bk-poll-form.js"
           >
           </script>
 
