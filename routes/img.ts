@@ -11,14 +11,17 @@ import { serveFile } from "$std/http/file_server.ts";
 import * as blob from "kv_toolbox/blob.ts";
 import { ASSET_CACHE_BUST_KEY } from "$fresh/runtime.ts";
 
-await initialize();
+let imgMagickReady = false;
 
 const kv = await Deno.openKv();
 const prefix = "v1-images";
+clearOldImages();
 
 // Delete old cache entries
-for await (const entry of kv.list({ prefix: ["v0-images"] })) {
-  await kv.delete(entry.key);
+async function clearOldImages() {
+  for await (const entry of kv.list({ prefix: ["v0-images"] })) {
+    await kv.delete(entry.key);
+  }
 }
 
 type ResizeParams = {
@@ -42,6 +45,14 @@ const resizer = (function () {
     let sourceFormat = MagickFormat.Jpeg;
     if (imgPath.endsWith(".png")) {
       sourceFormat = MagickFormat.Png;
+    }
+
+    if (!imgMagickReady) {
+      const t0 = performance.now();
+      await initialize();
+      const t1 = performance.now();
+      console.log(`Initialized ImageMagick in ${t1 - t0}ms`);
+      imgMagickReady = true;
     }
 
     // This must be sequential as it reuses a single buffer.
