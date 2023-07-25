@@ -232,7 +232,7 @@ Here are a few helpful links:
 
 <p style="max-width: 400px">
   <bk-contact-form></bk-contact-form>
-  <script async src="https://eyuxylujanwriimduamk.supabase.co/storage/v1/object/public/cdn/ui/1elqj993emcb23/bk-contact-form.js"></script>
+  <script async src="https://cdn.bolik.net/ui/1350i6u32qesnvp/bk-contact-form.js"></script>
 </p>
 
 <div class="powered-by">Form powered by <a href="https://bolik.net" target="_blank">Bolik</a>.</div>

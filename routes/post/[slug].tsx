@@ -721,7 +721,7 @@ export default function PostPage(props: PageProps) {
               <bk-like-button></bk-like-button>
               <script
                 async
-                src="https://eyuxylujanwriimduamk.supabase.co/storage/v1/object/public/cdn/ui/11dihcau1jg3ce5/bk-like-button.js"
+                src="https://cdn.bolik.net/ui/11s4aurm371ii5f/bk-like-button.js"
               >
               </script>
             </div>

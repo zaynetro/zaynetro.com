@@ -221,7 +221,7 @@ In this chapter let's try to build an app that will safely execute user-submitte
 What can you do with it? The app is a simple sandbox that executes code submitted by users and draws SVGs. The server is open-source and you can see how sandbox works on [GitHub](https://github.com/zaynetro/draw-by-zaynetro).
 
 <bk-poll-form></bk-poll-form>
-<script async src="https://eyuxylujanwriimduamk.supabase.co/storage/v1/object/public/cdn/ui/1hieghf2i2nqec/bk-poll-form.js"></script>
+<script async src="https://cdn.bolik.net/ui/13mgi92ik4n4av/bk-poll-form.js"></script>
 <div class="powered-by">Poll powered by <a href="https://bolik.net" target="_blank">Bolik</a>.</div>
 
 
