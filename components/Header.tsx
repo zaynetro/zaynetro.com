@@ -1,13 +1,11 @@
 import { asset, Head } from "$fresh/runtime.ts";
 import * as path from "$std/path/mod.ts";
 import { blogImages } from "@/build/posts.gen.ts";
-import {
-  IconBrandGithub,
-  IconBrandLinkedin,
-  IconDog,
-  IconGridDots,
-  IconMail,
-} from "@tabler/icons-preact";
+import IconBrandGithub from "@tabler/icons-preact/dist/esm/icons/IconBrandGithub.js";
+import IconBrandLinkedin from "@tabler/icons-preact/dist/esm/icons/IconBrandLinkedin.js";
+import IconDog from "@tabler/icons-preact/dist/esm/icons/IconDog.js";
+import IconGridDots from "@tabler/icons-preact/dist/esm/icons/IconGridDots.js";
+import IconMail from "@tabler/icons-preact/dist/esm/icons/IconMail.js";
 import { ComponentChildren } from "preact";
 
 export const baseTitle = "Roman Zaynetdinov (zaynetro)";

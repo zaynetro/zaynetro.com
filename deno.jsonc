@@ -23,7 +23,8 @@
     "imagemagick_deno/": "https://deno.land/x/imagemagick_deno@0.0.24/",
     "mermaid": "https://esm.sh/mermaid@10.2.3",
     "kv_toolbox/": "https://deno.land/x/kv_toolbox@0.0.2/",
-    "@tabler/icons-preact": "https://esm.sh/@tabler/icons-preact@2.23.0"
+    // We import icons directly because somehow treeshaking doesn't work
+    "@tabler/icons-preact/": "https://esm.sh/@tabler/icons-preact@2.29.0/"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
