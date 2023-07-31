@@ -1,7 +1,8 @@
-import { baseTitle, Footer, globalStyles } from "@/components/Header.tsx";
-import { asset, Head } from "$fresh/runtime.ts";
+import { Footer, Header } from "@/components/Header.tsx";
+import { Head } from "$fresh/runtime.ts";
 import { Handlers } from "$fresh/server.ts";
 import { JSX } from "preact";
+import { PageProps } from "$fresh/server.ts";
 import SudokuXWing from "@/islands/sudoku/SudokuXWing.tsx";
 import SudokuYWing from "@/islands/sudoku/SudokuYWing.tsx";
 
@@ -25,7 +26,7 @@ const yWing: SudokuExercise = {
 
 export const exercises: SudokuExercise[] = [xWing, yWing];
 
-export const handler: Handlers<PageProps> = {
+export const handler: Handlers<SudokuProps> = {
   GET(_req, ctx) {
     const exercise = exercises.find((e) => e.slug == ctx.params.exercise);
 
@@ -44,37 +45,20 @@ export const handler: Handlers<PageProps> = {
   },
 };
 
-type PageProps = {
+type SudokuProps = {
   exercise: SudokuExercise;
 };
 
-export default function SudokuExercisePage({ data }: {
-  data: PageProps;
-}) {
-  const { exercise } = data;
-  const title = `${exercise.name} | Sudoku | ${baseTitle}`;
+export default function SudokuExercisePage(props: PageProps<SudokuProps>) {
+  const { exercise } = props.data;
+
   return (
     <>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{title}</title>
-        <meta property="og:title" content={title} />
-        <link
-          rel="canonical"
-          href={`https://www.zaynetro.com/sudoku/${exercise.slug}`}
-        />
         <meta
           name="description"
           content={`${exercise.name}. Practice solving Sudoku online. Do you want to get better at Sudoku? Try completing this exercise.`}
         />
-        <link rel="icon" href={asset("/favicon.png")} />
-        <script
-          defer
-          data-domain="zaynetro.com"
-          data-api="/js/stats-event"
-          src="/js/stats.js"
-        />
-        <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -86,12 +70,7 @@ body {
         />
       </Head>
 
-      <header class="max-w-3xl mx-auto pt-6 px-4 flex gap-6 items-center">
-        <a href="/" class="text-lg no-underline py-1.5">zaynetro.com</a>
-        <div>
-          <a href="/sudoku" class="text-md py-1">Sudoku exercises</a>
-        </div>
-      </header>
+      <Header title={`${exercise.name} | Sudoku`} url={props.url} />
 
       <main class="max-w-3xl mx-auto px-4 mt-8">
         {exercise == xWing && <SudokuXWing />}

@@ -1,36 +1,19 @@
-import { baseTitle, Footer, globalStyles } from "@/components/Header.tsx";
-import { asset, Head } from "$fresh/runtime.ts";
+import { Footer, Header } from "@/components/Header.tsx";
+import { PageProps } from "$fresh/server.ts";
+import { Head } from "$fresh/runtime.ts";
 import { exercises } from "@/routes/sudoku/[exercise].tsx";
 
-export default function SudokuPage() {
-  const title = `Sudoku | ${baseTitle}`;
+export default function SudokuPage(props: PageProps) {
   return (
     <>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{title}</title>
-        <meta property="og:title" content={title} />
-        <link
-          rel="canonical"
-          href={`https://www.zaynetro.com/sudoku`}
-        />
         <meta
           name="description"
           content="Practice solving Sudoku online. Do you want to get better at Sudoku? Try completing these exercises."
         />
-        <link rel="icon" href={asset("/favicon.png")} />
-        <script
-          defer
-          data-domain="zaynetro.com"
-          data-api="/js/stats-event"
-          src="/js/stats.js"
-        />
-        <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
       </Head>
 
-      <header class="max-w-3xl mx-auto pt-6 px-4">
-        <a href="/" class="text-lg no-underline py-1.5">zaynetro.com</a>
-      </header>
+      <Header title="Sudoku" url={props.url} />
 
       <main class="max-w-xl mx-auto mt-8 mb-16 flex flex-col gap-4 px-4">
         <h1 class="text-2xl">Pick Sudoku exercises</h1>

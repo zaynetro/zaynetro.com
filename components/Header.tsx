@@ -1,11 +1,6 @@
 import { asset, Head } from "$fresh/runtime.ts";
-import * as path from "$std/path/mod.ts";
-import { blogImages } from "@/build/posts.gen.ts";
-import IconBrandGithub from "@tabler/icons-preact/dist/esm/icons/IconBrandGithub.js";
-import IconBrandLinkedin from "@tabler/icons-preact/dist/esm/icons/IconBrandLinkedin.js";
 import IconDog from "@tabler/icons-preact/dist/esm/icons/IconDog.js";
 import IconGridDots from "@tabler/icons-preact/dist/esm/icons/IconGridDots.js";
-import IconMail from "@tabler/icons-preact/dist/esm/icons/IconMail.js";
 import { ComponentChildren } from "preact";
 
 export const baseTitle = "Roman Zaynetdinov (zaynetro)";
@@ -49,12 +44,6 @@ a:hover {
 }
 `;
 
-// Register our logo image
-blogImages.set(
-  "logo.png",
-  path.join("static", "images", "logo.png"),
-);
-
 export function Header({
   title,
   url,
@@ -85,53 +74,20 @@ export function Header({
         <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
       </Head>
 
-      <header class="max-w-3xl mx-auto pt-6 px-4">
-        <div class="flex gap-12">
-          <a
-            href="/"
-            class="block rounded-md p-2 hover:bg-amber-200 hover:dark:bg-amber-300 transition-colors"
-          >
-            <picture>
-              <img
-                src="/img?id=logo.png&w=100"
-                srcset="/img?id=logo.png&w=155, /img?id=logo.png&w=312 2x"
-                loading="lazy"
-                alt="Racoon"
-                width="100"
-                height="155"
-              />
-            </picture>
-          </a>
+      <header class="max-w-3xl mx-auto pt-10 pb-6 px-4">
+        <nav class="flex gap-4 flex-wrap sm:flex-nowrap justify-between items-center">
+          <a href="/" class="text-lg no-underline">zaynetro.com</a>
 
-          <nav class="flex flex-col gap-4">
-            <a href="/" class="text-lg no-underline">zaynetro.com</a>
+          <div class="flex gap-4">
+            <a href="/" class="text-lg no-underline py-1.5 sm:py-0 px-2">
+              Blog
+            </a>
+            <a href="/about" class="text-lg no-underline py-1.5 sm:py-0 px-2">
+              About
+            </a>
+          </div>
 
-            <ul class="flex flex-col gap-1">
-              <NavLink href="https://github.com/zaynetro">
-                <IconBrandGithub size={16} />
-                GitHub
-              </NavLink>
-
-              <NavLink href="https://www.linkedin.com/in/roman-zay/">
-                <IconBrandLinkedin size={16} />
-                CV
-              </NavLink>
-
-              <NavLink href="mailto:roman@zaynetro.com">
-                <IconMail size={16} />
-                Get in touch
-              </NavLink>
-            </ul>
-          </nav>
-
-          <ul class="flex flex-col gap-1 pt-12">
-            <span class="text-gray-600">Projects:</span>
-
-            <NavLink href="/sudoku">
-              <IconGridDots size={16} />
-              Sudoku
-            </NavLink>
-
+          <ul class="flex gap-2 text-lg">
             <NavLink
               href="https://bolik.net"
               target="_blank"
@@ -139,8 +95,13 @@ export function Header({
               <IconDog size={16} />
               Bolik
             </NavLink>
+
+            <NavLink href="/sudoku">
+              <IconGridDots size={16} />
+              Sudoku
+            </NavLink>
           </ul>
-        </div>
+        </nav>
       </header>
     </>
   );
@@ -160,7 +121,7 @@ function NavLink({
       <a
         href={href}
         target={target}
-        class="inline-flex gap-1 items-center py-1.5 sm:py-0"
+        class="inline-flex gap-1 items-center py-1.5 sm:py-0 px-2"
       >
         {children}
       </a>

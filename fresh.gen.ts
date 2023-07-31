@@ -3,14 +3,15 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $0 from "./routes/_middleware.ts";
-import * as $1 from "./routes/img.ts";
-import * as $2 from "./routes/index.tsx";
-import * as $3 from "./routes/js/stats-event.ts";
-import * as $4 from "./routes/js/stats.js.ts";
-import * as $5 from "./routes/post/[slug].tsx";
-import * as $6 from "./routes/sitemap.xml.ts";
-import * as $7 from "./routes/sudoku.tsx";
-import * as $8 from "./routes/sudoku/[exercise].tsx";
+import * as $1 from "./routes/about.tsx";
+import * as $2 from "./routes/img.ts";
+import * as $3 from "./routes/index.tsx";
+import * as $4 from "./routes/js/stats-event.ts";
+import * as $5 from "./routes/js/stats.js.ts";
+import * as $6 from "./routes/post/[slug].tsx";
+import * as $7 from "./routes/sitemap.xml.ts";
+import * as $8 from "./routes/sudoku.tsx";
+import * as $9 from "./routes/sudoku/[exercise].tsx";
 import * as $$0 from "./islands/BlogPostImports.tsx";
 import * as $$1 from "./islands/sudoku/SudokuXWing.tsx";
 import * as $$2 from "./islands/sudoku/SudokuYWing.tsx";
@@ -18,14 +19,15 @@ import * as $$2 from "./islands/sudoku/SudokuYWing.tsx";
 const manifest = {
   routes: {
     "./routes/_middleware.ts": $0,
-    "./routes/img.ts": $1,
-    "./routes/index.tsx": $2,
-    "./routes/js/stats-event.ts": $3,
-    "./routes/js/stats.js.ts": $4,
-    "./routes/post/[slug].tsx": $5,
-    "./routes/sitemap.xml.ts": $6,
-    "./routes/sudoku.tsx": $7,
-    "./routes/sudoku/[exercise].tsx": $8,
+    "./routes/about.tsx": $1,
+    "./routes/img.ts": $2,
+    "./routes/index.tsx": $3,
+    "./routes/js/stats-event.ts": $4,
+    "./routes/js/stats.js.ts": $5,
+    "./routes/post/[slug].tsx": $6,
+    "./routes/sitemap.xml.ts": $7,
+    "./routes/sudoku.tsx": $8,
+    "./routes/sudoku/[exercise].tsx": $9,
   },
   islands: {
     "./islands/BlogPostImports.tsx": $$0,
