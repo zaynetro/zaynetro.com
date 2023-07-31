@@ -50,7 +50,7 @@ export default function AboutPage(props: PageProps) {
             </div>
             <div>
               <h1 class="text-2xl sm:text-3xl">Hi, I'm Roman Zaynetdinov.</h1>
-              <p class="text-gray-600 mt-2 text-lg">
+              <p class="text-gray-600 dark:text-gray-400 mt-2 text-lg">
                 I build services that help people.
               </p>
 
@@ -88,7 +88,7 @@ export default function AboutPage(props: PageProps) {
                     Bolik
                   </NavLink>
                 </h3>
-                <p class="text-gray-600 mt-2">
+                <p class="text-gray-600 dark:text-gray-400 mt-2">
                   Bolik helps you to make your website interactive in just a few
                   clicks. Configure UI and then choose an integration. Bolik
                   will generate a Web Component that you can include on your
@@ -102,7 +102,7 @@ export default function AboutPage(props: PageProps) {
                     Sudoku
                   </NavLink>
                 </h3>
-                <p class="text-gray-600 mt-2">
+                <p class="text-gray-600 dark:text-gray-400 mt-2">
                   Solve exercises to become better at Sudoku.
                 </p>
               </li>
@@ -121,7 +121,7 @@ export default function AboutPage(props: PageProps) {
                     Bolik Timeline
                   </NavLink>
                 </h3>
-                <p class="text-gray-600 mt-2">
+                <p class="text-gray-600 dark:text-gray-400 mt-2">
                   Bolik Timeline is an application for managing personal
                   documents like notes, photos and memories. It supports offline
                   editing, is end-to-end encrypted and is open source.
