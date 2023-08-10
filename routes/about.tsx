@@ -3,6 +3,7 @@ import { Head } from "$fresh/runtime.ts";
 import { PageProps } from "$fresh/server.ts";
 import IconBrandGithub from "@tabler/icons-preact/dist/esm/icons/IconBrandGithub.js";
 import IconBrandLinkedin from "@tabler/icons-preact/dist/esm/icons/IconBrandLinkedin.js";
+import IconFileTypePdf from "@tabler/icons-preact/dist/esm/icons/IconFileTypePdf.js";
 import IconDog from "@tabler/icons-preact/dist/esm/icons/IconDog.js";
 import IconGridDots from "@tabler/icons-preact/dist/esm/icons/IconGridDots.js";
 import IconMail from "@tabler/icons-preact/dist/esm/icons/IconMail.js";
@@ -56,20 +57,34 @@ export default function AboutPage(props: PageProps) {
 
               <nav class="flex flex-col gap-4 mt-4">
                 <ul class="flex flex-col gap-1">
-                  <NavLink href="https://github.com/zaynetro">
-                    <IconBrandGithub size={16} />
-                    GitHub
-                  </NavLink>
+                  <li>
+                    <NavLink href="https://github.com/zaynetro">
+                      <IconBrandGithub size={16} />
+                      GitHub
+                    </NavLink>
+                  </li>
 
-                  <NavLink href="https://www.linkedin.com/in/roman-zay/">
-                    <IconBrandLinkedin size={16} />
-                    CV
-                  </NavLink>
+                  <li class="flex flex-col sm:flex-row gap-1 sm:gap-6">
+                    <NavLink href="/assets/Roman_Zaynetdinov_CV.pdf">
+                      <IconFileTypePdf size={16} />
+                      Resume
+                    </NavLink>
 
-                  <NavLink href="mailto:roman@zaynetro.com">
-                    <IconMail size={16} />
-                    Get in touch
-                  </NavLink>
+                    <NavLink
+                      href="https://www.linkedin.com/in/roman-zay/"
+                      target="_blank"
+                    >
+                      <IconBrandLinkedin size={16} />
+                      LinkedIn
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink href="mailto:roman@zaynetro.com">
+                      <IconMail size={16} />
+                      Get in touch
+                    </NavLink>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -147,14 +162,12 @@ function NavLink({
   children: ComponentChildren;
 }) {
   return (
-    <li>
-      <a
-        href={href}
-        target={target}
-        class="inline-flex gap-2 items-center py-1.5 sm:py-0"
-      >
-        {children}
-      </a>
-    </li>
+    <a
+      href={href}
+      target={target}
+      class="inline-flex gap-2 items-center py-1.5 sm:py-0"
+    >
+      {children}
+    </a>
   );
 }
