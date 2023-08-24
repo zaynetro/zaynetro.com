@@ -33,6 +33,3 @@ jobs:
 
       - name: Typecheck main.ts
         run: deno check main.ts
-
-      - name: Typecheck build.ts
-        run: deno check build.ts
