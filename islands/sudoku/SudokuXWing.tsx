@@ -51,7 +51,7 @@ const exercises: Exercise[] = [{
       return (
         <>
           R3C5, R3C7, R7C5, R7C7 forms an X-wing. Number 3 must be in either of
-          these four cells. This removes all 3 number candidates from rows 3 and
+          these four cells. This removes all number 3 candidates from rows 3 and
           7.
           <br />
           Finally, we can place number 7 in R3C3.
@@ -105,7 +105,7 @@ const exercises: Exercise[] = [{
       return (
         <>
           R1C2, R1C7, R8C2, R8C7 forms an X-wing. Number 8 must be in either of
-          these four cells. This removes all 8 number candidates from rows 1 and
+          these four cells. This removes all number 8 candidates from rows 1 and
           8.
           <br />
           Finally, we can place number 8 in R7C5.
@@ -158,7 +158,7 @@ const exercises: Exercise[] = [{
       return (
         <>
           R3C5, R3C7, R7C5, R5C7 forms an X-wing. Number 3 must be in either of
-          these four cells. This removes all 3 number candidates from columns 5
+          these four cells. This removes all number 3 candidates from columns 5
           and 7.
           <br />
           Finally, we can place number 2 in R8C7.
@@ -211,7 +211,7 @@ const exercises: Exercise[] = [{
       return (
         <>
           R5C1, R5C7, R7C1, R5C7 forms an X-wing. Number 9 must be in either of
-          these four cells. This removes all 9 number candidates from rows 5 and
+          these four cells. This removes all number 9 candidates from rows 5 and
           7.
           <br />
           Finally, we can place number 2 in R7C3.
@@ -259,7 +259,7 @@ export default function SudokuXWing() {
               </p>
 
               <p class="text-sm text-gray-500 dark:text-gray-300">
-                If you are not sure how look for an X-wing then check the
+                If you are not sure how to look for an X-wing then check the
                 materials below or click on a "Hint" button.
               </p>
             </div>

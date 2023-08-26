@@ -173,7 +173,7 @@ export default function SudokuYWing() {
               </p>
 
               <p class="text-sm text-gray-500 dark:text-gray-300">
-                If you are not sure how look for a Y-wing then check the
+                If you are not sure how to look for a Y-wing then check the
                 materials below or click on a "Hint" button.
               </p>
             </div>
