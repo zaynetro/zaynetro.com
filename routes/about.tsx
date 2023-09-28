@@ -65,11 +65,6 @@ export default function AboutPage(props: PageProps) {
                   </li>
 
                   <li class="flex flex-col sm:flex-row gap-1 sm:gap-6">
-                    <NavLink href="/assets/Roman_Zaynetdinov_CV.pdf">
-                      <IconFileTypePdf size={16} />
-                      Resume
-                    </NavLink>
-
                     <NavLink
                       href="https://www.linkedin.com/in/roman-zay/"
                       target="_blank"
