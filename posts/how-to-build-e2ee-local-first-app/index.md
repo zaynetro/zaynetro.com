@@ -478,7 +478,7 @@ It is hard to say why I just don't use a built product. One thing for certain is
 
 ### Release
 
-Check it out on GitHub: <https://github.com/boliktech/timeline>.
+Check it out on GitHub: <https://github.com/zaynetro/timeline>.
 
 So why is this post called "How to **almost** build an app"?
 

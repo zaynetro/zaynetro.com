@@ -119,7 +119,7 @@ export default function AboutPage(props: PageProps) {
               <li>
                 <h3 class="text-xl">
                   <NavLink
-                    href="https://timeline.bolik.tech"
+                    href="https://timeline.bolik.net"
                     target="_blank"
                   >
                     <img

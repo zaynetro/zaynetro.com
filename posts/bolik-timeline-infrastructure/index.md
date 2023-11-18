@@ -11,7 +11,7 @@ preview_image = { href = "dog_icon.png", alt = "Bolik Timeline logo" }
 
 ![Bolik Timeline feature graphic](feature_graphic.jpg)
 
-[Bolik Timeline](https://timeline.bolik.tech/) is an application for managing personal documents like notes, photos and memories. It supports offline editing, is end-to-end encrypted and is open source unlike other popular solutions.
+[Bolik Timeline](https://timeline.bolik.net/) is an application for managing personal documents like notes, photos and memories. It supports offline editing, is end-to-end encrypted and is open source unlike other popular solutions.
 
 Read [an introductory blog post](/post/how-to-build-e2ee-local-first-app/) for more details.
 
