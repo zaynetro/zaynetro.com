@@ -228,15 +228,6 @@ Here are a few helpful links:
 * [Supabase's JS Runtime implementation](https://github.com/supabase/edge-runtime/blob/main/crates/base/src/deno_runtime.rs)
 * [Zinnia's JS Runtime implementation](https://github.com/filecoin-station/zinnia/blob/v0.13.0/runtime/runtime.rs)
 
-#### Are you building a custom JSRuntime? Let's get in touch!
-
-<p style="max-width: 400px">
-  <bk-contact-form></bk-contact-form>
-  <script async src="https://cdn.bolik.net/ui/1350i6u32qesnvp/bk-contact-form.js"></script>
-</p>
-
-<div class="powered-by">Form powered by <a href="https://bolik.net" target="_blank">Bolik</a>.</div>
-
 
 ### Deno Deploy
 
