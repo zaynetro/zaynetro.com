@@ -1,30 +1,32 @@
 import { Footer, Header } from "@/components/Header.tsx";
 import { Head } from "$fresh/runtime.ts";
 import { Handlers } from "$fresh/server.ts";
-import { JSX } from "preact";
 import { PageProps } from "$fresh/server.ts";
 import SudokuXWing from "@/islands/sudoku/SudokuXWing.tsx";
 import SudokuYWing from "@/islands/sudoku/SudokuYWing.tsx";
+import SudokuEmptyRectangle from "@/islands/sudoku/SudokuEmptyRectangle.tsx";
 
 export type SudokuExercise = {
   slug: string;
   name: string;
-  island: () => JSX.Element;
 };
 
 const xWing: SudokuExercise = {
   slug: "x-wing",
   name: "Find an X-wing",
-  island: SudokuXWing,
 };
 
 const yWing: SudokuExercise = {
   slug: "y-wing",
   name: "Find a Y-wing",
-  island: SudokuYWing,
 };
 
-export const exercises: SudokuExercise[] = [xWing, yWing];
+const emptyRectangle: SudokuExercise = {
+  slug: "empty-rectangle",
+  name: "Use Empty Rectangle technique",
+};
+
+export const exercises: SudokuExercise[] = [xWing, yWing, emptyRectangle];
 
 export const handler: Handlers<SudokuProps> = {
   GET(_req, ctx) {
@@ -75,6 +77,7 @@ body {
       <main class="max-w-3xl mx-auto px-4 mt-8">
         {exercise == xWing && <SudokuXWing />}
         {exercise == yWing && <SudokuYWing />}
+        {exercise == emptyRectangle && <SudokuEmptyRectangle />}
       </main>
 
       <Footer />

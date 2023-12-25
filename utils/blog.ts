@@ -12,6 +12,7 @@ import "prismjs/components/prism-cmake?no-check";
 import "prismjs/components/prism-dart?no-check";
 import "prismjs/components/prism-diff?no-check";
 import "prismjs/components/prism-java?no-check";
+import "prismjs/components/prism-jsx?no-check";
 import "prismjs/components/prism-nix?no-check";
 import "prismjs/components/prism-protobuf?no-check";
 import "prismjs/components/prism-rust?no-check";
@@ -52,7 +53,10 @@ class Renderer extends Marked.Renderer {
     const slug = slugger.slug(raw);
     const c = level == 1 ? "text-xl" : "text-lg";
     const tocEntry: TocEntry = {
-      text: text.replaceAll("&amp;", "&").replaceAll("&quot;", `"`),
+      text: text
+        .replaceAll("&amp;", "&")
+        .replaceAll("&quot;", `"`)
+        .replaceAll("&#39;", `'`),
       slug,
     };
     if (level == 2) {

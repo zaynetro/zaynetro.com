@@ -2,41 +2,44 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/_app.tsx";
-import * as $1 from "./routes/_middleware.ts";
-import * as $2 from "./routes/about.tsx";
-import * as $3 from "./routes/img.ts";
-import * as $4 from "./routes/index.tsx";
-import * as $5 from "./routes/js/stats-event.ts";
-import * as $6 from "./routes/js/stats.js.ts";
-import * as $7 from "./routes/post/[slug].tsx";
-import * as $8 from "./routes/sitemap.xml.ts";
-import * as $9 from "./routes/sudoku.tsx";
-import * as $10 from "./routes/sudoku/[exercise].tsx";
-import * as $$0 from "./islands/BlogPostImports.tsx";
-import * as $$1 from "./islands/sudoku/SudokuXWing.tsx";
-import * as $$2 from "./islands/sudoku/SudokuYWing.tsx";
+import * as $_app from "./routes/_app.tsx";
+import * as $_middleware from "./routes/_middleware.ts";
+import * as $about from "./routes/about.tsx";
+import * as $img from "./routes/img.ts";
+import * as $index from "./routes/index.tsx";
+import * as $js_stats_event from "./routes/js/stats-event.ts";
+import * as $js_stats_js from "./routes/js/stats.js.ts";
+import * as $post_slug_ from "./routes/post/[slug].tsx";
+import * as $sitemap_xml from "./routes/sitemap.xml.ts";
+import * as $sudoku from "./routes/sudoku.tsx";
+import * as $sudoku_exercise_ from "./routes/sudoku/[exercise].tsx";
+import * as $BlogPostImports from "./islands/BlogPostImports.tsx";
+import * as $sudoku_SudokuEmptyRectangle from "./islands/sudoku/SudokuEmptyRectangle.tsx";
+import * as $sudoku_SudokuXWing from "./islands/sudoku/SudokuXWing.tsx";
+import * as $sudoku_SudokuYWing from "./islands/sudoku/SudokuYWing.tsx";
+import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
-    "./routes/_app.tsx": $0,
-    "./routes/_middleware.ts": $1,
-    "./routes/about.tsx": $2,
-    "./routes/img.ts": $3,
-    "./routes/index.tsx": $4,
-    "./routes/js/stats-event.ts": $5,
-    "./routes/js/stats.js.ts": $6,
-    "./routes/post/[slug].tsx": $7,
-    "./routes/sitemap.xml.ts": $8,
-    "./routes/sudoku.tsx": $9,
-    "./routes/sudoku/[exercise].tsx": $10,
+    "./routes/_app.tsx": $_app,
+    "./routes/_middleware.ts": $_middleware,
+    "./routes/about.tsx": $about,
+    "./routes/img.ts": $img,
+    "./routes/index.tsx": $index,
+    "./routes/js/stats-event.ts": $js_stats_event,
+    "./routes/js/stats.js.ts": $js_stats_js,
+    "./routes/post/[slug].tsx": $post_slug_,
+    "./routes/sitemap.xml.ts": $sitemap_xml,
+    "./routes/sudoku.tsx": $sudoku,
+    "./routes/sudoku/[exercise].tsx": $sudoku_exercise_,
   },
   islands: {
-    "./islands/BlogPostImports.tsx": $$0,
-    "./islands/sudoku/SudokuXWing.tsx": $$1,
-    "./islands/sudoku/SudokuYWing.tsx": $$2,
+    "./islands/BlogPostImports.tsx": $BlogPostImports,
+    "./islands/sudoku/SudokuEmptyRectangle.tsx": $sudoku_SudokuEmptyRectangle,
+    "./islands/sudoku/SudokuXWing.tsx": $sudoku_SudokuXWing,
+    "./islands/sudoku/SudokuYWing.tsx": $sudoku_SudokuYWing,
   },
   baseUrl: import.meta.url,
-};
+} satisfies Manifest;
 
 export default manifest;
