@@ -1,7 +1,7 @@
 import * as path from "$std/path/mod.ts";
 import { walk, WalkEntry } from "$std/fs/walk.ts";
 import { extract as extractFrontMatter } from "$std/front_matter/toml.ts";
-import * as Marked from "marked";
+import { marked } from "marked";
 import { Renderer, TocHeading } from "@/utils/renderer.ts";
 
 const baseDir = Deno.cwd();
@@ -67,12 +67,10 @@ async function loadPost(file: WalkEntry, {
   const { body, attrs } = extractFrontMatter(text);
 
   const mdRenderer = new Renderer(file.path, slug, images);
-  const html = Marked.marked(body, {
+  const html = marked.parse(body, {
     gfm: true,
     renderer: mdRenderer,
-    mangle: undefined,
-    headerIds: undefined,
-  });
+  }) as string;
 
   const post: BlogPost = {
     slug,

@@ -1,7 +1,8 @@
 import * as path from "$std/path/mod.ts";
-import * as Marked from "marked";
+import { marked, Renderer as MarkedRenderer } from "marked";
 import { default as Prism } from "prismjs";
 import { ASSET_CACHE_BUST_KEY } from "$fresh/runtime.ts";
+import GithubSlugger from "github-slugger";
 
 // Support more languages (by default only HTML, JS and CSS are supported)
 import "prismjs/components/prism-typescript?no-check";
@@ -37,11 +38,13 @@ const anchorIcon =
   '<svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg>';
 
 /** Inject tailwind class names */
-export class Renderer extends Marked.Renderer {
+export class Renderer extends MarkedRenderer {
   /* Table of contents */
   toc: TocHeading[] = [];
   /* Mermaid is used */
   mermaid = false;
+
+  slugger = new GithubSlugger();
 
   constructor(
     private filePath: string,
@@ -55,9 +58,8 @@ export class Renderer extends Marked.Renderer {
     text: string,
     level: 1 | 2 | 3 | 4 | 5 | 6,
     raw: string,
-    slugger: Marked.Slugger,
   ): string {
-    const slug = slugger.slug(raw);
+    const slug = this.slugger.slug(raw);
     const c = level == 1 ? "text-xl" : "text-lg";
     const tocEntry: TocEntry = {
       text: text
@@ -74,7 +76,15 @@ export class Renderer extends Marked.Renderer {
     } else if (level == 3 && this.toc.length) {
       this.toc[this.toc.length - 1].subheadings.push(tocEntry);
     }
-    return `<h${level} class="mt-2 ${c}" id="${slug}"><a class="anchor" aria-hidden="true" tabindex="-1" href="#${slug}">${anchorIcon}</a>${text}</h${level}>`;
+
+    return (
+      `<h${level} class="mt-2 ${c}" id="${slug}">` +
+      /**/ `<a class="anchor" aria-hidden="true" tabindex="-1" href="#${slug}">` +
+      /*  */ `${anchorIcon}` +
+      /**/ `</a>` +
+      /**/ `${text}` +
+      `</h${level}>`
+    );
   }
 
   code(code: string, language?: string) {
@@ -138,10 +148,7 @@ export class Renderer extends Marked.Renderer {
           return line.replace(src, imgHref({ id, file: imagePath }));
         })
         .join("\n");
-      const label = Marked.marked.parseInline(matches[1], {
-        headerIds: undefined,
-        mangle: undefined,
-      });
+      const label = marked.parseInline(matches[1], {});
 
       this.mermaid = true;
 
