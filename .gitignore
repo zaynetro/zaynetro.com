@@ -10,3 +10,5 @@
 # Generated files
 build
 _fresh
+
+node_modules/

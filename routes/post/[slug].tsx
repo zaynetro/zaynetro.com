@@ -62,7 +62,7 @@ export default function PostPage(props: PageProps) {
                   <a href={`#${heading.entry.slug}`}>{heading.entry.text}</a>
 
                   {!!heading.subheadings && (
-                    <ul class="list-circle list-inside ml-6">
+                    <ul class="list-[circle] list-inside ml-6">
                       {heading.subheadings.map((sub) => (
                         <li>
                           <a href={`#${sub.slug}`}>

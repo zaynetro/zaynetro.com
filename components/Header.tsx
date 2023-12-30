@@ -5,45 +5,6 @@ import { ComponentChildren } from "preact";
 
 export const baseTitle = "Roman Zaynetdinov (zaynetro)";
 
-export const globalStyles = `
-:root {
-  --text-color: #333;
-  --a-hover-color: #ffe69c;
-}
-
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: #f1f1f1;
-    --a-hover-color: #826e30;
-  }
-
-  body {
-    background-color: #111;
-  }
-}
-
-body {
-  color: var(--text-color);
-}
-
-a {
-  color: var(--text-color);
-  overflow-wrap: break-word;
-  padding: 1px 2px;
-  border-radius: 5px;
-  /* Safari doesn't support dotted text-decoration so first we define a value that it supports. */
-  text-decoration: underline;
-  text-decoration: underline dotted #777;
-  text-decoration-thickness: from-font;
-}
-
-a:hover {
-  background-color: var(--a-hover-color);
-  text-decoration: none;
-}
-`;
-
 export function Header({
   title,
   url,
@@ -64,14 +25,13 @@ export function Header({
           href={`https://www.zaynetro.com${url.pathname}`}
         />
         <link rel="icon" href={asset("/favicon.png")} />
+        <link rel="stylesheet" href="/styles.css" />
         <script
           defer
           data-domain="zaynetro.com"
           data-api="/js/stats-event"
           src="/js/stats.js"
         />
-
-        <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
       </Head>
 
       <header class="max-w-3xl mx-auto pt-10 pb-6 px-4">
