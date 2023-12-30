@@ -5,6 +5,7 @@
 import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $about from "./routes/about.tsx";
+import * as $explainix from "./routes/explainix.tsx";
 import * as $img from "./routes/img.ts";
 import * as $index from "./routes/index.tsx";
 import * as $js_stats_event from "./routes/js/stats-event.ts";
@@ -14,6 +15,7 @@ import * as $sitemap_xml from "./routes/sitemap.xml.ts";
 import * as $sudoku from "./routes/sudoku.tsx";
 import * as $sudoku_exercise_ from "./routes/sudoku/[exercise].tsx";
 import * as $BlogPostImports from "./islands/BlogPostImports.tsx";
+import * as $Explainix from "./islands/Explainix.tsx";
 import * as $sudoku_SudokuEmptyRectangle from "./islands/sudoku/SudokuEmptyRectangle.tsx";
 import * as $sudoku_SudokuXWing from "./islands/sudoku/SudokuXWing.tsx";
 import * as $sudoku_SudokuYWing from "./islands/sudoku/SudokuYWing.tsx";
@@ -24,6 +26,7 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/_middleware.ts": $_middleware,
     "./routes/about.tsx": $about,
+    "./routes/explainix.tsx": $explainix,
     "./routes/img.ts": $img,
     "./routes/index.tsx": $index,
     "./routes/js/stats-event.ts": $js_stats_event,
@@ -35,6 +38,7 @@ const manifest = {
   },
   islands: {
     "./islands/BlogPostImports.tsx": $BlogPostImports,
+    "./islands/Explainix.tsx": $Explainix,
     "./islands/sudoku/SudokuEmptyRectangle.tsx": $sudoku_SudokuEmptyRectangle,
     "./islands/sudoku/SudokuXWing.tsx": $sudoku_SudokuXWing,
     "./islands/sudoku/SudokuYWing.tsx": $sudoku_SudokuYWing,

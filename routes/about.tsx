@@ -3,7 +3,6 @@ import { Head } from "$fresh/runtime.ts";
 import { PageProps } from "$fresh/server.ts";
 import IconBrandGithub from "@tabler/icons-preact/dist/esm/icons/IconBrandGithub.js";
 import IconBrandLinkedin from "@tabler/icons-preact/dist/esm/icons/IconBrandLinkedin.js";
-import IconFileTypePdf from "@tabler/icons-preact/dist/esm/icons/IconFileTypePdf.js";
 import IconDog from "@tabler/icons-preact/dist/esm/icons/IconDog.js";
 import IconGridDots from "@tabler/icons-preact/dist/esm/icons/IconGridDots.js";
 import IconMail from "@tabler/icons-preact/dist/esm/icons/IconMail.js";
@@ -135,6 +134,21 @@ export default function AboutPage(props: PageProps) {
                   Bolik Timeline is an application for managing personal
                   documents like notes, photos and memories. It supports offline
                   editing, is end-to-end encrypted and is open source.
+                </p>
+              </li>
+              <li>
+                <h3 class="text-xl">
+                  <NavLink href="/explainix">
+                    <img
+                      src="/images/nix-snowflake.svg"
+                      class="w-[25px] h-[25px]"
+                      alt="Nix snowflake logo"
+                    />
+                    Explainix
+                  </NavLink>
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">
+                  Explain Nix syntax visually.
                 </p>
               </li>
             </ul>
