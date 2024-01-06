@@ -5,14 +5,25 @@ import {
   ExprView,
   resolveView,
   TooltipCtx,
+  TooltipState,
   ViewDef,
 } from "@/components/nix/views.tsx";
 import { useContext, useRef } from "preact/hooks";
 
-const strSeparator = (hover: Signal<boolean>) => () => (
+const strSeparator = (
+  {
+    hover,
+    onClick,
+  }: {
+    hover: Signal<boolean>;
+    onClick?: (e: Event) => void;
+  },
+) =>
+() => (
   <span
     onMouseOver={() => hover.value = true}
     onMouseOut={() => hover.value = false}
+    onClick={onClick}
     class={classNames("text-emerald-700 ring-emerald-300 cursor-pointer", {
       "ring-2": hover.value,
     })}
@@ -21,10 +32,35 @@ const strSeparator = (hover: Signal<boolean>) => () => (
   </span>
 );
 
-export function resolveStringView(str: string): ViewDef {
+export function resolveStringView(ctx: TooltipState, str: string): ViewDef {
+  function onClick(e: Event) {
+    // Prevent reseting the tooltip
+    e.stopPropagation();
+
+    ctx.value = {
+      docHref:
+        "https://nixos.org/manual/nix/stable/language/values#type-string",
+      title: "String",
+      description: `
+1.
+    \`\`\`nix
+    "Hello world!"
+    \`\`\`
+2. Indented string. Can span multiple lines
+    \`\`\`nix
+    ''
+      Hello
+      world!
+    ''
+    \`\`\`
+`,
+      el: e.target as HTMLElement,
+    };
+  }
+
   if (str.includes("\n")) {
     const hover = signal(false);
-    const separator = strSeparator(hover);
+    const separator = strSeparator({ hover, onClick });
     return {
       size: "block",
       Left: separator,
@@ -33,6 +69,7 @@ export function resolveStringView(str: string): ViewDef {
         <pre
           onMouseOver={() => hover.value = true}
           onMouseOut={() => hover.value = false}
+          onClick={onClick}
           class={classNames(
             "ml-2 text-emerald-700 ring-emerald-300 cursor-pointer",
             {
@@ -48,22 +85,31 @@ export function resolveStringView(str: string): ViewDef {
 
   return {
     View: () => (
-      <span class="text-emerald-700 ring-emerald-300 hover:ring-2 cursor-pointer">
+      <span
+        onClick={onClick}
+        class="text-emerald-700 ring-emerald-300 hover:ring-2 cursor-pointer"
+      >
         "{str}"
       </span>
     ),
   };
 }
 
-export const resolveNumberView = (num: number): ViewDef => ({
+export const resolveNumberView = (ctx: TooltipState, num: number): ViewDef => ({
   View: () => {
     const ref = useRef<HTMLSpanElement>(null);
-    const ctx = useContext(TooltipCtx);
 
     function onClick(e: Event) {
+      // Prevent reseting the tooltip
       e.stopPropagation();
+
       ctx.value = {
-        description: "Number",
+        docHref:
+          "https://nixos.org/manual/nix/stable/language/values#type-number",
+        title: "Number",
+        description: `
+Numbers, which can be integers (like \`123\`) or floating point (like \`123.43\` or \`.27e13\`).
+`,
         el: ref.current as HTMLElement,
       };
     }
@@ -80,37 +126,133 @@ export const resolveNumberView = (num: number): ViewDef => ({
   },
 });
 
-export const resolveBooleanView = (value: boolean): ViewDef => ({
-  View: () => (
-    <span class="text-pink-700 ring-ping-300 cursor-pointer hover:ring-2">
-      {value.toString()}
-    </span>
-  ),
+export const resolveBooleanView = (
+  ctx: TooltipState,
+  value: boolean,
+): ViewDef => ({
+  View: () => {
+    function onClick(e: Event) {
+      // Prevent reseting the tooltip
+      e.stopPropagation();
+
+      ctx.value = {
+        docHref:
+          "https://nixos.org/manual/nix/stable/language/values#type-boolean",
+        title: "Boolean",
+        description: "Booleans with values `true` and `false`.",
+        el: e.target as HTMLElement,
+      };
+    }
+
+    return (
+      <span
+        onClick={onClick}
+        class="text-pink-700 ring-ping-300 cursor-pointer hover:ring-2"
+      >
+        {value.toString()}
+      </span>
+    );
+  },
 });
 
-export const resolveNullView = (): ViewDef => ({
-  View: () => (
-    <span class="text-pink-700 ring-ping-300 cursor-pointer hover:ring-2">
-      null
-    </span>
-  ),
+export const resolveNullView = (ctx: TooltipState): ViewDef => ({
+  View: () => {
+    function onClick(e: Event) {
+      // Prevent reseting the tooltip
+      e.stopPropagation();
+
+      ctx.value = {
+        docHref:
+          "https://nixos.org/manual/nix/stable/language/values#type-null",
+        title: "Null",
+        description: "The null value, denoted as `null`.",
+        el: e.target as HTMLElement,
+      };
+    }
+
+    return (
+      <span
+        onClick={onClick}
+        class="text-pink-700 ring-ping-300 cursor-pointer hover:ring-2"
+      >
+        null
+      </span>
+    );
+  },
 });
 
-export const resolvePathView = (path: string): ViewDef => ({
-  View: () => (
-    <span class="text-violet-700 ring-violet-300 cursor-pointer hover:ring-2">
-      {path}
-    </span>
-  ),
+export const resolvePathView = (ctx: TooltipState, path: string): ViewDef => ({
+  View: () => {
+    function onClick(e: Event) {
+      // Prevent reseting the tooltip
+      e.stopPropagation();
+
+      ctx.value = {
+        docHref:
+          "https://nixos.org/manual/nix/stable/language/values#type-path",
+        title: "Path",
+        description: `
+A path must contain at least one slash to be recognised as such.
+
+\`\`\`nix
+./config/hello.txt # Relative path
+/var/lib/nginx.log # Absolute path
+~/Downloads        # Relative to home directory
+\`\`\`
+
+<a href="https://nixos.org/manual/nix/stable/language/constructs/lookup-path" target="_blank">Lookup paths</a> such as \`<nixpkgs>\` resolve to path values.
+
+\`\`\`nix
+<nixpkgs>
+# Resolves to
+/nix/var/nix/profiles/per-user/root/channels/nixpkgs
+\`\`\`
+        `,
+        el: e.target as HTMLElement,
+      };
+    }
+
+    return (
+      <span
+        onClick={onClick}
+        class="text-violet-700 ring-violet-300 cursor-pointer hover:ring-2"
+      >
+        {path}
+      </span>
+    );
+  },
 });
 
 // For URIs quotes can be omited
-export const resolveUriView = (uri: string): ViewDef => ({
-  View: () => (
-    <span class="text-violet-700 ring-violet-300 cursor-pointer hover:ring-2">
-      {uri}
-    </span>
-  ),
+export const resolveUriView = (ctx: TooltipState, uri: string): ViewDef => ({
+  View: () => {
+    function onClick(e: Event) {
+      // Prevent reseting the tooltip
+      e.stopPropagation();
+
+      ctx.value = {
+        docHref:
+          "https://nixos.org/manual/nix/stable/language/values#type-string",
+        title: "String",
+        description: `
+URI is a third type of String.
+
+URIs as defined in appendix B of RFC 2396 can be written as is, without quotes.
+
+For instance, the string \`"http://example.org/foo.tar.bz2"\` can also be written as \`http://example.org/foo.tar.bz2\`.`,
+        el: e.target as HTMLElement,
+      };
+    }
+
+    return (
+      <span
+        onClick={onClick}
+        class="text-violet-700 ring-violet-300 cursor-pointer hover:ring-2"
+      >
+        {uri}
+      </span>
+    );
+  },
 });
 
 export const resolveIdentView = (value: string): ViewDef => ({
@@ -121,24 +263,52 @@ export const resolveIdentView = (value: string): ViewDef => ({
   ),
 });
 
-const blockSeparator =
-  (symbol: string, hover: Signal<boolean>, token?: string) => () => (
-    <span
-      onMouseOver={() => hover.value = true}
-      onMouseOut={() => hover.value = false}
-      class={classNames("text-black ring-black/25 cursor-pointer", {
-        "ring-2": hover.value,
-      })}
-    >
-      {!!token && <span class="text-lime-700 font-bold mr-2">{token}</span>}
-      {symbol}
-    </span>
-  );
+const blockSeparator = (
+  symbol: string,
+  { hover, onClick }: {
+    hover: Signal<boolean>;
+    onClick?: (e: Event) => void;
+  },
+  token?: string,
+) =>
+() => (
+  <span
+    onMouseOver={() => hover.value = true}
+    onMouseOut={() => hover.value = false}
+    onClick={onClick}
+    class={classNames("text-black ring-black/25 cursor-pointer", {
+      "ring-2": hover.value,
+    })}
+  >
+    {!!token && <span class="text-lime-700 font-bold mr-2">{token}</span>}
+    {symbol}
+  </span>
+);
 
-export function resolveListView(list: Expr[]): ViewDef {
+export function resolveListView(ctx: TooltipState, list: Expr[]): ViewDef {
   let isBlock = list.length > 5;
   if (!isBlock) {
-    isBlock = list.some((item) => resolveView(item).size == "block");
+    isBlock = list.some((item) => resolveView(ctx, item).size == "block");
+  }
+
+  function onClick(e: Event) {
+    // Prevent reseting the tooltip
+    e.stopPropagation();
+
+    ctx.value = {
+      docHref: "https://nixos.org/manual/nix/stable/language/values#list",
+      title: "List",
+      description: `
+Lists are formed by enclosing a whitespace-separated list of values between square brackets. For example,
+
+\`\`\`nix
+[ 123 ./foo.nix "abc" ]
+\`\`\`
+
+defines a list of three elements.
+`,
+      el: e.target as HTMLElement,
+    };
   }
 
   if (isBlock) {
@@ -146,14 +316,17 @@ export function resolveListView(list: Expr[]): ViewDef {
     return {
       size: "block",
       View: () => <ListRows list={list} />,
-      Left: blockSeparator("[", hover),
-      Right: blockSeparator("]", hover),
+      Left: blockSeparator("[", { hover, onClick }),
+      Right: blockSeparator("]", { hover, onClick }),
     };
   }
 
   return {
     View: () => (
-      <div class="inline-flex gap-2 cursor-pointer ring-black/25 hover:ring-2">
+      <div
+        onClick={onClick}
+        class="inline-flex gap-2 cursor-pointer ring-black/25 hover:ring-2"
+      >
         <span class="text-black">{"["}</span>
         <ListRows list={list} />
         <span class="text-black">{"]"}</span>
@@ -162,29 +335,56 @@ export function resolveListView(list: Expr[]): ViewDef {
   };
 }
 
-export function resolveAttrSetView(set: AttrSet): ViewDef {
+export function resolveAttrSetView(ctx: TooltipState, set: AttrSet): ViewDef {
   let isBlock = set.recursive || Object.entries(set.entries).length > 2;
   if (!isBlock) {
     isBlock = Object.values(set.entries).some((entry) =>
-      resolveView(entry.value).size == "block"
+      resolveView(ctx, entry.value).size == "block"
     );
+  }
+
+  function onClick(e: Event) {
+    // Prevent reseting the tooltip
+    e.stopPropagation();
+
+    ctx.value = {
+      docHref:
+        "https://nixos.org/manual/nix/stable/language/values#attribute-set",
+      title: "Attribute Set",
+      description: `
+An attribute set is a collection of name-value-pairs (called attributes) enclosed in curly brackets (\`{ }\`).
+
+An attribute name can be an identifier or a string.
+
+Names and values are separated by an equal sign (\`=\`). Each value is an arbitrary expression terminated by a semicolon (\`;\`).
+      `,
+      el: e.target as HTMLElement,
+    };
   }
 
   if (isBlock) {
     const hover = signal(false);
     return {
       size: "block",
-      View: () => <AttrSetRows set={set} />,
-      Left: blockSeparator("{", hover, set.recursive ? "rec" : undefined),
-      Right: blockSeparator("}", hover),
+      View: () => <AttrSetRows set={set} onClick={onClick} hover={hover} />,
+      Left: blockSeparator(
+        "{",
+        { hover, onClick },
+        // TODO: https://nixos.org/manual/nix/stable/language/constructs.html#recursive-sets
+        set.recursive ? "rec" : undefined,
+      ),
+      Right: blockSeparator("}", { hover, onClick }),
     };
   }
 
   return {
     View: () => (
-      <div class="inline-flex gap-2 cursor-pointer ring-black/25 hover:ring-2">
+      <div
+        onClick={onClick}
+        class="inline-flex gap-2 cursor-pointer ring-black/25 hover:ring-2"
+      >
         <span class="text-black">{"{"}</span>
-        <AttrSetRows set={set} />
+        <AttrSetRows set={set} onClick={onClick} />
         <span class="text-black">{"}"}</span>
       </div>
     ),
@@ -199,28 +399,60 @@ function ListRows({ list }: { list: Expr[] }) {
   );
 }
 
-function AttrSetRows({ set }: { set: AttrSet }) {
+function AttrSetRows({
+  set,
+  onClick,
+  hover,
+}: {
+  set: AttrSet;
+  onClick: (e: Event) => void;
+  hover?: Signal<boolean>;
+}) {
   return (
     <>
-      {set.entries.map((e) => <AttrSetEntry entry={e} />)}
+      {set.entries.map((e) => (
+        <AttrSetEntry entry={e} onClick={onClick} hover={hover} />
+      ))}
     </>
   );
 }
 
-export function AttrSetEntry({ entry }: { entry: AttrEntry }) {
+export function AttrSetEntry({
+  entry,
+  onClick,
+  hover,
+}: {
+  entry: AttrEntry;
+  onClick: (e: Event) => void;
+  hover?: Signal<boolean>;
+}) {
+  const ctx = useContext(TooltipCtx);
   const Name = typeof entry.name == "string"
-    ? resolveStringView(entry.name).View
+    ? resolveStringView(ctx, entry.name).View
     : resolveIdentView(entry.name.value).View;
-  const viewDef = resolveView(entry.value);
+  const viewDef = resolveView(ctx, entry.value);
 
-  // TODO: allow clicking on `=`
+  function setHover(v: boolean) {
+    if (hover) {
+      hover.value = v;
+    }
+  }
 
   if (viewDef.size != "block") {
     // Inline view
     return (
       <div>
         <Name />
-        <span class="text-black mx-2">=</span>
+        <span
+          onClick={onClick}
+          onMouseOver={() => setHover(true)}
+          onMouseOut={() => setHover(false)}
+          class={classNames("text-black mx-2 ring-black/25", {
+            "ring-2": hover?.value ?? false,
+          })}
+        >
+          =
+        </span>
         <viewDef.View />
         <span class="text-black">;</span>
       </div>
@@ -232,7 +464,16 @@ export function AttrSetEntry({ entry }: { entry: AttrEntry }) {
     <>
       <div>
         <Name />
-        <span class="text-black mx-2">=</span>
+        <span
+          onClick={onClick}
+          onMouseOver={() => setHover(true)}
+          onMouseOut={() => setHover(false)}
+          class={classNames("text-black mx-2 ring-black/25", {
+            "ring-2": hover?.value ?? false,
+          })}
+        >
+          =
+        </span>
         <span class="text-black">
           {!!viewDef.Left && <viewDef.Left />}
         </span>

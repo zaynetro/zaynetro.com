@@ -16,6 +16,7 @@ import {
   resolveLetInView,
 } from "@/components/nix/constructs.tsx";
 import { Signal, signal } from "@preact/signals";
+import { useContext } from "preact/hooks";
 
 // Either a block or inline view
 // Block view has separators on either side of the view.
@@ -28,7 +29,8 @@ export type ViewDef = {
 };
 
 export function ExprView({ expr }: { expr: Expr }) {
-  const viewDef = resolveView(expr);
+  const ctx = useContext(TooltipCtx);
+  const viewDef = resolveView(ctx, expr);
   if (viewDef.size != "block") {
     // Inline
     return <viewDef.View />;
@@ -46,39 +48,40 @@ export function ExprView({ expr }: { expr: Expr }) {
   );
 }
 
-export function resolveView(data: Expr): ViewDef {
+export function resolveView(ctx: TooltipState, data: Expr): ViewDef {
   if (typeof data == "string") {
-    return resolveStringView(data);
+    return resolveStringView(ctx, data);
   } else if (typeof data == "number") {
-    return resolveNumberView(data);
+    return resolveNumberView(ctx, data);
   } else if (typeof data == "boolean") {
-    return resolveBooleanView(data);
+    return resolveBooleanView(ctx, data);
   } else if (data === null) {
-    return resolveNullView();
+    return resolveNullView(ctx);
   } else if (Array.isArray(data)) {
-    return resolveListView(data);
+    return resolveListView(ctx, data);
   } else if (data.type == "Path") {
-    return resolvePathView(data.path);
+    return resolvePathView(ctx, data.path);
   } else if (data.type == "Uri") {
-    return resolveUriView(data.uri);
+    return resolveUriView(ctx, data.uri);
   } else if (data.type == "Ident") {
     return resolveIdentView(data.value);
   } else if (data.type == "AttrSet") {
-    return resolveAttrSetView(data);
+    return resolveAttrSetView(ctx, data);
   } else if (data.type == "IfElse") {
-    return resolveIfElseView(data);
+    return resolveIfElseView(ctx, data);
   } else if (data.type == "LetIn") {
-    return resolveLetInView(data);
+    return resolveLetInView(ctx, data);
   } else {
     throw new Error("Unknown data type: " + data);
   }
 }
 
 export type Tooltip = {
+  docHref?: string;
+  title: string;
   description: string;
   el: HTMLElement;
 };
 
-export const TooltipCtx = createContext(
-  signal(null) as Signal<Tooltip | null>,
-);
+export type TooltipState = Signal<Tooltip | null>;
+export const TooltipCtx = createContext(signal(null) as TooltipState);

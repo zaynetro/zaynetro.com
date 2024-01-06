@@ -1,16 +1,13 @@
-// TODO: change of plans!
-// Instead of parsing user code. I want to display a Nix snippet that will show case the syntax.
-// It should include all primitive types and language constructs.
-// On hover it shows a tooltip with explanation.
-// On click it saves this tooltip to the sidebar.
-// Sidebar shows a stack of saved tooltips and can hover to highlight the code.
-// Clicking a tooltip expands it (by default it shows only the title)
-
 import { ExprView, TooltipCtx } from "@/components/nix/views.tsx";
 import { Expr, ident } from "@/components/nix/datatypes.tsx";
-import { signal } from "@preact/signals";
-import { useContext } from "preact/hooks";
+import { signal, useSignal } from "@preact/signals";
+import { useContext, useEffect, useRef } from "preact/hooks";
+import IconExternalLink from "@tabler/icons-preact/dist/esm/icons/IconExternalLink.js";
+import { BrowserRenderer } from "@/utils/browser_renderer.ts";
+import { marked } from "marked";
+import { classNames } from "@/components/util.ts";
 
+// TODO:
 // Modes:
 // 1) Display a snippet of code of all features
 // 2) Display list of features one by one (e.g number, string, attrset, ...)
@@ -148,9 +145,13 @@ can span multiple lines.`,
 export default function Explainix() {
   return (
     <TooltipCtx.Provider value={signal(null)}>
-      <div class="flex gap-4">
-        <CodeSnippet />
-        <Tooltip />
+      <div class="flex gap-4 pb-16">
+        <section class="grow">
+          <CodeSnippet />
+        </section>
+        <section class="w-2/5">
+          <Tooltip />
+        </section>
       </div>
     </TooltipCtx.Provider>
   );
@@ -176,9 +177,58 @@ function CodeSnippet() {
 
 function Tooltip() {
   const ctx = useContext(TooltipCtx);
+  const ref = useRef<HTMLDivElement>(null);
+  // Add padding so that tooltip is on the same level as clicked element
+  const paddingTop = useSignal<number | null>(null);
+
+  const val = ctx.value;
+  if (!val) {
+    return null;
+  }
+
+  useEffect(() => {
+    // We calculate this in the effect because otherwise we won't have it
+    // on the first render.
+    const headerHeight = 36;
+    if (ref.current) {
+      let value = val.el.offsetTop - ref.current.offsetTop;
+      if (value > headerHeight) {
+        value -= headerHeight;
+      }
+      paddingTop.value = value;
+    }
+  }, [val, ref.current]);
+
+  const mdRenderer = new BrowserRenderer();
+  const html = marked.parse(val.description, {
+    gfm: true,
+    renderer: mdRenderer,
+  }) as string;
+
   return (
-    <div>
-      Currently clicked on: {ctx.value?.el.nodeName}
+    <div
+      ref={ref}
+      style={{
+        transform: `translateY(${paddingTop.value}px)`,
+      }}
+      class="transition-transform"
+    >
+      <div class="flex justify-between items-center">
+        <b>{val.title}</b>
+        {!!val.docHref && (
+          <a
+            href={val.docHref}
+            target="_blank"
+            class="text-gray-500 hover:text-gray-700"
+          >
+            <IconExternalLink size={20} />
+          </a>
+        )}
+      </div>
+      <div
+        class="mt-2 markdown-body"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </div>
   );
 }
