@@ -186,7 +186,7 @@ export default function Explainix() {
         <section class="grow">
           <CodeSnippet />
         </section>
-        <section class="w-2/5 overflow-y-scroll">
+        <section class="w-2/5">
           <Tooltip />
         </section>
       </div>
@@ -246,9 +246,9 @@ function Tooltip() {
     <div
       ref={ref}
       style={{
-        transform: `translateY(${paddingTop.value}px)`,
+        paddingTop: `${paddingTop.value}px`
       }}
-      class="transition-transform"
+      class="transition-[padding]"
     >
       <div class="flex justify-between items-center">
         <b>{val.title}</b>
