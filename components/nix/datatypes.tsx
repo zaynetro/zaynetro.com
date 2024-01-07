@@ -16,6 +16,7 @@ export type Uri = {
 export type AttrSet = {
   type: "AttrSet";
   recursive?: boolean;
+  size?: "block" | "inline";
   entries: AttrEntry[];
 };
 
@@ -29,6 +30,8 @@ export const ident = (value: string): Ident => ({ type: "Ident", value });
 export type AttrEntry = {
   name: Ident | string;
   value: Expr;
+} | {
+  inherit: Ident[];
 };
 
 /** Primitive types */

@@ -11,8 +11,32 @@ export const resolveIfElseView = (
     const Body = resolveView(ctx, ifElse.body).View;
     const Else = resolveView(ctx, ifElse.else).View;
 
+    function onClick(e: Event) {
+      // Prevent reseting the tooltip
+      e.stopPropagation();
+
+      ctx.value = {
+        docHref:
+          "https://nixos.org/manual/nix/stable/language/constructs.html#conditionals",
+        title: "Conditionals",
+        description: `
+Conditionals look like this:
+
+\`\`\`nix
+if e1 then e2 else e3
+\`\`\`
+
+where e1 is an expression that should evaluate to a Boolean value (\`true\` or \`false\`).
+`,
+        el: e.target as HTMLElement,
+      };
+    }
+
     return (
-      <div class="inline-flex gap-2 ring-lime-300 cursor-pointer hover:ring-2">
+      <div
+        onClick={onClick}
+        class="inline-flex gap-2 ring-lime-300 cursor-pointer hover:ring-2"
+      >
         <span class="text-lime-700 font-bold">if</span>
         <Cond />
         <span class="text-lime-700 font-bold">then</span>
@@ -31,6 +55,29 @@ export const resolveLetInView = (ctx: TooltipState, letIn: LetIn): ViewDef => ({
     const inToken = <span class="text-lime-700 font-bold">in</span>;
 
     function onClick(e: Event) {
+      // Prevent reseting the tooltip
+      e.stopPropagation();
+
+      ctx.value = {
+        docHref:
+          "https://nixos.org/manual/nix/stable/language/constructs.html#let-expressions",
+        title: "Let-expressions",
+        description: `
+A let-expression allows you to define local variables for an expression.
+
+Example:
+
+\`\`\`nix
+let
+  x = "foo";
+  y = "bar";
+in x + y
+\`\`\`
+
+This evaluates to \`"foobar"\`.
+`,
+        el: e.target as HTMLElement,
+      };
     }
 
     let inBlock;
@@ -58,7 +105,10 @@ export const resolveLetInView = (ctx: TooltipState, letIn: LetIn): ViewDef => ({
     }
 
     return (
-      <div class="flex flex-col items-start ring-lime-300 cursor-pointer hover:ring-2">
+      <div
+        onClick={onClick}
+        class="flex flex-col items-start ring-lime-300 cursor-pointer hover:ring-2"
+      >
         <span class="text-lime-700 font-bold">let</span>
         <div class="ml-2 flex flex-col">
           {letIn.defs.map((def) => (

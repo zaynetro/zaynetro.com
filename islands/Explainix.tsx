@@ -120,7 +120,23 @@ can span multiple lines.`,
         },
       }, {
         name: "inheriting attributes",
-        value: "TODO",
+        value: {
+          type: "LetIn",
+          defs: [{
+            name: ident("x"),
+            value: 123,
+          }],
+          body: {
+            type: "AttrSet",
+            size: "block",
+            entries: [{
+              inherit: [ident("x")],
+            }, {
+              name: "y",
+              value: 456,
+            }],
+          },
+        },
       }, {
         name: "functions",
         value: "TODO",
@@ -149,7 +165,7 @@ export default function Explainix() {
         <section class="grow">
           <CodeSnippet />
         </section>
-        <section class="w-2/5">
+        <section class="w-2/5 overflow-y-scroll">
           <Tooltip />
         </section>
       </div>

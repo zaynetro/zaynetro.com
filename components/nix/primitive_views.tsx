@@ -255,12 +255,37 @@ For instance, the string \`"http://example.org/foo.tar.bz2"\` can also be writte
   },
 });
 
-export const resolveIdentView = (value: string): ViewDef => ({
-  View: () => (
-    <span class="text-black ring-black/25 cursor-pointer hover:ring-2">
-      {value}
-    </span>
-  ),
+export const resolveIdentView = (
+  ctx: TooltipState,
+  value: string,
+): ViewDef => ({
+  View: () => {
+    function onClick(e: Event) {
+      // Prevent reseting the tooltip
+      e.stopPropagation();
+
+      ctx.value = {
+        title: "Identifier",
+        description: `
+*identifier ~* \`[a-zA-Z_][a-zA-Z0-9_'-]*\`
+
+In Attribute Sets identifiers could be used as attribute names.
+
+Elsewhere identifiers are variable or function references.
+`,
+        el: e.target as HTMLElement,
+      };
+    }
+
+    return (
+      <span
+        onClick={onClick}
+        class="text-black ring-black/25 cursor-pointer hover:ring-2"
+      >
+        {value}
+      </span>
+    );
+  },
 });
 
 const blockSeparator = (
@@ -336,10 +361,12 @@ defines a list of three elements.
 }
 
 export function resolveAttrSetView(ctx: TooltipState, set: AttrSet): ViewDef {
-  let isBlock = set.recursive || Object.entries(set.entries).length > 2;
+  let isBlock = set.recursive || set.size == "block" ||
+    Object.entries(set.entries).length > 2;
+
   if (!isBlock) {
     isBlock = Object.values(set.entries).some((entry) =>
-      resolveView(ctx, entry.value).size == "block"
+      "value" in entry && resolveView(ctx, entry.value).size == "block"
     );
   }
 
@@ -356,8 +383,21 @@ An attribute set is a collection of name-value-pairs (called attributes) enclose
 
 An attribute name can be an identifier or a string.
 
-Names and values are separated by an equal sign (\`=\`). Each value is an arbitrary expression terminated by a semicolon (\`;\`).
-      `,
+Names and values are separated by an equal sign (\`=\`).
+Each value is an arbitrary expression terminated by a semicolon (\`;\`).
+
+Example:
+
+\`\`\`nix
+{
+  x = 123;
+  text = "Hello";
+  y = f { bla = 456; };
+}
+\`\`\`
+
+This defines a set with attributes named x, text, y.
+`,
       el: e.target as HTMLElement,
     };
   }
@@ -427,16 +467,88 @@ export function AttrSetEntry({
   hover?: Signal<boolean>;
 }) {
   const ctx = useContext(TooltipCtx);
-  const Name = typeof entry.name == "string"
-    ? resolveStringView(ctx, entry.name).View
-    : resolveIdentView(entry.name.value).View;
-  const viewDef = resolveView(ctx, entry.value);
 
   function setHover(v: boolean) {
     if (hover) {
       hover.value = v;
     }
   }
+
+  function onInheritClick(e: Event) {
+    // Prevent reseting the tooltip
+    e.stopPropagation();
+
+    ctx.value = {
+      docHref:
+        "https://nixos.org/manual/nix/stable/language/constructs.html#inheriting-attributes",
+      title: "Inheriting attributes",
+      description: `
+When defining an attribute set or in a let-expression it is often convenient to copy variables
+from the surrounding lexical scope (e.g., when you want to propagate attributes).
+This can be shortened using the inherit keyword.
+
+Example:
+
+\`\`\`nix
+let x = 123; in
+{
+  inherit x;
+  y = 456;
+}
+\`\`\`
+
+is equivalent to
+
+\`\`\`nix
+let x = 123; in
+{
+  x = x;
+  y = 456;
+}
+\`\`\`
+
+and both evaluate to \`{ x = 123; y = 456; }\`.
+
+It is possible to inherit multiple attributes:
+
+\`\`\`nix
+inherit x y z;
+\`\`\`
+`,
+      el: e.target as HTMLElement,
+    };
+  }
+
+  if ("inherit" in entry) {
+    return (
+      <div>
+        <span
+          onClick={onInheritClick}
+          onMouseOver={() => setHover(true)}
+          onMouseOut={() => setHover(false)}
+          class={classNames("text-lime-700 font-bold cursor-pointer", {
+            "ring-2": hover?.value ?? false,
+          })}
+        >
+          inherit
+        </span>
+        <div class="inline-flex gap-2 ml-2">
+          {entry.inherit.map((e) => {
+            const View = resolveIdentView(ctx, e.value).View;
+            return <View />;
+          })}
+        </div>
+        <span class="text-black">;</span>
+      </div>
+    );
+  }
+
+  const Name = typeof entry.name == "string"
+    ? resolveStringView(ctx, entry.name).View
+    : resolveIdentView(ctx, entry.name.value).View;
+  const viewDef = resolveView(ctx, entry.value);
+
+  // TODO: clicking on the keys should display docs about them (not strings)
 
   if (viewDef.size != "block") {
     // Inline view
@@ -447,7 +559,7 @@ export function AttrSetEntry({
           onClick={onClick}
           onMouseOver={() => setHover(true)}
           onMouseOut={() => setHover(false)}
-          class={classNames("text-black mx-2 ring-black/25", {
+          class={classNames("text-black mx-2 ring-black/25 cursor-pointer", {
             "ring-2": hover?.value ?? false,
           })}
         >
@@ -468,7 +580,7 @@ export function AttrSetEntry({
           onClick={onClick}
           onMouseOver={() => setHover(true)}
           onMouseOut={() => setHover(false)}
-          class={classNames("text-black mx-2 ring-black/25", {
+          class={classNames("text-black mx-2 ring-black/25 cursor-pointer", {
             "ring-2": hover?.value ?? false,
           })}
         >

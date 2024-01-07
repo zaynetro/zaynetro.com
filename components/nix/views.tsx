@@ -64,7 +64,7 @@ export function resolveView(ctx: TooltipState, data: Expr): ViewDef {
   } else if (data.type == "Uri") {
     return resolveUriView(ctx, data.uri);
   } else if (data.type == "Ident") {
-    return resolveIdentView(data.value);
+    return resolveIdentView(ctx, data.value);
   } else if (data.type == "AttrSet") {
     return resolveAttrSetView(ctx, data);
   } else if (data.type == "IfElse") {
