@@ -14,12 +14,12 @@ import { ASSET_CACHE_BUST_KEY } from "$fresh/runtime.ts";
 let imgMagickReady = false;
 
 const kv = await Deno.openKv();
-const prefix = "v1-images";
+const prefix = "v2-images";
 clearOldImages();
 
 // Delete old cache entries
 async function clearOldImages() {
-  for await (const entry of kv.list({ prefix: ["v0-images"] })) {
+  for await (const entry of kv.list({ prefix: ["v1-images"] })) {
     await kv.delete(entry.key);
   }
 }
