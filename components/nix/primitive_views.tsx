@@ -187,7 +187,9 @@ const blockSeparator = (
     {!!token && (
       <span
         onClick={onTokenClick}
-        class="text-lime-700 font-bold mr-2 hover:ring-2"
+        class={classNames("text-lime-700 font-bold mr-2 hover:ring-2", {
+          "cursor-pointer": !!onTokenClick,
+        })}
       >
         {token}
       </span>

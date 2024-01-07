@@ -36,19 +36,21 @@ export default defineRoute((_req, ctx) => {
         url={ctx.url}
       />
 
-      <main class="mt-8">
+      <main class="mt-4">
         <section class="max-w-6xl mx-auto flex flex-col gap-8 px-2">
           <h1 class="text-2xl flex gap-4 items-center">
             <img
               src="/images/nix-snowflake.svg"
-              class="w-[48px] h-[48px]"
+              class="w-[36px] h-[36px]"
               alt="Nix snowflake logo"
             />
             Explainix
           </h1>
-          <p class="text-lg">
+          <p class="text-lg max-w-2xl">
             Explain Nix syntax visually. Snippet below showcases all language
-            features Nix has to offer. <i>WORK IN PROGRESS</i>
+            features Nix has to offer. Find unfamiliar syntax and click on it to
+            see the documentation. <br />
+            <i>WORK IN PROGRESS</i>
           </p>
 
           <Explainix />

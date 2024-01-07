@@ -257,15 +257,17 @@ to the lexical scope in the expression \`x + y\`.
     description: `
 Functions have the following form:
 
+\`\`\`
 pattern: body
+\`\`\`
 
 The pattern specifies what the argument of the function must look like, and binds variables
 in the body to (parts of) the argument. There are three kinds of patterns:
 
 * A single identifier
     \`\`\`nix
-    let concat = x: y: x + y;
-    in concat "foo" "bar"
+    let square = x: x * x;
+    in square 2
     \`\`\`
 
 * *A set pattern*
@@ -273,7 +275,7 @@ in the body to (parts of) the argument. There are three kinds of patterns:
     { x, y ? "foo" }: x + y
     \`\`\`
 
-    specifies a function that only requires an attribute named \`x\`, but optionally accepts y.
+    specifies a function that only requires an attribute named \`x\`, but optionally accepts \`y\`.
 
 * An \`@\`-pattern provides a means of referring to the whole value being matched
     \`\`\`nix
