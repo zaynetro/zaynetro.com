@@ -12,6 +12,7 @@ import {
   resolveUriView,
 } from "@/components/nix/primitive_views.tsx";
 import {
+  resolveFnView,
   resolveIfElseView,
   resolveLetInView,
   resolveWithView,
@@ -74,6 +75,8 @@ export function resolveView(ctx: TooltipState, data: Expr): ViewDef {
     return resolveLetInView(ctx, data);
   } else if (data.type == "With") {
     return resolveWithView(ctx, data);
+  } else if (data.type == "Fn") {
+    return resolveFnView(ctx, data);
   } else {
     throw new Error("Unknown data type: " + data);
   }

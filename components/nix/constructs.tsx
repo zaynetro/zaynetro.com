@@ -1,4 +1,4 @@
-import { IfElse, LetIn, WithExpr } from "@/components/nix/datatypes.tsx";
+import { FnDef, IfElse, LetIn, WithExpr } from "@/components/nix/datatypes.tsx";
 import {
   buildTooltipClick,
   resolveView,
@@ -107,6 +107,40 @@ export function resolveWithView(
           <span>
             <Ident />
             <span class="text-black">;</span>
+          </span>
+          <bodyDef.View />
+        </div>
+      ),
+    };
+  }
+
+  // Block view
+  return {
+    View: () => <b>TODO</b>,
+  };
+}
+
+export function resolveFnView(
+  ctx: TooltipState,
+  fn: FnDef,
+): ViewDef {
+  const bodyDef = resolveView(ctx, fn.body);
+  const Ident = resolveIdentView(ctx, fn.arg.value).View;
+  const onClick = buildTooltipClick(ctx, DOCS.Fn);
+
+  if (bodyDef.size != "block") {
+    // Inline view
+    return {
+      View: () => (
+        <div class="inline-flex hover:ring-2">
+          <span onClick={onClick}>
+            <Ident />
+            <span
+              onClick={onClick}
+              class="text-black mr-2"
+            >
+              :
+            </span>
           </span>
           <bodyDef.View />
         </div>

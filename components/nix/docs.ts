@@ -249,4 +249,38 @@ evaluates to \`"foobar"\` since the with adds the \`x\` and \`y\` attributes of 
 to the lexical scope in the expression \`x + y\`.
 `,
   },
+
+  "Fn": {
+    docHref:
+      "https://nixos.org/manual/nix/stable/language/constructs.html#functions",
+    title: "Functions",
+    description: `
+Functions have the following form:
+
+pattern: body
+
+The pattern specifies what the argument of the function must look like, and binds variables
+in the body to (parts of) the argument. There are three kinds of patterns:
+
+* A single identifier
+    \`\`\`nix
+    let concat = x: y: x + y;
+    in concat "foo" "bar"
+    \`\`\`
+
+* *A set pattern*
+    \`\`\`nix
+    { x, y ? "foo" }: x + y
+    \`\`\`
+
+    specifies a function that only requires an attribute named \`x\`, but optionally accepts y.
+
+* An \`@\`-pattern provides a means of referring to the whole value being matched
+    \`\`\`nix
+    args@{ x, ... }: x + args.a
+    # Or
+    { x, ... } @ args: x + args.a
+    \`\`\`
+`,
+  },
 };

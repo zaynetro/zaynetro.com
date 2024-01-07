@@ -139,7 +139,24 @@ can span multiple lines.`,
         },
       }, {
         name: "functions",
-        value: "TODO",
+        value: {
+          type: "LetIn",
+          defs: [{
+            name: ident("concat"),
+            value: {
+              type: "Fn",
+              arg: ident("x"),
+              body: {
+                type: "Fn",
+                arg: ident("y"),
+                // TODO: this needs to be x + y
+                body: ident("x"),
+              },
+            },
+          }],
+          // TODO: this needs to be concat x y
+          body: ident("concat"),
+        },
       }, {
         name: "assertions",
         value: "TODO",
@@ -246,7 +263,7 @@ function Tooltip() {
     <div
       ref={ref}
       style={{
-        paddingTop: `${paddingTop.value}px`
+        paddingTop: `${paddingTop.value}px`,
       }}
       class="transition-[padding]"
     >

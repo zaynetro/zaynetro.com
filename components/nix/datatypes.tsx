@@ -40,6 +40,12 @@ export type WithExpr = {
   body: Expr;
 };
 
+export type FnDef = {
+  type: "Fn";
+  arg: Ident;
+  body: Expr;
+};
+
 /** Primitive types */
 export type DataType =
   | string
@@ -51,7 +57,8 @@ export type DataType =
   | Ident
   | Array<Expr>
   | AttrSet
-  | WithExpr;
+  | WithExpr
+  | FnDef;
 
 export type IfElse = {
   type: "IfElse";
