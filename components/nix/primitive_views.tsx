@@ -2,6 +2,7 @@ import { AttrEntry, AttrSet, Expr } from "@/components/nix/datatypes.tsx";
 import { Signal, signal } from "@preact/signals";
 import { classNames } from "@/components/util.ts";
 import {
+  buildTooltipClick,
   ExprView,
   resolveView,
   TooltipCtx,
@@ -9,6 +10,7 @@ import {
   ViewDef,
 } from "@/components/nix/views.tsx";
 import { useContext, useRef } from "preact/hooks";
+import { DOCS } from "@/components/nix/docs.ts";
 
 const strSeparator = (
   {
@@ -33,30 +35,7 @@ const strSeparator = (
 );
 
 export function resolveStringView(ctx: TooltipState, str: string): ViewDef {
-  function onClick(e: Event) {
-    // Prevent reseting the tooltip
-    e.stopPropagation();
-
-    ctx.value = {
-      docHref:
-        "https://nixos.org/manual/nix/stable/language/values#type-string",
-      title: "String",
-      description: `
-1.
-    \`\`\`nix
-    "Hello world!"
-    \`\`\`
-2. Indented string. Can span multiple lines
-    \`\`\`nix
-    ''
-      Hello
-      world!
-    ''
-    \`\`\`
-`,
-      el: e.target as HTMLElement,
-    };
-  }
+  const onClick = buildTooltipClick(ctx, DOCS.String);
 
   if (str.includes("\n")) {
     const hover = signal(false);
@@ -98,21 +77,7 @@ export function resolveStringView(ctx: TooltipState, str: string): ViewDef {
 export const resolveNumberView = (ctx: TooltipState, num: number): ViewDef => ({
   View: () => {
     const ref = useRef<HTMLSpanElement>(null);
-
-    function onClick(e: Event) {
-      // Prevent reseting the tooltip
-      e.stopPropagation();
-
-      ctx.value = {
-        docHref:
-          "https://nixos.org/manual/nix/stable/language/values#type-number",
-        title: "Number",
-        description: `
-Numbers, which can be integers (like \`123\`) or floating point (like \`123.43\` or \`.27e13\`).
-`,
-        el: ref.current as HTMLElement,
-      };
-    }
+    const onClick = buildTooltipClick(ctx, DOCS.Number);
 
     return (
       <span
@@ -131,18 +96,7 @@ export const resolveBooleanView = (
   value: boolean,
 ): ViewDef => ({
   View: () => {
-    function onClick(e: Event) {
-      // Prevent reseting the tooltip
-      e.stopPropagation();
-
-      ctx.value = {
-        docHref:
-          "https://nixos.org/manual/nix/stable/language/values#type-boolean",
-        title: "Boolean",
-        description: "Booleans with values `true` and `false`.",
-        el: e.target as HTMLElement,
-      };
-    }
+    const onClick = buildTooltipClick(ctx, DOCS.Boolean);
 
     return (
       <span
@@ -157,18 +111,7 @@ export const resolveBooleanView = (
 
 export const resolveNullView = (ctx: TooltipState): ViewDef => ({
   View: () => {
-    function onClick(e: Event) {
-      // Prevent reseting the tooltip
-      e.stopPropagation();
-
-      ctx.value = {
-        docHref:
-          "https://nixos.org/manual/nix/stable/language/values#type-null",
-        title: "Null",
-        description: "The null value, denoted as `null`.",
-        el: e.target as HTMLElement,
-      };
-    }
+    const onClick = buildTooltipClick(ctx, DOCS.Null);
 
     return (
       <span
@@ -183,34 +126,7 @@ export const resolveNullView = (ctx: TooltipState): ViewDef => ({
 
 export const resolvePathView = (ctx: TooltipState, path: string): ViewDef => ({
   View: () => {
-    function onClick(e: Event) {
-      // Prevent reseting the tooltip
-      e.stopPropagation();
-
-      ctx.value = {
-        docHref:
-          "https://nixos.org/manual/nix/stable/language/values#type-path",
-        title: "Path",
-        description: `
-A path must contain at least one slash to be recognised as such.
-
-\`\`\`nix
-./config/hello.txt # Relative path
-/var/lib/nginx.log # Absolute path
-~/Downloads        # Relative to home directory
-\`\`\`
-
-<a href="https://nixos.org/manual/nix/stable/language/constructs/lookup-path" target="_blank">Lookup paths</a> such as \`<nixpkgs>\` resolve to path values.
-
-\`\`\`nix
-<nixpkgs>
-# Resolves to
-/nix/var/nix/profiles/per-user/root/channels/nixpkgs
-\`\`\`
-        `,
-        el: e.target as HTMLElement,
-      };
-    }
+    const onClick = buildTooltipClick(ctx, DOCS.Path);
 
     return (
       <span
@@ -226,23 +142,7 @@ A path must contain at least one slash to be recognised as such.
 // For URIs quotes can be omited
 export const resolveUriView = (ctx: TooltipState, uri: string): ViewDef => ({
   View: () => {
-    function onClick(e: Event) {
-      // Prevent reseting the tooltip
-      e.stopPropagation();
-
-      ctx.value = {
-        docHref:
-          "https://nixos.org/manual/nix/stable/language/values#type-string",
-        title: "String",
-        description: `
-URI is a third type of String.
-
-URIs as defined in appendix B of RFC 2396 can be written as is, without quotes.
-
-For instance, the string \`"http://example.org/foo.tar.bz2"\` can also be written as \`http://example.org/foo.tar.bz2\`.`,
-        el: e.target as HTMLElement,
-      };
-    }
+    const onClick = buildTooltipClick(ctx, DOCS.Uri);
 
     return (
       <span
@@ -260,22 +160,7 @@ export const resolveIdentView = (
   value: string,
 ): ViewDef => ({
   View: () => {
-    function onClick(e: Event) {
-      // Prevent reseting the tooltip
-      e.stopPropagation();
-
-      ctx.value = {
-        title: "Identifier",
-        description: `
-*identifier ~* \`[a-zA-Z_][a-zA-Z0-9_'-]*\`
-
-In Attribute Sets identifiers could be used as attribute names.
-
-Elsewhere identifiers are variable or function references.
-`,
-        el: e.target as HTMLElement,
-      };
-    }
+    const onClick = buildTooltipClick(ctx, DOCS.Ident);
 
     return (
       <span
@@ -326,25 +211,7 @@ export function resolveListView(ctx: TooltipState, list: Expr[]): ViewDef {
     isBlock = list.some((item) => resolveView(ctx, item).size == "block");
   }
 
-  function onClick(e: Event) {
-    // Prevent reseting the tooltip
-    e.stopPropagation();
-
-    ctx.value = {
-      docHref: "https://nixos.org/manual/nix/stable/language/values#list",
-      title: "List",
-      description: `
-Lists are formed by enclosing a whitespace-separated list of values between square brackets. For example,
-
-\`\`\`nix
-[ 123 ./foo.nix "abc" ]
-\`\`\`
-
-defines a list of three elements.
-`,
-      el: e.target as HTMLElement,
-    };
-  }
+  const onClick = buildTooltipClick(ctx, DOCS.List);
 
   if (isBlock) {
     const hover = signal(false);
@@ -380,70 +247,8 @@ export function resolveAttrSetView(ctx: TooltipState, set: AttrSet): ViewDef {
     );
   }
 
-  function onClick(e: Event) {
-    // Prevent reseting the tooltip
-    e.stopPropagation();
-
-    ctx.value = {
-      docHref:
-        "https://nixos.org/manual/nix/stable/language/values#attribute-set",
-      title: "Attribute Set",
-      description: `
-An attribute set is a collection of name-value-pairs (called attributes) enclosed in curly brackets (\`{ }\`).
-
-An attribute name can be an identifier or a string.
-
-Names and values are separated by an equal sign (\`=\`).
-Each value is an arbitrary expression terminated by a semicolon (\`;\`).
-
-Example:
-
-\`\`\`nix
-{
-  x = 123;
-  text = "Hello";
-  y = f { bla = 456; };
-}
-\`\`\`
-
-This defines a set with attributes named x, text, y.
-`,
-      el: e.target as HTMLElement,
-    };
-  }
-
-  function onRecClick(e: Event) {
-    // Prevent reseting the tooltip
-    e.stopPropagation();
-
-    ctx.value = {
-      docHref:
-        "https://nixos.org/manual/nix/stable/language/constructs.html#recursive-sets",
-      title: "Recursive sets",
-      description: `
-Recursive sets are like normal attribute sets, but the attributes can refer to each other.
-
-Example:
-
-\`\`\`nix
-rec {
-  y = 123;
-  x = y;
-}
-\`\`\`
-
-evaluates to
-
-\`\`\`nix
-{
-  y = 123;
-  x = 123;
-}
-\`\`\`
-`,
-      el: e.target as HTMLElement,
-    };
-  }
+  const onClick = buildTooltipClick(ctx, DOCS.AttributeSet);
+  const onRecClick = buildTooltipClick(ctx, DOCS.RecursiveSet);
 
   if (isBlock) {
     const hover = signal(false);
@@ -516,50 +321,7 @@ export function AttrSetEntry({
     }
   }
 
-  function onInheritClick(e: Event) {
-    // Prevent reseting the tooltip
-    e.stopPropagation();
-
-    ctx.value = {
-      docHref:
-        "https://nixos.org/manual/nix/stable/language/constructs.html#inheriting-attributes",
-      title: "Inheriting attributes",
-      description: `
-When defining an attribute set or in a let-expression it is often convenient to copy variables
-from the surrounding lexical scope (e.g., when you want to propagate attributes).
-This can be shortened using the inherit keyword.
-
-Example:
-
-\`\`\`nix
-let x = 123; in
-{
-  inherit x;
-  y = 456;
-}
-\`\`\`
-
-is equivalent to
-
-\`\`\`nix
-let x = 123; in
-{
-  x = x;
-  y = 456;
-}
-\`\`\`
-
-and both evaluate to \`{ x = 123; y = 456; }\`.
-
-It is possible to inherit multiple attributes:
-
-\`\`\`nix
-inherit x y z;
-\`\`\`
-`,
-      el: e.target as HTMLElement,
-    };
-  }
+  const onInheritClick = buildTooltipClick(ctx, DOCS.Inherit);
 
   if ("inherit" in entry) {
     return (

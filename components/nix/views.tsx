@@ -88,3 +88,18 @@ export type Tooltip = {
 
 export type TooltipState = Signal<Tooltip | null>;
 export const TooltipCtx = createContext(signal(null) as TooltipState);
+
+export function buildTooltipClick(
+  ctx: TooltipState,
+  doc: Omit<Tooltip, "el">,
+): (e: Event) => void {
+  return (e: Event) => {
+    // Prevent reseting the tooltip
+    e.stopPropagation();
+
+    ctx.value = {
+      ...doc,
+      el: e.target as HTMLElement,
+    };
+  };
+}

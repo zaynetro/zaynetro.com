@@ -1,9 +1,15 @@
 import { IfElse, LetIn, WithExpr } from "@/components/nix/datatypes.tsx";
-import { resolveView, TooltipState, ViewDef } from "@/components/nix/views.tsx";
+import {
+  buildTooltipClick,
+  resolveView,
+  TooltipState,
+  ViewDef,
+} from "@/components/nix/views.tsx";
 import {
   AttrSetEntry,
   resolveIdentView,
 } from "@/components/nix/primitive_views.tsx";
+import { DOCS } from "@/components/nix/docs.ts";
 
 export const resolveIfElseView = (
   ctx: TooltipState,
@@ -13,27 +19,7 @@ export const resolveIfElseView = (
     const Cond = resolveView(ctx, ifElse.condition).View;
     const Body = resolveView(ctx, ifElse.body).View;
     const Else = resolveView(ctx, ifElse.else).View;
-
-    function onClick(e: Event) {
-      // Prevent reseting the tooltip
-      e.stopPropagation();
-
-      ctx.value = {
-        docHref:
-          "https://nixos.org/manual/nix/stable/language/constructs.html#conditionals",
-        title: "Conditionals",
-        description: `
-Conditionals look like this:
-
-\`\`\`nix
-if e1 then e2 else e3
-\`\`\`
-
-where e1 is an expression that should evaluate to a Boolean value (\`true\` or \`false\`).
-`,
-        el: e.target as HTMLElement,
-      };
-    }
+    const onClick = buildTooltipClick(ctx, DOCS.IfElse);
 
     return (
       <div
@@ -56,32 +42,7 @@ export const resolveLetInView = (ctx: TooltipState, letIn: LetIn): ViewDef => ({
   View: () => {
     const bodyDef = resolveView(ctx, letIn.body);
     const inToken = <span class="text-lime-700 font-bold">in</span>;
-
-    function onClick(e: Event) {
-      // Prevent reseting the tooltip
-      e.stopPropagation();
-
-      ctx.value = {
-        docHref:
-          "https://nixos.org/manual/nix/stable/language/constructs.html#let-expressions",
-        title: "Let-expressions",
-        description: `
-A let-expression allows you to define local variables for an expression.
-
-Example:
-
-\`\`\`nix
-let
-  x = "foo";
-  y = "bar";
-in x + y
-\`\`\`
-
-This evaluates to \`"foobar"\`.
-`,
-        el: e.target as HTMLElement,
-      };
-    }
+    const onClick = buildTooltipClick(ctx, DOCS.Let);
 
     let inBlock;
     if (bodyDef.size != "block") {
@@ -130,34 +91,7 @@ export function resolveWithView(
 ): ViewDef {
   const bodyDef = resolveView(ctx, withExpr.body);
   const Ident = resolveIdentView(ctx, withExpr.ident.value).View;
-
-  function onClick(e: Event) {
-    // Prevent reseting the tooltip
-    e.stopPropagation();
-
-    ctx.value = {
-      docHref:
-        "https://nixos.org/manual/nix/stable/language/constructs.html#with-expressions",
-      title: "With-expressions",
-      description: `
-A with-expression,
-
-\`\`\`nix
-with e1; e2
-\`\`\`
-
-introduces the set e1 into the lexical scope of the expression e2. For instance,
-
-\`\`\`nix
-let as = { x = "foo"; y = "bar"; };
-in with as; x + y
-\`\`\`
-
-evaluates to \`"foobar"\` since the with adds the \`x\` and \`y\` attributes of as to the lexical scope in the expression \`x + y\`.
-`,
-      el: e.target as HTMLElement,
-    };
-  }
+  const onClick = buildTooltipClick(ctx, DOCS.With);
 
   if (bodyDef.size != "block") {
     // Inline view
