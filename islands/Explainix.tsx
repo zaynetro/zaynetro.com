@@ -145,7 +145,28 @@ can span multiple lines.`,
         value: "TODO",
       }, {
         name: "with-expressions",
-        value: "TODO",
+        value: {
+          type: "LetIn",
+          defs: [{
+            name: ident("as"),
+            value: {
+              type: "AttrSet",
+              entries: [{
+                name: ident("x"),
+                value: "foo",
+              }, {
+                name: ident("y"),
+                value: "bar",
+              }],
+            },
+          }],
+          body: {
+            type: "With",
+            ident: ident("as"),
+            // TODO: this needs to be x + y
+            body: ident("x"),
+          },
+        },
       }, {
         name: "string substitution",
         value: "TODO",

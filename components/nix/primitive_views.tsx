@@ -290,23 +290,33 @@ Elsewhere identifiers are variable or function references.
 
 const blockSeparator = (
   symbol: string,
-  { hover, onClick }: {
+  { hover, onClick, onTokenClick }: {
     hover: Signal<boolean>;
     onClick?: (e: Event) => void;
+    onTokenClick?: (e: Event) => void;
   },
   token?: string,
 ) =>
 () => (
-  <span
-    onMouseOver={() => hover.value = true}
-    onMouseOut={() => hover.value = false}
-    onClick={onClick}
-    class={classNames("text-black ring-black/25 cursor-pointer", {
-      "ring-2": hover.value,
-    })}
-  >
-    {!!token && <span class="text-lime-700 font-bold mr-2">{token}</span>}
-    {symbol}
+  <span>
+    {!!token && (
+      <span
+        onClick={onTokenClick}
+        class="text-lime-700 font-bold mr-2 hover:ring-2"
+      >
+        {token}
+      </span>
+    )}
+    <span
+      onMouseOver={() => hover.value = true}
+      onMouseOut={() => hover.value = false}
+      onClick={onClick}
+      class={classNames("text-black ring-black/25 cursor-pointer", {
+        "ring-2": hover.value,
+      })}
+    >
+      {symbol}
+    </span>
   </span>
 );
 
@@ -402,6 +412,39 @@ This defines a set with attributes named x, text, y.
     };
   }
 
+  function onRecClick(e: Event) {
+    // Prevent reseting the tooltip
+    e.stopPropagation();
+
+    ctx.value = {
+      docHref:
+        "https://nixos.org/manual/nix/stable/language/constructs.html#recursive-sets",
+      title: "Recursive sets",
+      description: `
+Recursive sets are like normal attribute sets, but the attributes can refer to each other.
+
+Example:
+
+\`\`\`nix
+rec {
+  y = 123;
+  x = y;
+}
+\`\`\`
+
+evaluates to
+
+\`\`\`nix
+{
+  y = 123;
+  x = 123;
+}
+\`\`\`
+`,
+      el: e.target as HTMLElement,
+    };
+  }
+
   if (isBlock) {
     const hover = signal(false);
     return {
@@ -409,8 +452,7 @@ This defines a set with attributes named x, text, y.
       View: () => <AttrSetRows set={set} onClick={onClick} hover={hover} />,
       Left: blockSeparator(
         "{",
-        { hover, onClick },
-        // TODO: https://nixos.org/manual/nix/stable/language/constructs.html#recursive-sets
+        { hover, onClick, onTokenClick: onRecClick },
         set.recursive ? "rec" : undefined,
       ),
       Right: blockSeparator("}", { hover, onClick }),

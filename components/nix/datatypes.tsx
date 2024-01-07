@@ -34,6 +34,12 @@ export type AttrEntry = {
   inherit: Ident[];
 };
 
+export type WithExpr = {
+  type: "With";
+  ident: Ident;
+  body: Expr;
+};
+
 /** Primitive types */
 export type DataType =
   | string
@@ -44,7 +50,8 @@ export type DataType =
   | Uri
   | Ident
   | Array<Expr>
-  | AttrSet;
+  | AttrSet
+  | WithExpr;
 
 export type IfElse = {
   type: "IfElse";

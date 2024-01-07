@@ -14,6 +14,7 @@ import {
 import {
   resolveIfElseView,
   resolveLetInView,
+  resolveWithView,
 } from "@/components/nix/constructs.tsx";
 import { Signal, signal } from "@preact/signals";
 import { useContext } from "preact/hooks";
@@ -71,6 +72,8 @@ export function resolveView(ctx: TooltipState, data: Expr): ViewDef {
     return resolveIfElseView(ctx, data);
   } else if (data.type == "LetIn") {
     return resolveLetInView(ctx, data);
+  } else if (data.type == "With") {
+    return resolveWithView(ctx, data);
   } else {
     throw new Error("Unknown data type: " + data);
   }

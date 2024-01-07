@@ -1,6 +1,9 @@
-import { IfElse, LetIn } from "@/components/nix/datatypes.tsx";
+import { IfElse, LetIn, WithExpr } from "@/components/nix/datatypes.tsx";
 import { resolveView, TooltipState, ViewDef } from "@/components/nix/views.tsx";
-import { AttrSetEntry } from "@/components/nix/primitive_views.tsx";
+import {
+  AttrSetEntry,
+  resolveIdentView,
+} from "@/components/nix/primitive_views.tsx";
 
 export const resolveIfElseView = (
   ctx: TooltipState,
@@ -120,3 +123,65 @@ This evaluates to \`"foobar"\`.
     );
   },
 });
+
+export function resolveWithView(
+  ctx: TooltipState,
+  withExpr: WithExpr,
+): ViewDef {
+  const bodyDef = resolveView(ctx, withExpr.body);
+  const Ident = resolveIdentView(ctx, withExpr.ident.value).View;
+
+  function onClick(e: Event) {
+    // Prevent reseting the tooltip
+    e.stopPropagation();
+
+    ctx.value = {
+      docHref:
+        "https://nixos.org/manual/nix/stable/language/constructs.html#with-expressions",
+      title: "With-expressions",
+      description: `
+A with-expression,
+
+\`\`\`nix
+with e1; e2
+\`\`\`
+
+introduces the set e1 into the lexical scope of the expression e2. For instance,
+
+\`\`\`nix
+let as = { x = "foo"; y = "bar"; };
+in with as; x + y
+\`\`\`
+
+evaluates to \`"foobar"\` since the with adds the \`x\` and \`y\` attributes of as to the lexical scope in the expression \`x + y\`.
+`,
+      el: e.target as HTMLElement,
+    };
+  }
+
+  if (bodyDef.size != "block") {
+    // Inline view
+    return {
+      View: () => (
+        <div class="inline-flex gap-2">
+          <span
+            onClick={onClick}
+            class="text-lime-700 font-bold cursor-pointer hover:ring-2"
+          >
+            with
+          </span>
+          <span>
+            <Ident />
+            <span class="text-black">;</span>
+          </span>
+          <bodyDef.View />
+        </div>
+      ),
+    };
+  }
+
+  // Block view
+  return {
+    View: () => <b>TODO</b>,
+  };
+}
