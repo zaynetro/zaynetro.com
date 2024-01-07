@@ -1,5 +1,4 @@
 import { asset, Head } from "$fresh/runtime.ts";
-import IconDog from "@tabler/icons-preact/dist/esm/icons/IconDog.js";
 import IconGridDots from "@tabler/icons-preact/dist/esm/icons/IconGridDots.js";
 import { ComponentChildren } from "preact";
 
@@ -48,14 +47,6 @@ export function Header({
           </div>
 
           <ul class="flex gap-2 text-lg">
-            <NavLink
-              href="https://bolik.net"
-              target="_blank"
-            >
-              <IconDog size={16} />
-              Bolik
-            </NavLink>
-
             <NavLink href="/sudoku">
               <IconGridDots size={16} />
               Sudoku
