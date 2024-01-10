@@ -73,17 +73,29 @@ export type LetIn = {
   body: Expr;
 };
 
+export type BinaryOp = {
+  type: "BinaryOp";
+  left: Expr;
+  op: BinOperator;
+  right: Expr;
+};
+
+export type BinOperator = "+" | "<" | ">" | "<=" | ">=";
+
+export const binOp = (left: Expr, op: BinOperator, right: Expr): BinaryOp => ({
+  type: "BinaryOp",
+  left,
+  op,
+  right,
+});
+
 // TODO:
 // - assert
-// - with
-// - inherit
 // - import
-// - let in
 // - unary op
-// - binary op
 // - lambda def
 // - lambda call (apply)
 // - field access
 // - string substitution
 
-export type Expr = DataType | IfElse | LetIn;
+export type Expr = DataType | IfElse | LetIn | BinaryOp;

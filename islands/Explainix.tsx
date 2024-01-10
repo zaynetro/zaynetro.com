@@ -1,5 +1,5 @@
 import { ExprView, TooltipCtx } from "@/components/nix/views.tsx";
-import { Expr, ident } from "@/components/nix/datatypes.tsx";
+import { binOp, Expr, ident } from "@/components/nix/datatypes.tsx";
 import { signal, useSignal } from "@preact/signals";
 import { useContext, useEffect, useRef } from "preact/hooks";
 import IconExternalLink from "@tabler/icons-preact/dist/esm/icons/IconExternalLink.js";
@@ -97,7 +97,7 @@ can span multiple lines.`,
         name: "conditionals",
         value: {
           type: "IfElse",
-          condition: ident("condition"),
+          condition: binOp(ident("x"), "<", ident("y")),
           body: "this",
           else: "otherwise",
         },
@@ -112,11 +112,7 @@ can span multiple lines.`,
             name: ident("b"),
             value: 45,
           }],
-          // TODO: make this a + b
-          body: {
-            type: "AttrSet",
-            entries: [],
-          },
+          body: binOp(ident("a"), "+", ident("b")),
         },
       }, {
         name: "inheriting attributes",

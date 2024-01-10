@@ -1,4 +1,10 @@
-import { FnDef, IfElse, LetIn, WithExpr } from "@/components/nix/datatypes.tsx";
+import {
+  BinaryOp,
+  FnDef,
+  IfElse,
+  LetIn,
+  WithExpr,
+} from "@/components/nix/datatypes.tsx";
 import {
   buildTooltipClick,
   resolveView,
@@ -151,5 +157,43 @@ export function resolveFnView(
   // Block view
   return {
     View: () => <b>TODO</b>,
+  };
+}
+
+export function resolveBinOpView(
+  ctx: TooltipState,
+  e: BinaryOp,
+): ViewDef {
+  const leftDef = resolveView(ctx, e.left);
+  const rightDef = resolveView(ctx, e.right);
+  let onClick: (e: Event) => void | undefined;
+
+  switch (e.op) {
+    case "+":
+      onClick = buildTooltipClick(ctx, DOCS.BinOpAdd);
+      break;
+
+    case "<":
+    case ">":
+    case "<=":
+    case ">=":
+      onClick = buildTooltipClick(ctx, DOCS.BinOpCompare);
+      break;
+  }
+
+  // Support only inline view
+  return {
+    View: () => (
+      <div class="inline-flex gap-2 hover:ring-2">
+        <leftDef.View />
+        <span
+          onClick={onClick}
+          class="text-black"
+        >
+          {e.op}
+        </span>
+        <rightDef.View />
+      </div>
+    ),
   };
 }

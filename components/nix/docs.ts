@@ -285,4 +285,39 @@ in the body to (parts of) the argument. There are three kinds of patterns:
     \`\`\`
 `,
   },
+
+  "BinOpAdd": {
+    docHref:
+      "https://nixos.org/manual/nix/stable/language/operators#arithmetic",
+    title: "Operators",
+    description: `
+| Operator name                 | Syntax              |
+| ----------------------------- | ------------------- |
+| Addition                      | \`number + number\` |
+| String concatenation          | \`string + string\` |
+| Path concatenation            | \`path + path\`     |
+| Path and string concatenation | \`path + string\`   |
+| String and path concatenation | \`string + path\`   |
+`,
+  },
+
+  "BinOpCompare": {
+    docHref:
+      "https://nixos.org/manual/nix/stable/language/operators#comparison",
+    title: "Comparison operators",
+    description: `
+Comparison is
+
+- arithmetic for numbers
+- lexicographic for strings and paths
+- item-wise lexicographic for lists: elements at the same index in both lists are compared according to their type and skipped if they are equal.
+
+| Operator name            | Syntax           |
+| ------------------------ | ---------------- |
+| Less than                | \`expr < expr\`  |
+| Less than or equal to    | \`expr <= expr\` |
+| Greater than             | \`expr > expr\`  |
+| Greater than or equal to | \`expr >= expr\` |
+`,
+  },
 };
