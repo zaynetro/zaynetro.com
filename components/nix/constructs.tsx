@@ -1,6 +1,10 @@
+import { JSX } from "preact";
 import {
+  AttrSel,
   BinaryOp,
+  FnCall,
   FnDef,
+  Grouped,
   IfElse,
   LetIn,
   WithExpr,
@@ -13,9 +17,11 @@ import {
 } from "@/components/nix/views.tsx";
 import {
   AttrSetEntry,
+  blockSeparator,
   resolveIdentView,
 } from "@/components/nix/primitive_views.tsx";
 import { DOCS } from "@/components/nix/docs.ts";
+import { signal } from "@preact/signals";
 
 export const resolveIfElseView = (
   ctx: TooltipState,
@@ -179,6 +185,22 @@ export function resolveBinOpView(
     case ">=":
       onClick = buildTooltipClick(ctx, DOCS.BinOpCompare);
       break;
+
+    case "++":
+      onClick = buildTooltipClick(ctx, DOCS.BinOpConcat);
+      break;
+
+    case "//":
+      onClick = buildTooltipClick(ctx, DOCS.BinOpUpdate);
+      break;
+
+    case "->":
+      onClick = buildTooltipClick(ctx, DOCS.BinOpImplication);
+      break;
+
+    case "?":
+      onClick = buildTooltipClick(ctx, DOCS.BinOpHas);
+      break;
   }
 
   // Support only inline view
@@ -188,11 +210,91 @@ export function resolveBinOpView(
         <leftDef.View />
         <span
           onClick={onClick}
-          class="text-black"
+          class="text-black cursor-pointer"
         >
           {e.op}
         </span>
         <rightDef.View />
+      </div>
+    ),
+  };
+}
+
+export function resolveFnCallView(
+  ctx: TooltipState,
+  call: FnCall,
+): ViewDef {
+  const nameDef = resolveIdentView(ctx, call.name.value);
+  const onClick = buildTooltipClick(ctx, DOCS.FnCall);
+
+  // Support only inline view
+  return {
+    View: () => (
+      <div class="inline-flex gap-2 hover:ring-2" onClick={onClick}>
+        <nameDef.View />
+
+        {call.args.map((a) => {
+          const def = resolveView(ctx, a);
+          return <def.View />;
+        })}
+      </div>
+    ),
+  };
+}
+
+export function resolveGroupedView(
+  ctx: TooltipState,
+  g: Grouped,
+): ViewDef {
+  const e = resolveView(ctx, g.e);
+  const onClick = buildTooltipClick(ctx, DOCS.Group);
+  const hover = signal(false);
+  const Left = blockSeparator("(", { hover, onClick });
+  const Right = blockSeparator(")", { hover, onClick });
+
+  // Support only inline view
+  return {
+    View: () => (
+      <div class="inline-flex">
+        <Left />
+        <e.View />
+        <Right />
+      </div>
+    ),
+  };
+}
+
+export function resolveAttrSelView(
+  ctx: TooltipState,
+  d: AttrSel,
+): ViewDef {
+  const viewDef = resolveView(ctx, d.attrset);
+  const onClick = buildTooltipClick(ctx, DOCS.AttrSel);
+  const hover = signal(false);
+  const Dot = blockSeparator(".", { hover, onClick });
+
+  let Or: JSX.Element | undefined;
+  if (d.or != undefined) {
+    const Token = blockSeparator("", { hover, onTokenClick: onClick }, "or");
+    const orDef = resolveView(ctx, d.or);
+    Or = (
+      <span class="ml-2">
+        <Token />
+        <orDef.View />
+      </span>
+    );
+  }
+
+  // Support only inline view
+  return {
+    View: () => (
+      <div class="inline-flex">
+        <viewDef.View />
+        <Dot />
+        <span class="text-black">
+          {d.path}
+        </span>
+        {!!Or && Or}
       </div>
     ),
   };

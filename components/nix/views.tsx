@@ -12,8 +12,11 @@ import {
   resolveUriView,
 } from "@/components/nix/primitive_views.tsx";
 import {
+  resolveAttrSelView,
   resolveBinOpView,
+  resolveFnCallView,
   resolveFnView,
+  resolveGroupedView,
   resolveIfElseView,
   resolveLetInView,
   resolveWithView,
@@ -80,6 +83,12 @@ export function resolveView(ctx: TooltipState, data: Expr): ViewDef {
     return resolveFnView(ctx, data);
   } else if (data.type == "BinaryOp") {
     return resolveBinOpView(ctx, data);
+  } else if (data.type == "FnCall") {
+    return resolveFnCallView(ctx, data);
+  } else if (data.type == "Grouped") {
+    return resolveGroupedView(ctx, data);
+  } else if (data.type == "AttrSel") {
+    return resolveAttrSelView(ctx, data);
   } else {
     throw new Error("Unknown data type: " + data);
   }

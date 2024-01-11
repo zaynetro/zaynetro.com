@@ -320,4 +320,121 @@ Comparison is
 | Greater than or equal to | \`expr >= expr\` |
 `,
   },
+
+  "BinOpConcat": {
+    docHref: "https://nixos.org/manual/nix/stable/language/operators",
+    title: "List concatenation",
+    description: `
+\`\`\`nix
+[ 1 2 ] ++ [ 2 3 ]
+# Result: [ 1 2 3 4 ]
+\`\`\`
+`,
+  },
+
+  "BinOpUpdate": {
+    docHref: "https://nixos.org/manual/nix/stable/language/operators#update",
+    title: "Update operator",
+    description: `
+Example:
+
+\`\`\`nix
+let
+  a = { x = 1; };
+  b = { y = 2; };
+in a // b
+# Result: { x = 1; y = 2 }
+\`\`\`
+
+Update attribute set \`a\` with names and values from \`b\`.
+
+The returned attribute set will have of all the attributes in \`a\` and \`b\`.
+If an attribute name is present in both, the attribute value from the latter is taken.
+
+\`\`\`nix
+let
+  a = { x = 1; };
+  b = { x = 2; };
+in a // b
+# Result: { x = 2; }
+\`\`\`
+`,
+  },
+
+  "BinOpImplication": {
+    docHref:
+      "https://nixos.org/manual/nix/stable/language/operators#logical-implication",
+    title: "Logical implication",
+    description: `
+Equivalent to \`!x || y\`.
+`,
+  },
+
+  "BinOpHas": {
+    docHref:
+      "https://nixos.org/manual/nix/stable/language/operators#has-attribute",
+    title: "Has attribute",
+    description: `
+\`\`\`nix
+attrset ? attrpath
+\`\`\`
+
+Test whether attribute set *attrset* contains the attribute denoted by *attrpath*. The result is a Boolean value.
+`,
+  },
+
+  "FnCall": {
+    docHref: "https://nixos.org/manual/nix/stable/language/operators",
+    title: "Function application",
+    description: `
+If you want to use a function and apply it to a value like \`f(3)\`,
+you leave out the parentheses and add a space. So, \`f(3)\` in math, is \`f 3\` in Nix.
+
+If you want multiple arguments, you can add arguments like this:
+\`arg1: arg2: nixExpression\`, e.g. \`f = x: y: x*y\`.
+Applying that function to multiple values is easy: \`f(3,4)\` in math,
+is \`f 3 4\` in Nix. If you apply one argument \`f 3\` only,
+a partial function \`y: 3*y\` is returned.
+`,
+  },
+
+  "Group": {
+    title: "Group",
+    description: `
+Parentheses group expression into a single unit.
+
+Example:
+
+\`\`\`nix
+[ "foo" (f 1 2) ]
+\`\`\`
+
+defines a list of two elements, the last being the result of a call to the function \`f\`.
+Note that function calls have to be enclosed in parentheses. If they had been omitted, e.g.,
+
+\`\`\`nix
+[ "foo" f 1 2 ]
+\`\`\`
+
+the result would be a list of four elements, the second one being a function,
+fourth and fifth being a number.
+`,
+  },
+
+  "AttrSel": {
+    docHref:
+      "https://nixos.org/manual/nix/stable/language/operators#attribute-selection",
+    title: "Attribute selection",
+    description: `
+    attrset . attrpath [ or expr ]
+
+Select the attribute denoted by attribute path attrpath from attribute set attrset. If the attribute doesn’t exist, return the expr after or if provided, otherwise abort evaluation.
+
+An attribute path is a dot-separated list of attribute names.
+
+    Syntax
+
+    attrpath = name [ . name ]...
+`,
+  },
 };

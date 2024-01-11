@@ -80,7 +80,16 @@ export type BinaryOp = {
   right: Expr;
 };
 
-export type BinOperator = "+" | "<" | ">" | "<=" | ">=";
+export type BinOperator =
+  | "+"
+  | "<"
+  | ">"
+  | "<="
+  | ">="
+  | "++"
+  | "//"
+  | "->"
+  | "?";
 
 export const binOp = (left: Expr, op: BinOperator, right: Expr): BinaryOp => ({
   type: "BinaryOp",
@@ -89,13 +98,45 @@ export const binOp = (left: Expr, op: BinOperator, right: Expr): BinaryOp => ({
   right,
 });
 
+export type FnCall = {
+  type: "FnCall";
+  name: Ident;
+  args: Expr[];
+};
+
+export const fnCall = (name: string, args: Expr[]): FnCall => ({
+  type: "FnCall",
+  name: ident(name),
+  args,
+});
+
+// Grouped inside parentheses
+export type Grouped = {
+  type: "Grouped";
+  e: Expr;
+};
+
+export const grouped = (e: Expr): Grouped => ({ type: "Grouped", e });
+
+// Attribute selection: `x.y or 1`
+export type AttrSel = {
+  type: "AttrSel";
+  attrset: Expr;
+  path: string;
+  or?: Expr;
+};
+
 // TODO:
 // - assert
 // - import
 // - unary op
-// - lambda def
-// - lambda call (apply)
-// - field access
 // - string substitution
 
-export type Expr = DataType | IfElse | LetIn | BinaryOp;
+export type Expr =
+  | DataType
+  | IfElse
+  | LetIn
+  | BinaryOp
+  | FnCall
+  | Grouped
+  | AttrSel;

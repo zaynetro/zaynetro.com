@@ -173,7 +173,7 @@ export const resolveIdentView = (
   },
 });
 
-const blockSeparator = (
+export const blockSeparator = (
   symbol: string,
   { hover, onClick, onTokenClick }: {
     hover: Signal<boolean>;

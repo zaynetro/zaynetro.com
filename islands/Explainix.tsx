@@ -1,5 +1,11 @@
 import { ExprView, TooltipCtx } from "@/components/nix/views.tsx";
-import { binOp, Expr, ident } from "@/components/nix/datatypes.tsx";
+import {
+  binOp,
+  Expr,
+  fnCall,
+  grouped,
+  ident,
+} from "@/components/nix/datatypes.tsx";
 import { signal, useSignal } from "@preact/signals";
 import { useContext, useEffect, useRef } from "preact/hooks";
 import IconExternalLink from "@tabler/icons-preact/dist/esm/icons/IconExternalLink.js";
@@ -145,13 +151,11 @@ can span multiple lines.`,
               body: {
                 type: "Fn",
                 arg: ident("y"),
-                // TODO: this needs to be x + y
-                body: ident("x"),
+                body: binOp(ident("x"), "+", ident("y")),
               },
             },
           }],
-          // TODO: this needs to be concat x y
-          body: ident("concat"),
+          body: fnCall("concat", [ident("x"), ident("y")]),
         },
       }, {
         name: "assertions",
@@ -176,8 +180,7 @@ can span multiple lines.`,
           body: {
             type: "With",
             ident: ident("as"),
-            // TODO: this needs to be x + y
-            body: ident("x"),
+            body: binOp(ident("x"), "+", ident("y")),
           },
         },
       }, {
@@ -188,7 +191,43 @@ can span multiple lines.`,
   }, {
     /* https://nixos.org/manual/nix/stable/language/operators.html */
     name: "Operators",
-    value: "TODO",
+    value: [
+      grouped(binOp(2, "+", 3)),
+      grouped(binOp("foo", "+", "bar")),
+      grouped(binOp([1, 2], "++", [3, 4])),
+      grouped(binOp(
+        {
+          type: "AttrSet",
+          entries: [
+            { name: ident("x"), value: 1 },
+          ],
+        },
+        "//",
+        { type: "AttrSet", entries: [{ name: ident("y"), value: 2 }] },
+      )),
+      grouped(binOp(ident("x"), "->", ident("y"))),
+      grouped(
+        binOp(
+          { type: "AttrSet", entries: [{ name: ident("y"), value: 2 }] },
+          "?",
+          "x",
+        ),
+      ),
+      grouped(
+        {
+          type: "AttrSel",
+          attrset: {
+            type: "AttrSet",
+            entries: [{
+              name: ident("y"),
+              value: 1,
+            }],
+          },
+          path: "x",
+          or: 0,
+        },
+      ),
+    ],
   }],
 };
 
