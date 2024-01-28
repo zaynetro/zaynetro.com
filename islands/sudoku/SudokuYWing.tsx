@@ -142,8 +142,8 @@ export default function SudokuYWing() {
   function onNext() {
     exerciseIndex.value += 1;
 
-    if ("plausible" in window) {
-      const plausible = window.plausible as (
+    if ("plausible" in self) {
+      const plausible = self.plausible as (
         event: string,
         data: { props: Record<string, string> },
       ) => void;

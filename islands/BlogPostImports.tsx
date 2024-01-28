@@ -10,8 +10,8 @@ export default function BlogPostImports({
 
     let theme = "default";
     if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
+      self.matchMedia &&
+      self.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
       theme = "dark";
     }
