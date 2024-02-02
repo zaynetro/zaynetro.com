@@ -36,7 +36,7 @@ export const resolveIfElseView = (
     return (
       <div
         onClick={onClick}
-        class="inline-flex gap-2 ring-lime-300 cursor-pointer hover:ring-2"
+        class="inline-flex flex-wrap gap-2 ring-lime-300 cursor-pointer hover:ring-2"
       >
         <span class="text-lime-700 font-bold">if</span>
         <Cond />

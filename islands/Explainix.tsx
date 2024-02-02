@@ -299,7 +299,7 @@ function Tooltip() {
     <div
       ref={ref}
       class={classNames(
-        "absolute left-0 right-0 mx-8 rounded-md p-4 shadow-lg" +
+        "absolute left-0 right-0 mx-4 rounded-md p-4 shadow-lg" +
           " lg:p-0 lg:mx-0 lg:static lg:shadow-none",
         {
           "transition-[padding]": property == "paddingTop",
