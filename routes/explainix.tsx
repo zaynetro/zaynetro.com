@@ -46,18 +46,30 @@ export default defineRoute((_req, ctx) => {
             />
             Explainix
           </h1>
-          <p class="text-lg max-w-2xl">
-            Explain Nix syntax visually. Snippet below showcases all language
-            features Nix has to offer. Find unfamiliar syntax and click on it to
-            see the documentation. <br />
-            <i>WORK IN PROGRESS</i>
-          </p>
+          <div class="text-lg max-w-2xl flex flex-col gap-4">
+            <p>
+              Explain Nix syntax visually.{" "}
+              <s>
+                Snippet below showcases all language features Nix has to offer.
+              </s>{" "}
+              <span class="text-base italic">
+                Work in progress: Not all Nix syntax is displayed.
+              </span>
+              {" "}
+            </p>
+            <p>
+              Hover over any element to highlight it. Click on any element to
+              display help.
+            </p>
+          </div>
 
           <Explainix />
         </section>
       </main>
 
       <Footer />
+      {/* Give enough room for all popups to be seen */}
+      <div class="h-80" />
     </>
   );
 });

@@ -4,6 +4,7 @@
 
 :root {
   --text-color: #333;
+  --bg-color: #fff;
   --a-hover-color: #ffe69c;
 }
 
@@ -11,11 +12,12 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #f1f1f1;
+    --bg-color: #111;
     --a-hover-color: #826e30;
   }
 
   body {
-    background-color: #111;
+    background-color: var(--bg-color);
   }
 }
 

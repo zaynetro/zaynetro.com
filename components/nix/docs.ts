@@ -119,6 +119,7 @@ Example:
   x = 123;
   text = "Hello";
   y = f { bla = 456; };
+  "two words" = false;
 }
 \`\`\`
 
