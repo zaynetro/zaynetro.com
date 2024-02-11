@@ -149,7 +149,11 @@ can span multiple lines.`,
       },
     }, {
       name: "assertions",
-      value: "TODO",
+      value: {
+        type: "Assert",
+        cond: binOp(ident("x"), "!=", 0),
+        body: "x is not zero",
+      },
     }, {
       name: "with-expressions",
       value: {
@@ -173,9 +177,6 @@ can span multiple lines.`,
           body: binOp(ident("x"), "+", ident("y")),
         },
       },
-    }, {
-      name: "string substitution",
-      value: "TODO",
     }],
   },
 }, {

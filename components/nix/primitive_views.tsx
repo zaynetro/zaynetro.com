@@ -354,8 +354,6 @@ export function AttrSetEntry({
     : resolveIdentView(ctx, entry.name.value).View;
   const viewDef = resolveView(ctx, entry.value);
 
-  // TODO: clicking on the keys should display docs about them (not strings)
-
   if (viewDef.size != "block") {
     // Inline view
     return (

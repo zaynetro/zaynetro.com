@@ -48,18 +48,12 @@ export default defineRoute((_req, ctx) => {
           </h1>
           <div class="text-lg max-w-2xl flex flex-col gap-4">
             <p>
-              Explain Nix syntax visually.{" "}
-              <s>
-                Snippet below showcases all language features Nix has to offer.
-              </s>{" "}
-              <span class="text-base italic">
-                Work in progress: Not all Nix syntax is displayed.
-              </span>
-              {" "}
+              Explain Nix syntax visually. Snippet below showcases most of the
+              language features Nix has to offer.
             </p>
             <p>
-              Hover over any element to highlight it. Click on any element to
-              display help.
+              Hover over any element to highlight its bounds. Click on any
+              element to display help.
             </p>
           </div>
 

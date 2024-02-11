@@ -1,5 +1,6 @@
 import { JSX } from "preact";
 import {
+  Assert,
   AttrSel,
   BinaryOp,
   FnCall,
@@ -186,6 +187,11 @@ export function resolveBinOpView(
       onClick = buildTooltipClick(ctx, DOCS.BinOpCompare);
       break;
 
+    case "==":
+    case "!=":
+      onClick = buildTooltipClick(ctx, DOCS.BinOpEq);
+      break;
+
     case "++":
       onClick = buildTooltipClick(ctx, DOCS.BinOpConcat);
       break;
@@ -297,5 +303,40 @@ export function resolveAttrSelView(
         {!!Or && Or}
       </div>
     ),
+  };
+}
+
+export function resolveAssertView(
+  ctx: TooltipState,
+  assert: Assert,
+): ViewDef {
+  const condDef = resolveView(ctx, assert.cond);
+  const bodyDef = resolveView(ctx, assert.body);
+  const onClick = buildTooltipClick(ctx, DOCS.Assert);
+
+  if (bodyDef.size != "block") {
+    // Inline view
+    return {
+      View: () => (
+        <div class="inline-flex gap-2">
+          <span
+            onClick={onClick}
+            class="text-lime-700 font-bold cursor-pointer hover:ring-2"
+          >
+            assert
+          </span>
+          <span>
+            <condDef.View />
+            <span class="text-black">;</span>
+          </span>
+          <bodyDef.View />
+        </div>
+      ),
+    };
+  }
+
+  // Block view
+  return {
+    View: () => <b>TODO</b>,
   };
 }

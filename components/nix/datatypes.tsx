@@ -40,6 +40,12 @@ export type WithExpr = {
   body: Expr;
 };
 
+export type Assert = {
+  type: "Assert";
+  cond: Expr;
+  body: Expr;
+};
+
 export type FnDef = {
   type: "Fn";
   arg: Ident;
@@ -58,6 +64,7 @@ export type DataType =
   | Array<Expr>
   | AttrSet
   | WithExpr
+  | Assert
   | FnDef;
 
 export type IfElse = {
@@ -89,7 +96,9 @@ export type BinOperator =
   | "++"
   | "//"
   | "->"
-  | "?";
+  | "?"
+  | "=="
+  | "!=";
 
 export const binOp = (left: Expr, op: BinOperator, right: Expr): BinaryOp => ({
   type: "BinaryOp",
@@ -125,12 +134,6 @@ export type AttrSel = {
   path: string;
   or?: Expr;
 };
-
-// TODO:
-// - assert
-// - import
-// - unary op
-// - string substitution
 
 export type Expr =
   | DataType

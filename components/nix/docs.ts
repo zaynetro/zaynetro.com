@@ -14,6 +14,22 @@ export const DOCS = {
       world!
     ''
     \`\`\`
+
+**String interpolation**
+
+Rather than writing
+
+\`\`\`nix
+"Hello " + name + "!"
+\`\`\`
+
+you can instead write
+
+\`\`\`nix
+"Hello \${name}!"
+\`\`\`
+
+The latter is automatically translated to the former.
 `,
   },
 
@@ -251,6 +267,24 @@ to the lexical scope in the expression \`x + y\`.
 `,
   },
 
+  "Assert": {
+    docHref:
+      "https://nixos.org/manual/nix/stable/language/constructs.html#assertions",
+    title: "Assertions",
+    description: `
+Assertions are generally used to check that certain requirements on or between features
+and dependencies hold. They look like this:
+
+\`\`\`nix
+assert e1; e2
+\`\`\`
+
+where \`e1\` is an expression that should evaluate to a Boolean value.
+If it evaluates to true, \`e2\` is returned; otherwise expression evaluation
+is aborted and a backtrace is printed.
+`,
+  },
+
   "Fn": {
     docHref:
       "https://nixos.org/manual/nix/stable/language/constructs.html#functions",
@@ -319,6 +353,22 @@ Comparison is
 | Less than or equal to    | \`expr <= expr\` |
 | Greater than             | \`expr > expr\`  |
 | Greater than or equal to | \`expr >= expr\` |
+`,
+  },
+
+  "BinOpEq": {
+    docHref: "https://nixos.org/manual/nix/stable/language/operators#equality",
+    title: "Equality",
+    description: `
+- Attribute sets and lists are compared recursively, and therefore are fully evaluated.
+- Comparison of functions always returns \`false\`.
+- Numbers are type-compatible, see arithmetic operators.
+- Floating point numbers only differ up to a limited precision.
+
+| Operator name | Syntax           |
+| --------------| ---------------- |
+| Equality      | \`expr == expr\` |
+| Inequality    | \`expr != expr\` |
 `,
   },
 

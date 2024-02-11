@@ -12,6 +12,7 @@ import {
   resolveUriView,
 } from "@/components/nix/primitive_views.tsx";
 import {
+  resolveAssertView,
   resolveAttrSelView,
   resolveBinOpView,
   resolveFnCallView,
@@ -79,6 +80,8 @@ export function resolveView(ctx: TooltipState, data: Expr): ViewDef {
     return resolveLetInView(ctx, data);
   } else if (data.type == "With") {
     return resolveWithView(ctx, data);
+  } else if (data.type == "Assert") {
+    return resolveAssertView(ctx, data);
   } else if (data.type == "Fn") {
     return resolveFnView(ctx, data);
   } else if (data.type == "BinaryOp") {
