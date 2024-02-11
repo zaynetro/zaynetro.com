@@ -241,6 +241,8 @@ I hope it all fits together. Now we can use our flake for declarative package ma
 How do we modify the list of packages? If we try to install it again then Nix will fail due to conflicting binary names. In fact, we only need to install our flake once. All further changes to the flake would need to be applied with `nix profile upgrade 1`. Nix knows where flake source is located and will rebuild it. The flake doesn't even need to be present locally. You can install remote flakes. That's how we were able to install a `hello` package.
 
 > You can find the correct index using `nix profile list`. Yes, you have to refer to your set of packages with a number.
+>
+> *Note: Starting from [Nix 2.10](https://github.com/NixOS/nix/pull/8678) you can [use unique names](https://nixos.org/manual/nix/stable/release-notes/rl-2.20).*
 
 That's about it. A simple flake and new Nix CLI is everything you need.
 
