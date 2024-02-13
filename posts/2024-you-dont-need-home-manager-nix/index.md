@@ -242,7 +242,7 @@ How do we modify the list of packages? If we try to install it again then Nix wi
 
 > You can find the correct index using `nix profile list`. Yes, you have to refer to your set of packages with a number.
 >
-> *Note: Starting from [Nix 2.10](https://github.com/NixOS/nix/pull/8678) you can [use unique names](https://nixos.org/manual/nix/stable/release-notes/rl-2.20).*
+> *Note: Starting from [Nix 2.20](https://github.com/NixOS/nix/pull/8678) you can [use unique names](https://nixos.org/manual/nix/stable/release-notes/rl-2.20).*
 
 That's about it. A simple flake and new Nix CLI is everything you need.
 
