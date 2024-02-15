@@ -276,6 +276,21 @@ function Tooltip() {
   }
 
   useEffect(() => {
+    function listener(e: KeyboardEvent) {
+      if (e.code == "Escape") {
+        // Close tooltip on escape
+        ctx.value = null;
+      }
+    }
+
+    document.addEventListener("keyup", listener);
+
+    return () => {
+      document.removeEventListener("keyup", listener);
+    };
+  }, []);
+
+  useEffect(() => {
     // We calculate this in the effect because otherwise we won't have it
     // on the first render.
     const headerHeight = 36;
