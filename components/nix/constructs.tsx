@@ -212,12 +212,12 @@ export function resolveBinOpView(
   // Support only inline view
   return {
     View: () => (
-      <div class="inline-flex gap-2 hover:ring-2">
+      <div
+        onClick={onClick}
+        class="inline-flex gap-2 hover:ring-2"
+      >
         <leftDef.View />
-        <span
-          onClick={onClick}
-          class="text-black cursor-pointer"
-        >
+        <span class="text-black cursor-pointer">
           {e.op}
         </span>
         <rightDef.View />
