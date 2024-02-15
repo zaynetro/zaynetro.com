@@ -83,6 +83,9 @@ such as \`<nixpkgs>\` resolve to path values.
     description: `
 URI is a third type of String.
 
+> <a href="https://github.com/NixOS/rfcs/blob/c65c8321782b40844167beb48818471f70900d9d/rfcs/0045-deprecate-url-syntax.md" target="_blank">**Deprecated:**</a>
+>prefer using normal strings.
+
 URIs as defined in appendix B of RFC 2396 can be written as is, without quotes.
 
 For instance, the string \`"http://example.org/foo.tar.bz2"\` can also be written
@@ -92,7 +95,11 @@ as \`http://example.org/foo.tar.bz2\`.`,
   "Ident": {
     title: "Identifier",
     description: `
-*identifier ~* \`[a-zA-Z_][a-zA-Z0-9_'-]*\`
+> *identifier ~* \`[a-zA-Z_][a-zA-Z0-9_'-]*\`
+>
+> An identifier must start with a letter (\`a-z\`, \`A-Z\`) or underscore (\`_\`),
+> and can otherwise contain letters (\`a-z\`, \`A-Z\`), numbers (\`0-9\`), underscores (\`_\`),
+> apostrophes (\`'\`), or dashes (\`-\`).
 
 In Attribute Sets identifiers could be used as attribute names.
 
@@ -139,7 +146,7 @@ Example:
 }
 \`\`\`
 
-This defines a set with attributes named x, text, y.
+This defines a set with attributes named x, text, y and "two words".
 `,
   },
 
