@@ -1,7 +1,7 @@
 import IconHeart from "@tabler/icons-preact/dist/esm/icons/IconHeart.js";
 import { useSignal } from "@preact/signals";
 
-function getKey() {
+function getKey(): string {
   if (!self.location) {
     // Server env
     return `bk-like-button`;
@@ -11,7 +11,12 @@ function getKey() {
   return `bk-like-button-${path}`;
 }
 
-function wasClicked() {
+function wasClicked(): boolean {
+  if ("Deno" in self) {
+    // Server env
+    return false;
+  }
+
   try {
     return localStorage.getItem(getKey()) == "true";
   } catch (_e) {
