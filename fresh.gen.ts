@@ -14,6 +14,7 @@ import * as $post_slug_ from "./routes/post/[slug].tsx";
 import * as $sitemap_xml from "./routes/sitemap.xml.ts";
 import * as $sudoku from "./routes/sudoku.tsx";
 import * as $sudoku_exercise_ from "./routes/sudoku/[exercise].tsx";
+import * as $BlogPostEnd from "./islands/BlogPostEnd.tsx";
 import * as $BlogPostImports from "./islands/BlogPostImports.tsx";
 import * as $Explainix from "./islands/Explainix.tsx";
 import * as $sudoku_SudokuEmptyRectangle from "./islands/sudoku/SudokuEmptyRectangle.tsx";
@@ -37,6 +38,7 @@ const manifest = {
     "./routes/sudoku/[exercise].tsx": $sudoku_exercise_,
   },
   islands: {
+    "./islands/BlogPostEnd.tsx": $BlogPostEnd,
     "./islands/BlogPostImports.tsx": $BlogPostImports,
     "./islands/Explainix.tsx": $Explainix,
     "./islands/sudoku/SudokuEmptyRectangle.tsx": $sudoku_SudokuEmptyRectangle,

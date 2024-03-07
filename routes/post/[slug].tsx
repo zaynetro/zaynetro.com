@@ -3,6 +3,7 @@ import { blogPosts } from "@/build/posts.gen.ts";
 import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import BlogPostImports from "@/islands/BlogPostImports.tsx";
+import BlogPostEnd from "@/islands/BlogPostEnd.tsx";
 import {
   GFM_CSS,
   GFM_CSS_CODE,
@@ -84,12 +85,7 @@ export default function PostPage(props: PageProps) {
             />
 
             <div class="mt-4">
-              <bk-like-button></bk-like-button>
-              <script
-                async
-                src="https://cdn.bolik.net/ui/11s4aurm371ii5f/bk-like-button.js"
-              >
-              </script>
+              <BlogPostEnd />
             </div>
           </main>
 
@@ -108,19 +104,4 @@ export function formatDate(d: Date) {
   const month = ("" + (d.getMonth() + 1)).padStart(2, "0");
   const day = ("" + (d.getDate())).padStart(2, "0");
   return `${d.getFullYear()}-${month}-${day}`;
-}
-
-// This import is needed to allow extending module declaration.
-import "preact";
-
-declare module "preact" {
-  namespace JSX {
-    interface IntrinsicElements {
-      "bk-like-button": BkLikeButtonAttrs;
-    }
-  }
-}
-
-interface BkLikeButtonAttrs extends preact.JSX.HTMLAttributes<HTMLElement> {
-  href?: string;
 }
