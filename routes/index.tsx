@@ -1,16 +1,10 @@
 import { Footer, Header } from "@/components/Header.tsx";
-import { isProd } from "@/utils/env.ts";
+import { publishedPosts as posts } from "@/utils/env.ts";
 import { formatDate } from "@/routes/post/[slug].tsx";
 import { Head } from "$fresh/runtime.ts";
-import { blogPosts } from "@/build/posts.gen.ts";
 import { PageProps } from "$fresh/server.ts";
 
 export default function HomePage(props: PageProps) {
-  const posts = [...blogPosts.values()]
-    // Exclude draft posts in production
-    .filter((p) => isProd ? !p.draft : true)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
   return (
     <>
       <Head>

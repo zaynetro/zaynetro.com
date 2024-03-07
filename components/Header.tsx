@@ -25,6 +25,11 @@ export function Header({
         />
         <link rel="icon" href={asset("/favicon.png")} />
         <link rel="stylesheet" href="/styles.css" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          href="https://zaynetro.com/feed.rss"
+        />
         <script
           defer
           data-domain="zaynetro.com"

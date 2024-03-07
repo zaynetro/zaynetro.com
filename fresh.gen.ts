@@ -6,6 +6,7 @@ import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $about from "./routes/about.tsx";
 import * as $explainix from "./routes/explainix.tsx";
+import * as $feed_rss from "./routes/feed.rss.tsx";
 import * as $img from "./routes/img.ts";
 import * as $index from "./routes/index.tsx";
 import * as $js_stats_event from "./routes/js/stats-event.ts";
@@ -28,6 +29,7 @@ const manifest = {
     "./routes/_middleware.ts": $_middleware,
     "./routes/about.tsx": $about,
     "./routes/explainix.tsx": $explainix,
+    "./routes/feed.rss.tsx": $feed_rss,
     "./routes/img.ts": $img,
     "./routes/index.tsx": $index,
     "./routes/js/stats-event.ts": $js_stats_event,
