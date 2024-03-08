@@ -28,20 +28,21 @@ export const handler: Handler = (_req, _ctx): Response => {
           things I am working on.
         </description>
         <language>en-US</language>
+
+        {posts.map((post) => (
+          <item>
+            <title>{post.title}</title>
+            <link>https://www.zaynetro.com/post/{post.slug}</link>
+            <pubDate>{formatDate(new Date(post.date))}</pubDate>
+            <content:encoded
+              dangerouslySetInnerHTML={{
+                __html: `<![CDATA[${post.html}]]>`,
+              }}
+            >
+            </content:encoded>
+          </item>
+        ))}
       </channel>
-      {posts.map((post) => (
-        <item>
-          <title>{post.title}</title>
-          <link>https://www.zaynetro.com/post/{post.slug}</link>
-          <pubDate>{formatDate(new Date(post.date))}</pubDate>
-          <content:encoded
-            dangerouslySetInnerHTML={{
-              __html: `<![CDATA[${post.html}]]>`,
-            }}
-          >
-          </content:encoded>
-        </item>
-      ))}
     </rss>,
     {},
     { pretty: true },
