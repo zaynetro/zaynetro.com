@@ -2,7 +2,6 @@ import { Handler } from "$fresh/server.ts";
 import render from "preact-render-to-string/jsx.js";
 import { baseTitle } from "@/components/Header.tsx";
 import { publishedPosts as posts } from "@/utils/env.ts";
-import { formatDate } from "@/routes/post/[slug].tsx";
 
 export const handler: Handler = (_req, _ctx): Response => {
   const feed = render(
@@ -32,8 +31,12 @@ export const handler: Handler = (_req, _ctx): Response => {
         {posts.map((post) => (
           <item>
             <title>{post.title}</title>
+            <guid isPermaLink="false">
+              https://www.zaynetro.com/post/{post.slug}
+            </guid>
             <link>https://www.zaynetro.com/post/{post.slug}</link>
-            <pubDate>{formatDate(new Date(post.date))}</pubDate>
+            <pubDate>{(new Date(post.date)).toUTCString()}</pubDate>
+            <description>{post.description}</description>
             <content:encoded
               dangerouslySetInnerHTML={{
                 __html: `<![CDATA[${post.html}]]>`,
@@ -73,6 +76,7 @@ declare module "preact" {
       "language": NoAttrs;
       "pubDate": NoAttrs;
       "item": NoAttrs;
+      "guid": GuidAttrs;
       "content:encoded": NoAttrs;
       "atom:link": NoAttrs;
       "rss": RssAttrs;
@@ -88,4 +92,8 @@ interface RssAttrs extends preact.JSX.HTMLAttributes<HTMLElement> {
   "xmlns:atom": string;
   "xmlns:sy": string;
   "xmlns:slash": string;
+}
+
+interface GuidAttrs extends preact.JSX.HTMLAttributes<HTMLElement> {
+  isPermaLink: string;
 }
