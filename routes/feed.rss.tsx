@@ -45,7 +45,9 @@ export const handler: Handler = (_req, _ctx): Response => {
     </rss>,
     {},
     { pretty: true },
-  );
+  )
+    // Preact renders xmlns:* attributes as xmlns::*
+    .replaceAll("xmlns::", "xmlns:");
 
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?>${feed}`,
