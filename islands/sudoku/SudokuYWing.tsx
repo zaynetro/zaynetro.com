@@ -134,6 +134,47 @@ const exercises: Exercise[] = [{
     },
   ],
   hideCandidates: ["R1C7:1", "R4C7:9", "R4C8:6", "R5C7:5", "R6C7:9", "R9C7:6"],
+}, {
+  grid: [
+    [7, 2, 4, 5, 8, 9, 1, 3, 6],
+    [6, 3, 5, 1, 0, 0, 9, 4, 8],
+    [1, 9, 8, 3, 6, 4, 5, 7, 2],
+    [4, 1, 6, 0, 9, 0, 7, 5, 3],
+    [9, 5, 7, 6, 1, 3, 2, 8, 4],
+    [2, 8, 3, 0, 0, 0, 6, 1, 9],
+    [3, 7, 9, 0, 0, 1, 8, 6, 5],
+    [0, 4, 2, 0, 0, 6, 3, 9, 1],
+    [0, 6, 1, 9, 3, 0, 4, 2, 7],
+  ],
+  answer: ["R6C6", "R8C4", "R9C6"],
+  hints: [
+    (ctx) => {
+      ctx.highlightRow(8);
+      ctx.highlightCol(6);
+      return "Take a look at row 8 and column 6.";
+    },
+    (ctx) => {
+      ctx.clearHighlight();
+
+      ctx.highlight(8, 4);
+      ctx.highlight(6, 6);
+      ctx.highlight(9, 6);
+
+      ctx.fillCandidates();
+      ctx.highlightCandidate(6, 4, 7);
+
+      return (
+        <>
+          R8C4, R6C6, R9C6 forms a Y-wing. R9C6 is a pivot. R8C4 and R6C6 are
+          pins. Either pin will have number 7. This allows us to remove number 7
+          from an intersecting cell R6C4.
+          <br />
+          Finally, we can place number 4 in R6C4.
+        </>
+      );
+    },
+  ],
+  hideCandidates: [],
 }];
 
 export default function SudokuYWing() {
