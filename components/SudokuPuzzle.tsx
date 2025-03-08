@@ -167,6 +167,13 @@ export function SudokuPuzzle({
   }
 
   function selectCell(row: number, col: number) {
+    const current = selected.value;
+    if (current && current[0] == row && current[1] == col) {
+      // Clicked on the same cell --> deselect
+      selected.value = null;
+      return;
+    }
+
     selected.value = [row, col];
     onSelectCell?.(row, col);
   }
