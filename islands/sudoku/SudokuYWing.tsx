@@ -8,6 +8,7 @@ import {
 const materials = [
   "https://www.sudoku.academy/learn/xy-wing/",
   "https://www.learn-sudoku.com/xy-wing.html",
+  "https://masteringsudoku.com/y-wings/",
 ];
 
 const exercises: Exercise[] = [{

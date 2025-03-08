@@ -22,6 +22,7 @@ export function SingleExercise({
 }) {
   const selected = useSignal<number[][]>([]);
   const solved = useSignal(false);
+  const expectValues = exercise.answer.length;
 
   function selectCell(row: number, col: number) {
     if (solved.value) {
@@ -29,7 +30,7 @@ export function SingleExercise({
     }
 
     const cur = [...selected.value];
-    if (cur.length >= 4) {
+    if (cur.length >= expectValues) {
       cur.shift();
     }
     cur.push([row, col]);
@@ -57,7 +58,7 @@ export function SingleExercise({
           ))}
         </div>
 
-        {(selected.value.length == 4) && !solved.value && (
+        {(selected.value.length == expectValues) && !solved.value && (
           <span class="text-red-500" title="Incorrect answer">
             <IconExclamationCircle />
           </span>

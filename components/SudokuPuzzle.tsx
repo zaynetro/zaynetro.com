@@ -322,7 +322,7 @@ export function SudokuPuzzle({
               return (
                 <div
                   class={classNames(
-                    "border border-gray-200 dark:border-gray-600",
+                    "aspect-square border border-gray-200 dark:border-gray-600",
                     {
                       // Border every three segments
                       "border-t-gray-900 dark:border-t-gray-200": row === 0,
