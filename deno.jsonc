@@ -1,11 +1,11 @@
 {
-  "nodeModulesDir": true,
+  "nodeModulesDir": "auto",
   "lock": false,
   "tasks": {
-    "start": "deno run -A --unstable --watch=static/,routes/,posts/ dev.ts",
+    "start": "deno run -A --unstable-kv --watch=static/,routes/,posts/ dev.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
-    "build": "deno run -A --unstable dev.ts build",
-    "production": "deno run -A --unstable main.ts",
+    "build": "deno run -A --unstable-kv dev.ts build",
+    "production": "deno run -A --unstable-kv main.ts",
     "preview": "deno run -A main.ts"
   },
   "imports": {
