@@ -24,11 +24,11 @@ export default defineRoute((_req, ctx) => {
           content="Explain Nix syntax visually"
         />
 
-        <style dangerouslySetInnerHTML={{ __html: GFM_VARS }} />
-        <style dangerouslySetInnerHTML={{ __html: GFM_CSS }} />
-        <style dangerouslySetInnerHTML={{ __html: GFM_CSS_CODE }} />
-        <style dangerouslySetInnerHTML={{ __html: GFM_CSS_CUSTOM }} />
-        <style dangerouslySetInnerHTML={{ __html: overrides }} />
+        <style>{GFM_VARS}</style>
+        <style>{GFM_CSS}</style>
+        <style>{GFM_CSS_CODE}</style>
+        <style>{GFM_CSS_CUSTOM}</style>
+        <style>{overrides}</style>
       </Head>
 
       <Header

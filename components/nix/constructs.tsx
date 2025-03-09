@@ -241,7 +241,7 @@ export function resolveFnCallView(
 
         {call.args.map((a) => {
           const def = resolveView(ctx, a);
-          return <def.View />;
+          return <def.View key={a} />;
         })}
       </div>
     ),

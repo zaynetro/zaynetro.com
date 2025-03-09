@@ -61,15 +61,13 @@ export default function SudokuExercisePage(props: PageProps<SudokuProps>) {
           name="description"
           content={`${exercise.name}. Practice solving Sudoku online. Do you want to get better at Sudoku? Try completing this exercise.`}
         />
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
+        <style>
+          {`
 /* Disable zooming in mobile Safari  https://stackoverflow.com/a/62165035 */
 body {
   touch-action: pan-x pan-y;
-}`,
-          }}
-        />
+}`}
+        </style>
       </Head>
 
       <Header title={`${exercise.name} | Sudoku`} url={props.url} />

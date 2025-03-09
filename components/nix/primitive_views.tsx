@@ -231,9 +231,9 @@ export function resolveListView(ctx: TooltipState, list: Expr[]): ViewDef {
         onClick={onClick}
         class="inline-flex gap-2 cursor-pointer ring-black/25 hover:ring-2"
       >
-        <span class="text-black">{"["}</span>
+        <span class="text-black">[</span>
         <ListRows list={list} />
-        <span class="text-black">{"]"}</span>
+        <span class="text-black">]</span>
       </div>
     ),
   };
@@ -283,7 +283,7 @@ export function resolveAttrSetView(ctx: TooltipState, set: AttrSet): ViewDef {
 function ListRows({ list }: { list: Expr[] }) {
   return (
     <>
-      {list.map((item) => <ExprView expr={item} />)}
+      {list.map((item) => <ExprView key={item} expr={item} />)}
     </>
   );
 }
@@ -341,7 +341,7 @@ export function AttrSetEntry({
         <div class="inline-flex gap-2 ml-2">
           {entry.inherit.map((e) => {
             const View = resolveIdentView(ctx, e.value).View;
-            return <View />;
+            return <View key={e.value} />;
           })}
         </div>
         <span class="text-black">;</span>

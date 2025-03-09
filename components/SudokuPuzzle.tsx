@@ -4,7 +4,7 @@ import IconBulb from "@tabler/icons-preact/dist/esm/icons/IconBulb.js";
 import IconEraser from "@tabler/icons-preact/dist/esm/icons/IconEraser.js";
 import IconPencil from "@tabler/icons-preact/dist/esm/icons/IconPencil.js";
 import IconRobot from "@tabler/icons-preact/dist/esm/icons/IconRobot.js";
-import { JSX } from "preact";
+import { Fragment, JSX } from "preact";
 import { classNames } from "@/components/util.ts";
 
 type SudokuGrid = number[][];
@@ -453,7 +453,7 @@ export function SudokuPuzzle({
 
       {!!visibleHints.value.length && (
         <div class="flex flex-col gap-1 rounded-md p-2 bg-yellow-100 text-gray-800 dark:bg-yellow-900 dark:text-gray-300">
-          {visibleHints.value.map((h) => <p>{h}</p>)}
+          {visibleHints.value.map((h) => <p key={h}>{h}</p>)}
 
           {(visibleHints.value.length < hints.length) && (
             <div class="flex justify-end">
@@ -519,7 +519,7 @@ function SudokuCell({
                 );
               }
 
-              return <>{n}</>;
+              return <Fragment key={n}>{n}</Fragment>;
             })}
           </span>
         )

@@ -264,11 +264,7 @@ function Tooltip() {
   // Add padding so that tooltip is on the same level as clicked element
   // (on mobile use top)
   const paddingTop = useSignal<number | null>(null);
-
   const val = ctx.value;
-  if (!val) {
-    return null;
-  }
 
   let property = "paddingTop";
   if (ref.current && getComputedStyle(ref.current).position == "absolute") {
@@ -291,6 +287,10 @@ function Tooltip() {
   }, []);
 
   useEffect(() => {
+    if (!val) {
+      return;
+    }
+
     // We calculate this in the effect because otherwise we won't have it
     // on the first render.
     const headerHeight = 36;
@@ -304,6 +304,10 @@ function Tooltip() {
       paddingTop.value = value;
     }
   }, [val, ref.current]);
+
+  if (!val) {
+    return null;
+  }
 
   const mdRenderer = new BrowserRenderer();
   const html = marked.parse(val.description, {
@@ -341,6 +345,7 @@ function Tooltip() {
       </div>
       <div
         class="mt-2 markdown-body"
+        // deno-lint-ignore react-no-danger
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>

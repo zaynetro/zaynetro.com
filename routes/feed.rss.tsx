@@ -1,3 +1,5 @@
+// deno-lint-ignore-file jsx-void-dom-elements-no-children
+
 import { Handler } from "$fresh/server.ts";
 import render from "preact-render-to-string/jsx.js";
 import { baseTitle } from "@/components/Header.tsx";
@@ -38,6 +40,7 @@ export const handler: Handler = (_req, _ctx): Response => {
             <pubDate>{(new Date(post.date)).toUTCString()}</pubDate>
             <description>{post.description}</description>
             <content:encoded
+              // deno-lint-ignore react-no-danger
               dangerouslySetInnerHTML={{
                 __html: `<![CDATA[${post.html}]]>`,
               }}

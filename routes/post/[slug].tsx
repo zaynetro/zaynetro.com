@@ -37,10 +37,10 @@ export default function PostPage(props: PageProps) {
           <meta name="description" content={post.description} />
         )}
 
-        <style dangerouslySetInnerHTML={{ __html: GFM_VARS }} />
-        <style dangerouslySetInnerHTML={{ __html: GFM_CSS }} />
-        <style dangerouslySetInnerHTML={{ __html: GFM_CSS_CODE }} />
-        <style dangerouslySetInnerHTML={{ __html: GFM_CSS_CUSTOM }} />
+        <style>{GFM_VARS}</style>
+        <style>{GFM_CSS}</style>
+        <style>{GFM_CSS_CODE}</style>
+        <style>{GFM_CSS_CUSTOM}</style>
       </Head>
       <Header title={post.title} url={props.url} />
 
@@ -81,6 +81,7 @@ export default function PostPage(props: PageProps) {
           <main class="max-w-4xl mx-0 md:mx-auto mt-4 xl:mt-0 xl:grow">
             <div
               class="my-2 markdown-body"
+              // deno-lint-ignore react-no-danger
               dangerouslySetInnerHTML={{ __html: post.html! }}
             />
 
