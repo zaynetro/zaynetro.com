@@ -9,6 +9,7 @@ const materials = [
   "https://www.sudoku.academy/learn/xy-wing/",
   "https://www.learn-sudoku.com/xy-wing.html",
   "https://masteringsudoku.com/y-wings/",
+  "https://www.stolaf.edu/people/hansonr/sudoku/explain.htm",
 ];
 
 const exercises: Exercise[] = [{
@@ -29,6 +30,11 @@ const exercises: Exercise[] = [{
       ctx.highlightRow(5);
       ctx.highlightCol(5);
       return "Take a look at row 5 and column 5.";
+    },
+    (ctx) => {
+      ctx.clearHighlight();
+      ctx.highlight(5, 5);
+      return "R5C5 is a pivot. Look for two pins. Three cells together form a bent naked triple.";
     },
     (ctx) => {
       ctx.clearHighlight();
@@ -73,6 +79,11 @@ const exercises: Exercise[] = [{
     },
     (ctx) => {
       ctx.clearHighlight();
+      ctx.highlight(3, 1);
+      return "R3C1 is a pivot. Look for two pins. Three cells together form a bent naked triple.";
+    },
+    (ctx) => {
+      ctx.clearHighlight();
 
       ctx.highlight(3, 1);
       ctx.highlight(3, 7);
@@ -114,6 +125,11 @@ const exercises: Exercise[] = [{
     },
     (ctx) => {
       ctx.clearHighlight();
+      ctx.highlight(9, 7);
+      return "R9C7 is a pivot. Look for two pins. Three cells together form a bent naked triple.";
+    },
+    (ctx) => {
+      ctx.clearHighlight();
 
       ctx.highlight(1, 7);
       ctx.highlight(7, 9);
@@ -152,6 +168,11 @@ const exercises: Exercise[] = [{
       ctx.highlightRow(8);
       ctx.highlightCol(6);
       return "Take a look at row 8 and column 6.";
+    },
+    (ctx) => {
+      ctx.clearHighlight();
+      ctx.highlight(9, 6);
+      return "R9C6 is a pivot. Look for two pins. Three cells together form a bent naked triple.";
     },
     (ctx) => {
       ctx.clearHighlight();
