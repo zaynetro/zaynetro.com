@@ -21,7 +21,7 @@ import * as $Explainix from "./islands/Explainix.tsx";
 import * as $sudoku_SudokuEmptyRectangle from "./islands/sudoku/SudokuEmptyRectangle.tsx";
 import * as $sudoku_SudokuXWing from "./islands/sudoku/SudokuXWing.tsx";
 import * as $sudoku_SudokuYWing from "./islands/sudoku/SudokuYWing.tsx";
-import { type Manifest } from "$fresh/server.ts";
+import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
