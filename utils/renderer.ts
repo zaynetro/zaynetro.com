@@ -55,7 +55,7 @@ export class Renderer extends BrowserRenderer {
     super();
   }
 
-  heading(
+  override heading(
     text: string,
     level: 1 | 2 | 3 | 4 | 5 | 6,
     raw: string,
@@ -88,7 +88,7 @@ export class Renderer extends BrowserRenderer {
     );
   }
 
-  html(html: string, block: boolean): string {
+  override html(html: string, block: boolean): string {
     const trimmed = html.trim();
     if (block && trimmed.startsWith("<mermaid-block")) {
       const lines = trimmed.split("\n");
@@ -153,7 +153,7 @@ export class Renderer extends BrowserRenderer {
     return html;
   }
 
-  image(src: string, title: string | null, alt: string | null) {
+  override image(src: string, title: string | null, alt: string | null) {
     if (src.startsWith("http")) {
       return `
 <a href="${src}" class="img-link">

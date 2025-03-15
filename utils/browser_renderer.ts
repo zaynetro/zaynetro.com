@@ -5,7 +5,7 @@ import "prismjs/components/prism-nix?no-check";
 
 /** Markdown renderer for the browser */
 export class BrowserRenderer extends MarkedRenderer {
-  code(code: string, language?: string) {
+  override code(code: string, language?: string) {
     const grammar =
       language && Object.hasOwnProperty.call(Prism.languages, language)
         ? Prism.languages[language]
