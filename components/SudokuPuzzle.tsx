@@ -503,7 +503,9 @@ function SudokuCell({
 
               if (highlighted == "removed") {
                 return (
-                  <span class={`${selectedClass} bg-red-300 dark:bg-red-700`}>
+                  <span
+                    class={`${selectedClass} bg-red-300 dark:bg-red-700 line-through`}
+                  >
                     {n}
                   </span>
                 );

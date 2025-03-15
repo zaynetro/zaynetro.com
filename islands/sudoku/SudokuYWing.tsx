@@ -14,6 +14,52 @@ const materials = [
 
 const exercises: Exercise[] = [{
   grid: [
+    [9, 1, 8, 2, 5, 7, 4, 6, 3],
+    [2, 7, 3, 9, 4, 6, 0, 0, 0],
+    [5, 6, 4, 3, 1, 8, 0, 0, 7],
+    [4, 9, 5, 0, 2, 3, 7, 0, 6],
+    [7, 0, 6, 0, 9, 4, 5, 3, 0],
+    [3, 0, 1, 7, 6, 5, 0, 4, 9],
+    [1, 3, 2, 5, 8, 9, 6, 7, 4],
+    [6, 5, 7, 4, 3, 2, 0, 0, 8],
+    [8, 4, 9, 6, 7, 1, 3, 0, 0],
+  ],
+  answer: ["R2C7", "R5C9", "R6C7"],
+  hints: [
+    (ctx) => {
+      ctx.highlightCol(7);
+      ctx.highlightCol(9);
+      return "Take a look at columns 7 and 9.";
+    },
+    (ctx) => {
+      ctx.clearHighlight();
+      ctx.highlight(6, 7);
+      return "R6C7 is a pivot. Look for two pins. Three cells together form a bent naked triple.";
+    },
+    (ctx) => {
+      ctx.clearHighlight();
+
+      ctx.highlight(2, 7);
+      ctx.highlight(5, 9);
+      ctx.highlight(6, 7);
+
+      ctx.fillCandidates();
+      ctx.highlightCandidate(2, 9, 1);
+
+      return (
+        <>
+          R2C7, R5C9, R6C7 form a Y-wing. R6C7 is a pivot. R2C7 and R5C9 are
+          pins. Either pin will have number 1. This allows us to remove number 1
+          from an intercecting cell R2C9.
+          <br />
+          Finally, we can place number 5 in R2C9.
+        </>
+      );
+    },
+  ],
+  hideCandidates: [],
+}, {
+  grid: [
     [6, 4, 7, 9, 1, 5, 3, 8, 2],
     [3, 9, 5, 2, 8, 4, 7, 6, 1],
     [0, 2, 0, 3, 0, 0, 5, 4, 9],
@@ -48,7 +94,7 @@ const exercises: Exercise[] = [{
 
       return (
         <>
-          R5C2, R5C5, R8C5 forms a Y-wing. R5C5 is a pivot. R5C2 and R8C5 are
+          R5C2, R5C5, R8C5 form a Y-wing. R5C5 is a pivot. R5C2 and R8C5 are
           pins. Either pin will have number 7. This allows us to remove number 7
           from an intercecting cell R8C2.
           <br />
@@ -94,7 +140,7 @@ const exercises: Exercise[] = [{
 
       return (
         <>
-          R3C1, R3C7, R4C1 forms a Y-wing. R3C1 is a pivot. R3C7 and R4C1 are
+          R3C1, R3C7, R4C1 form a Y-wing. R3C1 is a pivot. R3C7 and R4C1 are
           pins. Either pin will have number 5. This allows us to remove number 5
           from an intersecting cell R4C7.
           <br />
@@ -140,7 +186,7 @@ const exercises: Exercise[] = [{
 
       return (
         <>
-          R1C7, R9C7, R7C9 forms a Y-wing. R9C7 is a pivot. R1C7 and R7C9 are
+          R1C7, R9C7, R7C9 form a Y-wing. R9C7 is a pivot. R1C7 and R7C9 are
           pins. Either pin will have number 2. This allows us to remove number 2
           from an intersecting cell R1C9.
           <br />
@@ -186,7 +232,7 @@ const exercises: Exercise[] = [{
 
       return (
         <>
-          R8C4, R6C6, R9C6 forms a Y-wing. R9C6 is a pivot. R8C4 and R6C6 are
+          R8C4, R6C6, R9C6 form a Y-wing. R9C6 is a pivot. R8C4 and R6C6 are
           pins. Either pin will have number 7. This allows us to remove number 7
           from an intersecting cell R6C4.
           <br />
