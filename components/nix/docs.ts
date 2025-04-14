@@ -384,7 +384,7 @@ Comparison is
     title: "List concatenation",
     description: `
 \`\`\`nix
-[ 1 2 ] ++ [ 2 3 ]
+[ 1 2 ] ++ [ 3 4 ]
 # Result: [ 1 2 3 4 ]
 \`\`\`
 `,
@@ -424,6 +424,14 @@ in a // b
       "https://nixos.org/manual/nix/stable/language/operators#logical-implication",
     title: "Logical implication",
     description: `
+Example:
+\`\`\`nix
+let
+   x = true; 
+   x = false; 
+in (x -> y)
+# Result: false
+\`\`\`
 Equivalent to \`!x || y\`.
 `,
   },
@@ -433,6 +441,16 @@ Equivalent to \`!x || y\`.
       "https://nixos.org/manual/nix/stable/language/operators#has-attribute",
     title: "Has attribute",
     description: `
+\`\`\`nix
+({y = 2;} ? "y")
+# Result: true
+\`\`\`
+
+\`\`\`nix
+({x=3; y = 2;} ? "z")
+# Result: false
+\`\`\`
+
 \`\`\`nix
 attrset ? attrpath
 \`\`\`
