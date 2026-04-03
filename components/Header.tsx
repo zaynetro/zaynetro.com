@@ -4,13 +4,7 @@ import { ComponentChildren } from "preact";
 
 export const baseTitle = "Roman Zaynetdinov (zaynetro)";
 
-export function Header({
-  title,
-  url,
-}: {
-  title?: string;
-  url: URL;
-}) {
+export function Header({ title, url }: { title?: string; url: URL }) {
   const pageTitle = title ? `${title} | ${baseTitle}` : baseTitle;
 
   return (
@@ -30,17 +24,21 @@ export function Header({
           type="application/rss+xml"
           href="https://zaynetro.com/feed.rss"
         />
-        <script
+        {
+          /*<script
           defer
           data-domain="zaynetro.com"
           data-api="/js/stats-event"
           src="/js/stats.js"
-        />
+        />*/
+        }
       </Head>
 
       <header class="max-w-3xl mx-auto pt-10 pb-6 px-4">
         <nav class="flex gap-4 flex-wrap sm:flex-nowrap justify-between items-center">
-          <a href="/" class="text-lg no-underline">zaynetro.com</a>
+          <a href="/" class="text-lg no-underline">
+            zaynetro.com
+          </a>
 
           <div class="flex gap-4">
             <a href="/" class="text-lg no-underline py-1.5 sm:py-0 px-2">
@@ -89,9 +87,7 @@ export function Footer() {
   return (
     <footer class="text-center mt-8 mb-4 px-4">
       <div class="inline-flex flex-col sm:flex-row text-gray-700 dark:text-gray-200 text-sm gap-4">
-        <span>
-          Roman Zaynetdinov (zaynetro) {new Date().getFullYear()}
-        </span>
+        <span>Roman Zaynetdinov (zaynetro) {new Date().getFullYear()}</span>
         <span class="hidden sm:block text-gray-300">|</span>
 
         <div class="flex gap-4 justify-center">
@@ -105,10 +101,7 @@ export function Footer() {
           </span>
           <span class="text-gray-300">|</span>
           <span>
-            <a
-              href="mailto:roman@zaynetro.com"
-              class="py-1.5 sm:py-0"
-            >
+            <a href="mailto:roman@zaynetro.com" class="py-1.5 sm:py-0">
               Get in touch
             </a>
           </span>
