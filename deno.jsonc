@@ -37,5 +37,6 @@
     "exclude": ["static/", "posts/", ".vscode/", "build/"],
     "rules": { "tags": ["fresh", "recommended"] }
   },
-  "exclude": ["**/_fresh/*"]
+  "exclude": ["**/_fresh/*"],
+  "unstable": ["kv"]
 }
