@@ -1,0 +1,11 @@
+{
+  "name": "zaynetro-assets",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@preact/signals": "^2.1.0",
+    "@tabler/icons-preact": "^3.41.1",
+    "marked": "^15.0.12",
+    "preact": "^10.25.4"
+  }
+}

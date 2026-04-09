@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <%= if assigns[:page_title] do %>
+      <title>{@page_title} | zaynetro</title>
+    <% else %>
+      <title>zaynetro</title>
+    <% end %>
+    <%= if assigns[:meta_description] do %>
+      <meta name="description" content={@meta_description} />
+    <% end %>
+    <link rel="icon" href="/favicon.png" />
+    <link rel="alternate" type="application/rss+xml" title="zaynetro" href="/feed.rss" />
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    {if assigns[:post_styles], do: {:safe, @post_styles}}
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    </script>
+    {if assigns[:extra_head], do: {:safe, @extra_head}}
+  </head>
+  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    {@inner_content}
+  </body>
+</html>
