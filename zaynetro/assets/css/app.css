@@ -103,3 +103,36 @@
 [data-phx-session], [data-phx-teleported-src] { display: contents }
 
 /* This file is for your main application CSS */
+
+:root {
+  --a-hover-color: #ffe69c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --a-hover-color: #826e30;
+  }
+}
+
+a {
+  color: inherit;
+  overflow-wrap: break-word;
+  padding: 1px 2px;
+  border-radius: 5px;
+  text-decoration: underline;
+  text-decoration: underline dotted #777;
+  text-decoration-thickness: from-font;
+}
+
+a:hover {
+  background-color: var(--a-hover-color);
+  text-decoration: none;
+}
+
+a.no-underline {
+  text-decoration: none;
+}
+
+a.no-underline:hover {
+  background-color: var(--a-hover-color);
+}
