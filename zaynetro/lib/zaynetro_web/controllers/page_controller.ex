@@ -13,7 +13,9 @@ defmodule ZaynetroWeb.PageController do
   end
 
   def explainix(conn, _params) do
-    render(conn, :explainix,
+    conn
+    |> assign(:page_title, "Explainix")
+    |> render(:explainix,
       extra_head: ~s(<script defer src="/assets/explainix.js"></script>)
     )
   end
