@@ -6,6 +6,7 @@
     "@preact/signals": "^2.1.0",
     "@tabler/icons-preact": "^3.41.1",
     "marked": "^15.0.12",
+    "mermaid": "^11.14.0",
     "preact": "^10.25.4"
   }
 }

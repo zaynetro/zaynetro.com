@@ -8,8 +8,7 @@ defmodule ZaynetroWeb.PostController do
       {:ok, post} ->
         extra_head =
           if post.has_mermaid do
-            # Mermaid script loaded by app.js DOMContentLoaded handler
-            ""
+            ~s(<script defer src="/assets/mermaid.js"></script>)
           else
             ""
           end

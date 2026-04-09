@@ -51,6 +51,12 @@ config :esbuild,
          --alias:@=./js),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../assets/node_modules", __DIR__)}
+  ],
+  mermaid: [
+    args:
+      ~w(js/islands/mermaid-loader.js --bundle --target=es2022 --outfile=../priv/static/assets/mermaid.js),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../assets/node_modules", __DIR__)}
   ]
 
 # Configure tailwind (the version is required)
