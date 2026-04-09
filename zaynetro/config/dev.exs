@@ -75,3 +75,7 @@ config :phoenix_live_view,
   debug_attributes: true,
   # Enable helpful, but potentially expensive runtime checks
   enable_expensive_runtime_checks: true
+
+config :zaynetro,
+  image_cache_dir: Path.expand("../tmp/image_cache", __DIR__),
+  posts_dir: Path.expand("../posts", __DIR__)
