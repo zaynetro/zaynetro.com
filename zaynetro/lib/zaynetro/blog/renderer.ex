@@ -211,7 +211,7 @@ defmodule Zaynetro.Blog.Renderer do
     # Match src="./filename" or src="filename" (no scheme = local image)
     Regex.replace(~r/src="((?:\.\/)?(?!https?:\/\/|\/)[^"]+\.[a-z]{2,5})"/, html, fn _, path ->
       filename = String.trim_leading(path, "./")
-      ~s(src="/img?id=#{post_slug}/#{filename}")
+      ~s(src="/img?id=#{post_slug}/#{filename}&orig=true")
     end)
   end
 
