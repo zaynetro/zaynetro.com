@@ -85,13 +85,19 @@ defmodule Zaynetro.Blog.GfmCss do
   @gfm_css_custom """
   .markdown-body .mermaid-block { margin: 1.5em 0; overflow-x: auto; }
   .markdown-body .mermaid-block pre.mermaid { background: transparent; padding: 0; margin: 0; }
+  .markdown-body .mermaid-block svg { margin: 0 auto; display: block; }
+  .markdown-body .mermaid-label {
+    text-align: center; font-size: .875em; color: #57606a; margin-top: .5em;
+  }
   .markdown-body .img-block { margin: 1.5em 0; }
   .markdown-body .img-block img { max-width: 100%; border-radius: 4px; }
+  .markdown-body .img-block-list { display: flex; justify-content: center; overflow-x: auto; gap: .5em; }
   .markdown-body .img-block-label {
     font-size: .875em; color: #57606a; margin-top: .25em;
     text-align: center; font-style: italic;
   }
   @media (prefers-color-scheme: dark) {
+    .markdown-body .mermaid-label { color: #8b949e; }
     .markdown-body .img-block-label { color: #8b949e; }
   }
   """

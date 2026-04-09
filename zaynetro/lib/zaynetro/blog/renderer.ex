@@ -98,14 +98,17 @@ defmodule Zaynetro.Blog.Renderer do
 
   # HtmlBlock: detect mermaid-block and labeled-img
 
-  defp transform(%MDEx.HtmlBlock{literal: literal}, acc, _slug) do
+  defp transform(%MDEx.HtmlBlock{literal: literal}, acc, slug) do
     cond do
       String.contains?(literal, "<mermaid-block") ->
         name = extract_attr(literal, "name")
         content = extract_inner_content(literal, "mermaid-block")
 
         html =
-          ~s(<section class="mermaid-block" data-name="#{name}"><pre class="mermaid">#{content}</pre></section>\n)
+          ~s(<section class="mermaid-block">) <>
+          ~s(<pre class="mermaid">#{content}</pre>) <>
+          ~s(<div class="mermaid-label"><i>Diagram: #{name}</i></div>) <>
+          ~s(</section>\n)
 
         {%MDEx.Raw{literal: html}, %{acc | has_mermaid: true}}
 
@@ -113,8 +116,20 @@ defmodule Zaynetro.Blog.Renderer do
         label = extract_attr(literal, "label")
         content = extract_inner_content(literal, "labeled-img")
 
+        # Transform ./filename.png -> /img?id=post-slug/filename.png
+        images_html = transform_img_srcs(content, slug)
+
+        # Parse markdown in label (for links etc), strip wrapping <p> tag
+        label_html =
+          label
+          |> MDEx.to_html!(extension: [autolink: true])
+          |> String.replace(~r/\A<p>(.*)<\/p>\z/s, "\\1")
+
         html =
-          ~s(<section class="img-block">#{content}<div class="img-block-label">#{label}</div></section>\n)
+          ~s(<section class="img-block">) <>
+          ~s(<div class="img-block-list">#{images_html}</div>) <>
+          ~s(<div class="img-block-label">#{label_html}</div>) <>
+          ~s(</section>\n)
 
         {%MDEx.Raw{literal: html}, %{acc | has_labeled_img: true}}
 
@@ -191,6 +206,14 @@ defmodule Zaynetro.Blog.Renderer do
   end
 
   defp extract_text(_), do: ""
+
+  defp transform_img_srcs(html, post_slug) do
+    # Match src="./filename" or src="filename" (no scheme = local image)
+    Regex.replace(~r/src="((?:\.\/)?(?!https?:\/\/|\/)[^"]+\.[a-z]{2,5})"/, html, fn _, path ->
+      filename = String.trim_leading(path, "./")
+      ~s(src="/img?id=#{post_slug}/#{filename}")
+    end)
+  end
 
   defp extract_attr(html, attr) do
     case Regex.run(~r/#{attr}="([^"]*)"/, html) do
