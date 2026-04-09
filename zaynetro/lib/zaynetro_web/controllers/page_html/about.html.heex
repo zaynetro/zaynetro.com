@@ -1,6 +1,113 @@
-<section class="max-w-3xl mx-auto px-4 py-8 prose dark:prose-invert">
-  <h1>About</h1>
-  <p>Hi! I'm Roman Zaynetdinov, a software engineer.</p>
-  <p>Welcome to my personal blog where I write about things I find interesting.</p>
-  <p>Feel free to reach out via <a href="mailto:roman@zaynetro.com">email</a>.</p>
+<section class="max-w-xl mx-auto flex flex-col gap-8 px-2 mt-8">
+  <div class="flex gap-4 sm:gap-12">
+    <div>
+      <picture>
+        <img
+          src="/img?id=logo.jpg&w=200"
+          srcset="/img?id=logo.jpg&w=200, /img?id=logo.jpg&w=400 2x"
+          loading="lazy"
+          class="w-[200px] h-[200px] object-cover rounded-lg shadow-md"
+          alt="Roman Zaynetdinov"
+        />
+      </picture>
+    </div>
+    <div>
+      <h1 class="text-2xl sm:text-3xl">Hi, I'm Roman Zaynetdinov.</h1>
+      <p class="text-gray-600 dark:text-gray-400 mt-2 text-lg">
+        I build services that help people.
+      </p>
+
+      <nav class="flex flex-col gap-4 mt-4">
+        <ul class="flex flex-col gap-1 list-none p-0">
+          <li>
+            <a href="https://github.com/zaynetro" class="inline-flex gap-2 items-center py-1.5 sm:py-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/roman-zay/" target="_blank" class="inline-flex gap-2 items-center py-1.5 sm:py-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href="mailto:roman@zaynetro.com" class="inline-flex gap-2 items-center py-1.5 sm:py-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,12 2,6"></polyline>
+              </svg>
+              Get in touch
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h2 class="text-2xl">Projects</h2>
+    <ul class="list-inside flex flex-col gap-8 mt-4 list-none p-0">
+      <li>
+        <h3 class="text-xl">
+          <a href="https://bolik.net" target="_blank" class="inline-flex gap-2 items-center py-1.5 sm:py-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5"/><path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75z"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"/>
+            </svg>
+            Bolik
+          </a>
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mt-2">
+          Bolik helps you to make your website interactive in just a few clicks.
+          Configure UI and then choose an integration. Bolik will generate a Web Component
+          that you can include on your page.
+        </p>
+      </li>
+      <li>
+        <h3 class="text-xl">
+          <a href="/sudoku" class="inline-flex gap-2 items-center py-1.5 sm:py-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="5" cy="5" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="19" cy="5" r="1"/>
+              <circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>
+              <circle cx="5" cy="19" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="19" cy="19" r="1"/>
+            </svg>
+            Sudoku
+          </a>
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mt-2">
+          Solve exercises to become better at Sudoku.
+        </p>
+      </li>
+      <li>
+        <h3 class="text-xl">
+          <a href="https://timeline.bolik.net" target="_blank" class="inline-flex gap-2 items-center py-1.5 sm:py-0">
+            <img src="/img?id=bolik-timeline-logo.png&w=100" loading="lazy" class="w-[50px] h-[50px] object-cover" alt="Bolik Timeline logo" />
+            Bolik Timeline
+          </a>
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mt-2">
+          Bolik Timeline is an application for managing personal documents like notes, photos
+          and memories. It supports offline editing, is end-to-end encrypted and is open source.
+        </p>
+      </li>
+      <li>
+        <h3 class="text-xl">
+          <a href="/explainix" class="inline-flex gap-2 items-center py-1.5 sm:py-0">
+            <img src="/images/nix-snowflake.svg" class="w-[25px] h-[25px]" alt="Nix snowflake logo" />
+            Explainix
+          </a>
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mt-2">
+          Explain Nix syntax visually.
+        </p>
+      </li>
+    </ul>
+  </div>
 </section>
+
