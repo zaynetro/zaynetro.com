@@ -1,10 +1,15 @@
-<section class="max-w-4xl mx-auto px-4 py-8">
-  <h1 class="text-2xl font-bold mb-4">Explainix</h1>
-  <p class="text-gray-600 dark:text-gray-300 mb-8">
-    Interactive Nix language explorer. Click on expressions to learn about them.
-  </p>
+<section class="max-w-6xl mx-auto flex flex-col gap-8 px-2 py-4">
+  <h1 class="text-2xl flex gap-4 items-center">
+    <img src="/images/nix-snowflake.svg" class="w-9 h-9" alt="Nix snowflake logo" />
+    Explainix
+  </h1>
+  <div class="text-lg max-w-2xl flex flex-col gap-4">
+    <p>Explain Nix syntax visually. Snippet below showcases most of the language features Nix has to offer.</p>
+    <p>Hover over any element to highlight its bounds. Click on any element to display help.</p>
+  </div>
 
   <div id="explainix-root" phx-update="ignore">
     <p class="text-gray-500">Loading...</p>
   </div>
 </section>
+<div class="h-80"></div>

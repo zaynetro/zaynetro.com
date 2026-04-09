@@ -28,7 +28,7 @@ defmodule ZaynetroWeb.Router do
     get "/explainix", PageController, :explainix
     get "/post/:slug", PostController, :show
     get "/sudoku", SudokuController, :index
-    live "/sudoku/:exercise", SudokuLive, :show
+    get "/sudoku/:exercise", SudokuController, :show
     get "/feed.rss", FeedController, :index
     get "/sitemap.xml", SitemapController, :index
   end
