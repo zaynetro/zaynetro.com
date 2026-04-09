@@ -1,39 +1,33 @@
-<section class="max-w-3xl mx-auto px-4 py-8">
-  <ul class="flex flex-col gap-8 list-none p-0">
-    <%= for post <- @posts do %>
-      <li>
-        <a href={"/post/#{post.slug}"} class="flex gap-4 no-underline group">
-          <%= if post.preview_image do %>
-            <div class="flex-none">
-              <picture>
-                <source
-                  srcset={"/img?id=#{URI.encode_www_form(post.preview_image.id)}&w=48 1x, /img?id=#{URI.encode_www_form(post.preview_image.id)}&w=96 2x"}
-                  media="(max-width: 640px)"
-                />
-                <source srcset={"/img?id=#{URI.encode_www_form(post.preview_image.id)}&w=64 1x, /img?id=#{URI.encode_www_form(post.preview_image.id)}&w=128 2x"} />
-                <img
-                  src={"/img?id=#{URI.encode_www_form(post.preview_image.id)}&w=64"}
-                  alt={post.preview_image.alt}
-                  class="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded"
-                  loading="lazy"
-                />
-              </picture>
-            </div>
-          <% end %>
-          <div class="flex flex-col gap-1">
-            <h2 class="text-lg font-semibold group-hover:underline">{post.title}</h2>
-            <time
-              class="text-sm text-gray-500 dark:text-gray-400"
-              datetime={Date.to_iso8601(post.date)}
-            >
-              {Calendar.strftime(post.date, "%B %d, %Y")}
-            </time>
-            <%= if post.description do %>
-              <p class="text-sm text-gray-600 dark:text-gray-300">{post.description}</p>
-            <% end %>
-          </div>
-        </a>
-      </li>
-    <% end %>
-  </ul>
+<section class="max-w-3xl mx-auto flex flex-col gap-8 px-2 py-8">
+  <%= for post <- @posts do %>
+    <article class="flex gap-4">
+      <div class="w-12 sm:w-16 shrink-0">
+        <%= if post.preview_image do %>
+          <picture>
+            <source
+              media="(max-width: 640px)"
+              srcset={"/img?id=#{URI.encode_www_form(post.preview_image.id)}&w=48 1x, /img?id=#{URI.encode_www_form(post.preview_image.id)}&w=96 2x"}
+            />
+            <img
+              src={"/img?id=#{URI.encode_www_form(post.preview_image.id)}&w=64"}
+              srcset={"/img?id=#{URI.encode_www_form(post.preview_image.id)}&w=64 1x, /img?id=#{URI.encode_www_form(post.preview_image.id)}&w=128 2x"}
+              loading="lazy"
+              alt={post.preview_image.alt}
+              class="max-w-full max-h-full object-contain mx-auto"
+            />
+          </picture>
+        <% end %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-gray-600 dark:text-gray-400 text-sm">
+          {Calendar.strftime(post.date, "%B %d, %Y")}
+        </span>
+        <h2 class="text-2xl">
+          <a href={"/post/#{post.slug}"} class="no-underline">
+            {post.title}
+          </a>
+        </h2>
+      </div>
+    </article>
+  <% end %>
 </section>
