@@ -8,7 +8,7 @@ import {
 } from "@/components/nix/datatypes.tsx";
 import { signal, useSignal } from "@preact/signals";
 import { useContext, useEffect, useRef } from "preact/hooks";
-import IconExternalLink from "@tabler/icons-preact/dist/esm/icons/IconExternalLink.js";
+import { IconExternalLink } from "@tabler/icons-preact";
 import { BrowserRenderer } from "@/utils/browser_renderer.ts";
 import { marked } from "marked";
 import { classNames } from "@/components/util.ts";

@@ -1,9 +1,6 @@
 import { batch, useSignal } from "@preact/signals";
 import { useEffect } from "preact/hooks";
-import IconBulb from "@tabler/icons-preact/dist/esm/icons/IconBulb.js";
-import IconEraser from "@tabler/icons-preact/dist/esm/icons/IconEraser.js";
-import IconPencil from "@tabler/icons-preact/dist/esm/icons/IconPencil.js";
-import IconRobot from "@tabler/icons-preact/dist/esm/icons/IconRobot.js";
+import { IconBulb, IconEraser, IconPencil, IconRobot } from "@tabler/icons-preact";
 import { Fragment, JSX } from "preact";
 import { classNames } from "@/components/util.ts";
 

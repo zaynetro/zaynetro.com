@@ -1,4 +1,4 @@
-import IconHeart from "@tabler/icons-preact/dist/esm/icons/IconHeart.js";
+import { IconHeart } from "@tabler/icons-preact";
 import { useSignal } from "@preact/signals";
 
 function getKey(): string {

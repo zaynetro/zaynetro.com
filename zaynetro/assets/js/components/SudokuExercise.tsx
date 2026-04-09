@@ -1,9 +1,6 @@
 import { HintFunc, SudokuPuzzle } from "@/components/SudokuPuzzle.tsx";
 import { useSignal } from "@preact/signals";
-import IconArrowRight from "@tabler/icons-preact/dist/esm/icons/IconArrowRight.js";
-import IconCircleCheck from "@tabler/icons-preact/dist/esm/icons/IconCircleCheck.js";
-import IconExclamationCircle from "@tabler/icons-preact/dist/esm/icons/IconExclamationCircle.js";
-import IconMoodSmileBeam from "@tabler/icons-preact/dist/esm/icons/IconMoodSmileBeam.js";
+import { IconArrowRight, IconCircleCheck, IconExclamationCircle, IconMoodSmileBeam } from "@tabler/icons-preact";
 
 export type Exercise = {
   grid: number[][];

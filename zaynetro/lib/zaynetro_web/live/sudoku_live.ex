@@ -6,7 +6,10 @@ defmodule ZaynetroWeb.SudokuLive do
   @impl true
   def mount(%{"exercise" => exercise}, _session, socket) do
     if exercise in @exercises do
-      {:ok, assign(socket, exercise: exercise)}
+      {:ok,
+       socket
+       |> assign(exercise: exercise)
+       |> assign(extra_head: ~s(<script defer src="/assets/sudoku.js"></script>))}
     else
       {:ok, push_navigate(socket, to: "/sudoku")}
     end
