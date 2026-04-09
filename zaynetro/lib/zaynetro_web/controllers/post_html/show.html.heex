@@ -1,80 +1,44 @@
-<article class="max-w-3xl mx-auto px-4 py-8">
-  <header class="mb-8">
-    <h1 class="text-3xl font-bold mb-2">{@post.title}</h1>
-    <div class="flex gap-4 items-center text-sm text-gray-500 dark:text-gray-400">
-      <time datetime={Date.to_iso8601(@post.date)}>
-        {Calendar.strftime(@post.date, "%B %d, %Y")}
-      </time>
-      <%= if @post.author do %>
-        <span>by {@post.author}</span>
-      <% end %>
+<div class="mt-4 px-4">
+  <div class="mt-8 max-w-4xl mx-auto">
+    <div class="text-gray-600 dark:text-gray-400 text-sm pb-2">
+      {Date.to_iso8601(@post.date)}
     </div>
-  </header>
+    <h1 class="text-3xl dark:text-gray-200">{@post.title}</h1>
+  </div>
 
-  <%= if length(@post.toc) > 1 do %>
-    <nav
-      class="mb-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-sm"
-      aria-label="Table of contents"
-    >
-      <p class="font-semibold mb-2">Contents</p>
-      <ol class="list-decimal ml-4 space-y-1">
+  <div class="mt-4 flex flex-col xl:flex-row">
+    <section class="static xl:sticky xl:grow xl:shrink xl:basis-0 xl:self-start pt-2 xl:top-0 xl:mr-4">
+      <ul class="mx-auto list-disc list-inside max-w-3xl xl:max-w-lg text-gray-700 dark:text-gray-300">
+        <li>
+          <a href="#">↑ Top</a>
+        </li>
         <%= for heading <- @post.toc do %>
           <li>
-            <a
-              href={"##{heading.entry.slug}"}
-              class="text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              {heading.entry.text}
-            </a>
+            <a href={"##{heading.entry.slug}"}>{heading.entry.text}</a>
             <%= if heading.subheadings != [] do %>
-              <ol class="list-decimal ml-4 mt-1 space-y-1">
+              <ul class="list-[circle] list-inside ml-6">
                 <%= for sub <- heading.subheadings do %>
                   <li>
-                    <a
-                      href={"##{sub.slug}"}
-                      class="text-blue-600 dark:text-blue-400 hover:underline"
-                    >
-                      {sub.text}
-                    </a>
+                    <a href={"##{sub.slug}"}>{sub.text}</a>
                   </li>
                 <% end %>
-              </ol>
+              </ul>
             <% end %>
           </li>
         <% end %>
-      </ol>
-    </nav>
-  <% end %>
+      </ul>
+    </section>
 
-  <div class="markdown-body">
-    {{:safe, @post.html}}
-  </div>
+    <main class="max-w-4xl mx-0 md:mx-auto mt-4 xl:mt-0 xl:grow">
+      <div class="my-2 markdown-body">
+        {{:safe, @post.html}}
+      </div>
 
-  <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-    <button
-      type="button"
-      data-like-button
-      data-slug={@post.slug}
-      class="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600
-             text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800
-             transition-colors [&.liked]:text-red-500 [&.liked]:border-red-400"
-      aria-label="Like this post"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-5 h-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-        />
-      </svg>
-      <span>Like</span>
-    </button>
+      <div class="mt-4">
+        <div id="like-button-root" data-slug={@post.slug} phx-update="ignore"></div>
+      </div>
+    </main>
+
+    <div class="hidden xl:block xl:grow xl:shrink xl:basis-0" />
   </div>
-</article>
+</div>

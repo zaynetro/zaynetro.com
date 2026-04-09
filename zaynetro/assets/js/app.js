@@ -19,17 +19,16 @@
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
-// Establish Phoenix Socket and LiveView configuration.
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
-import {hooks as colocatedHooks} from "phoenix-colocated/zaynetro"
 import topbar from "../vendor/topbar"
+import { render } from "preact"
+import { LikeButton } from "./components/LikeButton.tsx"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
-  hooks: {...colocatedHooks},
 })
 
 // Show progress bar on live navigation and form submits
@@ -45,6 +44,12 @@ liveSocket.connect()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
+
+// Mount Preact islands
+const likeRoot = document.getElementById("like-button-root")
+if (likeRoot) {
+  render(<LikeButton />, likeRoot)
+}
 
 // The lines below enable quality of life phoenix_live_reload
 // development features:
