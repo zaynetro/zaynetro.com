@@ -18,7 +18,7 @@ defmodule ZaynetroWeb.SudokuLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <section class="max-w-2xl mx-auto px-4 py-8">
+    <section class="max-w-3xl mx-auto px-4 py-8">
       <div id="sudoku-root" data-exercise={@exercise} phx-update="ignore">
         <p class="text-gray-500">Loading exercise...</p>
       </div>

@@ -52,6 +52,7 @@ defmodule ZaynetroWeb.Router do
     scope "/dev" do
       pipe_through :browser
       live_dashboard "/dashboard", metrics: ZaynetroWeb.Telemetry
+      get "/404", ZaynetroWeb.DevController, :not_found
     end
   end
 end

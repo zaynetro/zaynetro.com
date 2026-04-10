@@ -16,7 +16,7 @@ config :zaynetro, ZaynetroWeb.Endpoint,
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: ZaynetroWeb.ErrorHTML, json: ZaynetroWeb.ErrorJSON],
-    layout: false
+    layout: {ZaynetroWeb.Layouts, :root}
   ],
   pubsub_server: Zaynetro.PubSub,
   live_view: [signing_salt: "hjprrq9+"]

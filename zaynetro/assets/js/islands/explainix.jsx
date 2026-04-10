@@ -7,5 +7,6 @@ import Explainix from "@/components/nix/ExplainixApp.tsx";
 
 const root = document.getElementById("explainix-root");
 if (root) {
+  root.textContent = "";
   render(<Explainix />, root);
 }

@@ -36,6 +36,19 @@ function setClicked() {
 
 export function LikeButton() {
   const clicked = useSignal(wasClicked());
+  // Increments on each mouseenter to force icon remount, restarting the CSS animation.
+  const animKey = useSignal(0);
+  const hovering = useSignal(false);
+
+  function onMouseEnter() {
+    if (clicked.value) return;
+    hovering.value = true;
+    animKey.value += 1;
+  }
+
+  function onMouseLeave() {
+    hovering.value = false;
+  }
 
   function onClick() {
     if (clicked.value) {
@@ -43,6 +56,7 @@ export function LikeButton() {
     }
 
     clicked.value = true;
+    hovering.value = false;
     setClicked();
 
     if ("plausible" in self) {
@@ -51,22 +65,27 @@ export function LikeButton() {
     }
   }
 
+  const isHovering = !clicked.value && hovering.value;
+
+  const iconClass = [
+    "transition-colors",
+    clicked.value ? "fill-rose-400 stroke-rose-400" : "fill-transparent stroke-rose-400",
+    isHovering ? "stroke-rose-500 animate-heartbeat" : "",
+  ].join(" ");
+
   return (
     <button
       type="button"
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       disabled={clicked}
-      class={"group rounded-md bg-white dark:bg-gray-200 px-3.5 py-1.5 text-sm font-semibold" +
+      class={"rounded-md bg-white dark:bg-gray-200 px-3.5 py-1.5 text-sm font-semibold" +
         " text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600" +
         " enabled:hover:bg-gray-50 flex gap-2 items-center" +
         " transition-colors enabled:cursor-pointer"}
     >
-      <IconHeart
-        size={18}
-        class={"stroke-rose-400 group-enabled:group-hover:stroke-rose-500" +
-          " group-enabled:fill-transparent group-disabled:fill-rose-400 transition-colors" +
-          " group-enabled:group-hover:animate-heartbeat"}
-      />
+      <IconHeart key={animKey.value} size={18} class={iconClass} />
       Thank you
     </button>
   );

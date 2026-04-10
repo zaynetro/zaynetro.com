@@ -18,6 +18,8 @@ if (root) {
     App = SudokuEmptyRectangle;
   }
   if (App) {
+    // Clear any server-side placeholder text before mounting.
+    root.textContent = "";
     render(<App />, root);
   }
 }
