@@ -43,6 +43,26 @@ defmodule ZaynetroWeb.SitemapController do
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
       </url>
+      <url>
+        <loc>https://www.zaynetro.com/sudoku</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+      </url>
+      <url>
+        <loc>https://www.zaynetro.com/sudoku/x-wing</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+      </url>
+      <url>
+        <loc>https://www.zaynetro.com/sudoku/y-wing</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+      </url>
+      <url>
+        <loc>https://www.zaynetro.com/sudoku/empty-rectangle</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+      </url>
     #{post_urls}
     </urlset>
     """

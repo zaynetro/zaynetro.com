@@ -13,9 +13,9 @@ defmodule Zaynetro.Images.Queue do
 
   # ── Public API ─────────────────────────────────────────────────────────────
 
-  @spec resize(String.t(), pos_integer()) :: {:ok, binary()} | {:error, term()}
-  def resize(path, width) do
-    GenServer.call(__MODULE__, {:resize, path, width}, @call_timeout)
+  @spec resize(String.t(), pos_integer(), String.t()) :: :ok | {:error, term()}
+  def resize(path, width, out_path) do
+    GenServer.call(__MODULE__, {:resize, path, width, out_path}, @call_timeout)
   end
 
   # ── GenServer ──────────────────────────────────────────────────────────────
@@ -28,15 +28,19 @@ defmodule Zaynetro.Images.Queue do
   def init(_opts), do: {:ok, %{}}
 
   @impl GenServer
-  def handle_call({:resize, path, width}, _from, state) do
-    result = do_resize(path, width)
+  def handle_call({:resize, path, width, out_path}, _from, state) do
+    result = do_resize(path, width, out_path)
     {:reply, result, state}
   end
 
-  defp do_resize(path, width) do
+  defp do_resize(path, width, out_path) do
+    Logger.info("Resizing image #{path} to #{width}px")
+    tmp = out_path <> ".tmp"
+    File.mkdir_p!(Path.dirname(out_path))
+
     with {:ok, thumb} <- Image.thumbnail(path, width, fit: :contain),
-         {:ok, bytes} <- Image.write(thumb, :memory, suffix: ".png") do
-      {:ok, bytes}
+         {:ok, _} <- Image.write(thumb, tmp) do
+      File.rename(tmp, out_path)
     else
       {:error, reason} ->
         Logger.error("Image resize failed for #{path} at #{width}px: #{inspect(reason)}")

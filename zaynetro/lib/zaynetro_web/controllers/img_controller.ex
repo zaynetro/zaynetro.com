@@ -3,6 +3,17 @@ defmodule ZaynetroWeb.ImgController do
 
   alias Zaynetro.Images.Pipeline
 
+  # Allow only safe path characters: alphanumeric, hyphen, underscore, dot, forward slash.
+  # The leading character must not be a dot or slash to prevent hidden-file or absolute paths.
+  @valid_id ~r/\A[a-zA-Z0-9_\-][a-zA-Z0-9_\-\.\/]*\z/
+
+  defp valid_id?(nil), do: false
+  defp valid_id?(""), do: false
+
+  defp valid_id?(id) do
+    Regex.match?(@valid_id, id) and not String.contains?(id, "..")
+  end
+
   def show(conn, params) do
     id = params["id"]
     w = params["w"]
@@ -11,10 +22,13 @@ defmodule ZaynetroWeb.ImgController do
 
     cond do
       is_nil(id) or id == "" ->
-        conn |> put_status(500) |> text("id is missing")
+        conn |> put_status(400) |> text("id is missing")
+
+      not valid_id?(id) ->
+        conn |> put_status(400) |> text("invalid id")
 
       is_nil(w) and is_nil(orig) ->
-        conn |> put_status(500) |> text("w or orig params are missing")
+        conn |> put_status(400) |> text("w or orig params are missing")
 
       true ->
         serve_image(conn, id, w, orig, v)
@@ -23,11 +37,11 @@ defmodule ZaynetroWeb.ImgController do
 
   defp serve_image(conn, id, _w, "true", v) do
     case Pipeline.serve_original(id) do
-      {:ok, bytes, mime} ->
+      {:ok, path, mime} ->
         conn
         |> maybe_cache_forever(v)
         |> put_resp_content_type(mime)
-        |> send_resp(200, bytes)
+        |> send_file(200, path)
 
       {:error, :not_found} ->
         conn |> put_status(404) |> text("img not found")
@@ -41,11 +55,11 @@ defmodule ZaynetroWeb.ImgController do
     case Integer.parse(w || "") do
       {width, ""} ->
         case Pipeline.resize_and_cache(id, width) do
-          {:ok, bytes} ->
+          {:ok, path} ->
             conn
             |> maybe_cache_forever(v)
             |> put_resp_content_type("image/png")
-            |> send_resp(200, bytes)
+            |> send_file(200, path)
 
           {:error, :not_found} ->
             conn |> put_status(404) |> text("img not found")

@@ -13,9 +13,17 @@ defmodule ZaynetroWeb.PostController do
             ""
           end
 
+        og_image =
+          case post.preview_image do
+            %{id: id} -> "/img?id=#{URI.encode_www_form(id)}&w=1200"
+            _ -> nil
+          end
+
         conn
         |> assign(:page_title, post.title)
         |> assign(:meta_description, post.description)
+        |> assign(:og_type, "article")
+        |> assign(:og_image, og_image)
         |> assign(:post_styles, "<style>#{GfmCss.all()}</style>")
         |> assign(:extra_head, extra_head)
         |> render(:show, post: post)

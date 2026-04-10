@@ -5,14 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
     <meta name="csrf-token" content={get_csrf_token()} />
+    <% og_title = assigns[:page_title] || "Roman Zaynetdinov (zaynetro)" %>
+    <% og_description =
+      assigns[:meta_description] ||
+        "Personal blog about software development, interesting projects, and technical discoveries." %>
+    <% og_type = assigns[:og_type] || "website" %>
+    <% og_url = ZaynetroWeb.Endpoint.url() <> @conn.request_path %>
     <%= if assigns[:page_title] do %>
       <title>{@page_title} | Roman Zaynetdinov (zaynetro)</title>
     <% else %>
       <title>Roman Zaynetdinov (zaynetro)</title>
     <% end %>
-    <%= if assigns[:meta_description] do %>
-      <meta name="description" content={@meta_description} />
+    <meta name="description" content={og_description} />
+    <%!-- Open Graph --%>
+    <meta property="og:site_name" content="Roman Zaynetdinov (zaynetro)" />
+    <meta property="og:type" content={og_type} />
+    <meta property="og:title" content={og_title} />
+    <meta property="og:description" content={og_description} />
+    <meta property="og:url" content={og_url} />
+    <%= if assigns[:og_image] do %>
+      <meta property="og:image" content={"#{ZaynetroWeb.Endpoint.url()}#{@og_image}"} />
+      <meta name="twitter:card" content="summary_large_image" />
+    <% else %>
+      <meta name="twitter:card" content="summary" />
     <% end %>
+    <%!-- Twitter Card --%>
+    <meta name="twitter:title" content={og_title} />
+    <meta name="twitter:description" content={og_description} />
     <link rel="icon" href="/favicon.png" />
     <link rel="alternate" type="application/rss+xml" title="zaynetro" href="/feed.rss" />
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />

@@ -9,29 +9,28 @@ defmodule Zaynetro.Images.Pipeline do
   alias Zaynetro.Blog.Cache
   alias Zaynetro.Images.{DiskCache, Queue}
 
-  @spec resize_and_cache(String.t(), pos_integer()) :: {:ok, binary()} | {:error, term()}
+  @spec resize_and_cache(String.t(), pos_integer()) :: {:ok, String.t()} | {:error, term()}
   def resize_and_cache(id, width) do
     cache_dir = cache_dir()
 
     case DiskCache.get(cache_dir, id, width) do
-      {:ok, bytes} ->
-        {:ok, bytes}
+      {:ok, path} ->
+        {:ok, path}
 
       :miss ->
-        with {:ok, path} <- Cache.image_path(id),
-             {:ok, bytes} <- Queue.resize(path, width) do
-          DiskCache.put(cache_dir, id, width, bytes)
-          {:ok, bytes}
+        out_path = DiskCache.cache_path(cache_dir, id, width)
+
+        with {:ok, src_path} <- Cache.image_path(id),
+             :ok <- Queue.resize(src_path, width, out_path) do
+          {:ok, out_path}
         end
     end
   end
 
-  @spec serve_original(String.t()) :: {:ok, binary(), String.t()} | {:error, term()}
+  @spec serve_original(String.t()) :: {:ok, String.t(), String.t()} | {:error, term()}
   def serve_original(id) do
-    with {:ok, path} <- Cache.image_path(id),
-         {:ok, bytes} <- File.read(path) do
-      mime = mime_type(path)
-      {:ok, bytes, mime}
+    with {:ok, path} <- Cache.image_path(id) do
+      {:ok, path, mime_type(path)}
     end
   end
 

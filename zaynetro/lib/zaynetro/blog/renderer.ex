@@ -106,9 +106,9 @@ defmodule Zaynetro.Blog.Renderer do
 
         html =
           ~s(<section class="mermaid-block">) <>
-          ~s(<pre class="mermaid">#{content}</pre>) <>
-          ~s(<div class="mermaid-label"><i>Diagram: #{name}</i></div>) <>
-          ~s(</section>\n)
+            ~s(<pre class="mermaid">#{content}</pre>) <>
+            ~s(<div class="mermaid-label"><i>Diagram: #{name}</i></div>) <>
+            ~s(</section>\n)
 
         {%MDEx.Raw{literal: html}, %{acc | has_mermaid: true}}
 
@@ -127,9 +127,9 @@ defmodule Zaynetro.Blog.Renderer do
 
         html =
           ~s(<section class="img-block">) <>
-          ~s(<div class="img-block-list">#{images_html}</div>) <>
-          ~s(<div class="img-block-label">#{label_html}</div>) <>
-          ~s(</section>\n)
+            ~s(<div class="img-block-list">#{images_html}</div>) <>
+            ~s(<div class="img-block-label">#{label_html}</div>) <>
+            ~s(</section>\n)
 
         {%MDEx.Raw{literal: html}, %{acc | has_labeled_img: true}}
 

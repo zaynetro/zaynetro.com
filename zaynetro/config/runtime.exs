@@ -54,4 +54,5 @@ end
 # Content & image cache configuration (available in all envs at runtime)
 config :zaynetro,
   posts_dir: System.get_env("POSTS_DIR") || "posts",
-  image_cache_dir: System.get_env("IMAGE_CACHE_DIR") || Path.join(System.tmp_dir!(), "zaynetro/images")
+  image_cache_dir:
+    System.get_env("IMAGE_CACHE_DIR") || Path.join(System.tmp_dir!(), "zaynetro/images")

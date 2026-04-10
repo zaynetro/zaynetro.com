@@ -17,7 +17,7 @@ defmodule ZaynetroWeb.FeedController do
 
     """
     <?xml version="1.0" encoding="UTF-8"?>
-    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
       <channel>
         <title>Roman Zaynetdinov (zaynetro)</title>
         <link>https://www.zaynetro.com</link>
@@ -45,7 +45,6 @@ defmodule ZaynetroWeb.FeedController do
           <link>https://www.zaynetro.com/post/#{post.slug}</link>
           <pubDate>#{pub_date}</pubDate>
           #{description}
-          <content:encoded><![CDATA[#{post.html}]]></content:encoded>
         </item>
     """
   end

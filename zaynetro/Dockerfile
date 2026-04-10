@@ -1,5 +1,5 @@
 # Build stage
-FROM hexpm/elixir:1.17.3-erlang-27.1-debian-bookworm-20240904-slim AS builder
+FROM hexpm/elixir:1.19-erlang-26.0-rc2-debian-bullseye-20260406-slim AS builder
 
 RUN apt-get update -y && \
     apt-get install -y build-essential git curl libvips-dev && \
@@ -26,7 +26,7 @@ RUN mix assets.deploy
 RUN mix release
 
 # Runtime stage
-FROM debian:bookworm-slim AS app
+FROM debian:bullseye-slim AS app
 
 RUN apt-get update -y && \
     apt-get install -y libstdc++6 openssl libncurses5 locales libvips42 && \

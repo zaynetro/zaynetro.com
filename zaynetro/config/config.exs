@@ -25,14 +25,18 @@ config :zaynetro, ZaynetroWeb.Endpoint,
 config :esbuild,
   version: "0.25.4",
   zaynetro: [
-    args:
-      ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js
+    args: ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js
          --external:/fonts/* --external:/images/*
          --jsx=automatic --jsx-import-source=preact
          --loader:.js=jsx --loader:.tsx=tsx --loader:.ts=ts
          --alias:@=./js),
     cd: Path.expand("../assets", __DIR__),
-    env: %{"NODE_PATH" => [Path.expand("../assets/node_modules", __DIR__), Path.expand("../deps", __DIR__)]}
+    env: %{
+      "NODE_PATH" => [
+        Path.expand("../assets/node_modules", __DIR__),
+        Path.expand("../deps", __DIR__)
+      ]
+    }
   ],
   sudoku: [
     args:
