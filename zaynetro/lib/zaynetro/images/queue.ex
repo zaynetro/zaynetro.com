@@ -35,7 +35,7 @@ defmodule Zaynetro.Images.Queue do
 
   defp do_resize(path, width, out_path) do
     Logger.info("Resizing image #{path} to #{width}px")
-    tmp = out_path <> ".tmp"
+    tmp = Path.rootname(out_path) <> ".tmp.png"
     File.mkdir_p!(Path.dirname(out_path))
 
     with {:ok, thumb} <- Image.thumbnail(path, width, fit: :contain),

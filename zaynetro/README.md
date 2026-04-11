@@ -3,8 +3,8 @@
 Personal website and blog built with [Phoenix](https://phoenixframework.org/) and
 [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view). Posts are written in Markdown
 with TOML frontmatter and rendered server-side using [MDEx](https://github.com/leandrocp/mdex)
-(comrak + Autumn syntax highlighting). Images are processed on-demand with
-[libvips](https://www.libvips.org/) via the `Image` NIF library.
+(comrak + Autumn syntax highlighting). Images are processed on-demand via the
+[`image`](https://hex.pm/packages/image) NIF library (libvips is bundled; no system install required).
 
 ## Running locally
 
@@ -25,10 +25,15 @@ The Phoenix LiveDashboard (metrics, processes, ETS tables, etc.) is available at
 
 ## Running remotely
 
+Need to run these commands once.
+
 ```sh
+mix phx.gen.release 
 mix phx.gen.secret
 fly secrets set SECRET_KEY_BASE=<output of mix phx.gen.secret>
 ```
+
+- See more at <https://hexdocs.pm/phoenix/fly.html>
 
 ## Pages
 
