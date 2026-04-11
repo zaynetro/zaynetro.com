@@ -39,7 +39,7 @@ defmodule ZaynetroWeb.ImgController do
     case Pipeline.serve_original(id) do
       {:ok, path, mime} ->
         conn
-        |> maybe_cache_forever(v)
+        |> put_cache_control(v)
         |> put_resp_content_type(mime)
         |> send_file(200, path)
 
@@ -57,7 +57,7 @@ defmodule ZaynetroWeb.ImgController do
         case Pipeline.resize_and_cache(id, width) do
           {:ok, path} ->
             conn
-            |> maybe_cache_forever(v)
+            |> put_cache_control(v)
             |> put_resp_content_type("image/png")
             |> send_file(200, path)
 
@@ -73,9 +73,11 @@ defmodule ZaynetroWeb.ImgController do
     end
   end
 
-  defp maybe_cache_forever(conn, v) when not is_nil(v) and v != "" do
+  defp put_cache_control(conn, v) when not is_nil(v) and v != "" do
     put_resp_header(conn, "cache-control", "public, max-age=31536000, immutable")
   end
 
-  defp maybe_cache_forever(conn, _v), do: conn
+  defp put_cache_control(conn, _v) do
+    put_resp_header(conn, "cache-control", "public, max-age=604800")
+  end
 end
