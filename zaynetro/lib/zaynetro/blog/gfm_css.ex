@@ -80,6 +80,12 @@ defmodule Zaynetro.Blog.GfmCss do
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
   .markdown-body pre.lumis code { background: none; padding: 0; font-size: inherit; }
+  @media (prefers-color-scheme: light) {
+    .markdown-body pre.lumis { background-color: #f6f8fa; }
+  }
+  @media (prefers-color-scheme: dark) {
+    .markdown-body pre.lumis { background-color: #161b22; }
+  }
   """
 
   @gfm_css_custom """
