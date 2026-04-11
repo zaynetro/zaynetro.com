@@ -1,40 +1,59 @@
-# Based on https://github.com/denoland/deno_docker/blob/main/alpine.dockerfile
+# Node stage
+FROM node:24-slim AS node
 
-ARG DENO_VERSION=2.7.11
-ARG BIN_IMAGE=denoland/deno:bin-${DENO_VERSION}
-FROM ${BIN_IMAGE} AS bin
+# Build stage
+FROM hexpm/elixir:1.19-erlang-26.0-rc2-debian-trixie-20260406-slim AS builder
 
-FROM gcr.io/distroless/cc as cc
+RUN apt-get update -y && \
+    apt-get install -y build-essential git && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-FROM alpine:latest
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/npm
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-# Inspired by https://github.com/dojyorin/deno_docker_image/blob/master/src/alpine.dockerfile
-COPY --from=cc --chown=root:root --chmod=755 /lib/*-linux-gnu/* /usr/local/lib/
-COPY --from=cc --chown=root:root --chmod=755 /lib/ld-linux-* /lib/
+WORKDIR /app
 
-RUN addgroup --gid 1000 deno \
-  && adduser --uid 1000 --disabled-password deno --ingroup deno \
-  && mkdir /deno-dir/ \
-  && chown deno:deno /deno-dir/ \
-  && mkdir /lib64 \
-  && ln -s /usr/local/lib/ld-linux-* /lib64/
+RUN mix local.hex --force && mix local.rebar --force
 
-ENV LD_LIBRARY_PATH="/usr/local/lib"
-ENV DENO_USE_CGROUPS=1
-ENV DENO_DIR /deno-dir/
-ENV DENO_INSTALL_ROOT /usr/local
+ENV MIX_ENV=prod
 
-ARG DENO_VERSION
-ENV DENO_VERSION=${DENO_VERSION}
-COPY --from=bin /deno /bin/deno
+COPY mix.exs mix.lock ./
+RUN mix deps.get --only prod
+RUN mix deps.compile
 
-WORKDIR /deno-dir
+COPY assets/package.json assets/package-lock.json ./assets/
+RUN npm install --prefix assets
+
 COPY . .
 
-# Build the application
-RUN deno task build
+RUN mix assets.deploy
+RUN mix release
 
-EXPOSE 8000
+# Runtime stage
+FROM debian:trixie-slim AS app
 
-ENTRYPOINT ["/bin/deno"]
-CMD ["task", "production"]
+RUN apt-get update -y && \
+    apt-get install -y libstdc++6 openssl locales && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
+
+WORKDIR /app
+RUN chown nobody /app
+
+COPY --from=builder --chown=nobody:root /app/_build/prod/rel/zaynetro ./
+COPY --from=builder --chown=nobody:root /app/posts ./posts
+
+ENV POSTS_DIR=/app/posts
+
+USER nobody
+
+ENV HOME=/tmp
+EXPOSE 4000
+
+CMD ["/app/bin/server"]
